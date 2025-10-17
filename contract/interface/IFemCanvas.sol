@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
+import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol"
 
-interface IFemCanvas {
+interface IFemCanvas is IERC1155{
     struct Canvas{
-        uint256 canvasId;// ERC1155 tokenId
+        uint256 canvasId;
         uint256 dayTimestamp;
         string metadataURI;
         address creator;
@@ -15,13 +16,13 @@ interface IFemCanvas {
         uint256 indexed canvasId,
         uint256 indexed dayTimestamp,
         string metadataURI,
-        address indexed creator
+        uint256 indexed canvasCounter
     );
     event CanvasURIUpdate(uint256 indexed canvasId,string newURI);
     event CanavasFinalized(uint256 indexed  canvasId,uint256 dayTimestamp);
 
-    // everyday mint one canva
-    function mintCanvas(uint256 canvasId,uint256 dayTimestamp,string calldata ipfsURI,uint256 amount) external;
+    // everyday mint one canva,
+    function mintCanvas(uint256 canvasId,uint256 dayTimestamp,string calldata ipfsURI,uint256 supply) external;
 
     function finalized(uint256 canvasId) external;
 

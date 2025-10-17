@@ -1,0 +1,22 @@
+{
+  "name": "fempunk-nushu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AllenWang-Yang/FemPunk-Nushu.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AllenWang-Yang/FemPunk-Nushu/issues"
+  },
+  "homepage": "https://github.com/AllenWang-Yang/FemPunk-Nushu#readme",
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.4.0"
+  }
+}
