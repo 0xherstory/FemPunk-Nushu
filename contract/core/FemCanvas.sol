@@ -9,7 +9,7 @@ import "../interface/IFemCanvas.sol";
 contract FemCanvas is IFemCanvas, ERC1155, Ownable, ReentrancyGuard {
     uint256 public canvasCounter;
     // canvasCounter:canvasId
-    mapping(uint256 => unit256) canvasCounterMapping;
+    mapping(uint256 => uint256) canvasCounterMapping;
     // canvasId => Canvas
     mapping(uint256 => Canvas) public canvases;
     // dayTimestamp => canvasId      
@@ -21,7 +21,7 @@ contract FemCanvas is IFemCanvas, ERC1155, Ownable, ReentrancyGuard {
         _;
     }
 
-    constructor(string memory uri) ERC1155(uri) {
+    constructor(string memory initialURI) ERC1155(initialURI) Ownable(msg.sender) {
         authorizedMinters[msg.sender] = true;
     }
 
@@ -29,16 +29,16 @@ contract FemCanvas is IFemCanvas, ERC1155, Ownable, ReentrancyGuard {
         authorizedMinters[minter] = authorized;
     }
 
-    function mintCanvas(uint256 canvasId,uint256 dayTimestamp,string calldata ipfsURI,uint256 supply) external override onlyAuthorized {
+    function mintCanvas(uint256 canvasId,uint256 dayTimestamp,string calldata _metadataURI,uint256 supply) external override onlyAuthorized {
         require(canvases[canvasId].canvasId == 0, "Canvas already exists");
         require(dayToCanvasId[dayTimestamp] == 0, "Canvas for this day already exists");
-        require(bytes(ipfsURI).length > 0, "Invalid IPFS URI");
+        require(bytes(_metadataURI).length > 0, "Invalid IPFS URI");
         require(supply > 0, "Supply must be greater than zero");
 
         canvases[canvasId] = Canvas({
             canvasId: canvasId,
             dayTimestamp: dayTimestamp,
-            metadataURI: ipfsURI,
+            metadataURI: _metadataURI,
             creator: msg.sender,
             totalRaised: 0,
             finalized: false
@@ -49,7 +49,7 @@ contract FemCanvas is IFemCanvas, ERC1155, Ownable, ReentrancyGuard {
         canvasCounterMapping[canvasId] = canvasCounter;
 
         _mint(msg.sender, canvasId, supply, "");
-        emit CanvasCreated(canvasId, dayTimestamp, ipfsURI, msg.sender,canvasCounter);
+        emit CanvasCreated(canvasId, dayTimestamp, _metadataURI, msg.sender,canvasCounter);
     }
 
     function finalized(uint256 canvasId) external override onlyAuthorized {
@@ -77,13 +77,13 @@ contract FemCanvas is IFemCanvas, ERC1155, Ownable, ReentrancyGuard {
         return canvases[canvasId];
     }
 
-    function updateTotalRaised(uint256 canvasId, uint256 amount) external override onlyAuthorized {
+    function updateTotalRaised(uint256 canvasId, uint256 amount) external onlyAuthorized {
         require(canvases[canvasId].canvasId != 0, "Canvas does not exist");
         require(amount > 0, "Amount must be greater than zero");
         canvases[canvasId].totalRaised += amount;
     }
 
-    function mintToContributor(address to, uint256 canvasId, uint256 contributions) external override onlyAuthorized {
+    function mintToContributor(address to, uint256 canvasId, uint256 contributions) external onlyAuthorized {
         require(canvases[canvasId].canvasId != 0, "Canvas does not exist");
         require(canvases[canvasId].finalized, "Canvas not finalized");
 

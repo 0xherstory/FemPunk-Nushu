@@ -8,7 +8,7 @@ interface IFemColors is IERC721 {
 
 
         // Only callable by the platform or authorized contract
-        function rewardColor(address to,uint256 colorId) external ;
+        function rewardColor(address to,uint256 colorId,string memory metadataURI) external ;
         // Transfers NFT to buyer only if payment is correct
         function transferColor(address _to,uint256 colorId) external payable ;
         // Users purchase a color

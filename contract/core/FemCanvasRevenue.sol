@@ -31,24 +31,30 @@ contract FemCanvasRevenue is Ownable, ReentrancyGuard {
     
     constructor(
         address _contributionContract,
+        address _canvasContract,
         address _platformFeeRecipient
     ) Ownable(msg.sender) {
         require(_contributionContract != address(0), "Invalid contribution contract");
         require(_platformFeeRecipient != address(0), "Invalid platform fee recipient");
         
-        contributionContract = IFemCanvasContribution(_contributionContract);
+        femCanvasContribution = IFemCanvasContribution(_contributionContract);
+        femCanvas = IFemCanvas(_canvasContract);
         platformFeeRecipientAddress = _platformFeeRecipient;
     }
     
+
     function receiveRevenue(uint256 canvasId) external payable {
         require(msg.value > 0, "No revenue received");
-        require(contributionContract.totalContributions(canvasId) > 0, "No contributions for this canvas");
+        require(femCanvasContribution.getTotalContribution(canvasId) > 0, "No contributions for this canvas");
         require(femCanvas.getCanvas(canvasId).canvasId != 0, "Canvas does not exist");
 
         canvasRevenue[canvasId] += msg.value;
         emit RevenueReceived(canvasId, msg.value);
     }
     
+    /**
+        * @dev Distribute revenue for a canvas to its contributors based on their contributions.
+     */
     function distributeRevenue(uint256 canvasId) external onlyOwner nonReentrant {
         require(!revenueDistributed[canvasId], "Revenue already distributed");
         require(femCanvas.getCanvas(canvasId).canvasId != 0, "Canvas does not exist");
@@ -63,7 +69,7 @@ contract FemCanvasRevenue is Ownable, ReentrancyGuard {
             address[] memory contributors,
             uint256[] memory amounts,
             uint256 totalContributions
-        ) = contributionContract.getCanvasContributionDetails(canvasId);
+        ) = femCanvasContribution.getCanvasContributionDetails(canvasId);
         require(totalContributions > 0, "No contributions found");
         
         for (uint256 i = 0; i < contributors.length; i++) {
@@ -78,6 +84,9 @@ contract FemCanvasRevenue is Ownable, ReentrancyGuard {
     }
     
     
+    /**
+        * @dev Claim distributed revenue for a canvas.
+     */
     function claimRevenue(uint256 canvasId) external nonReentrant {
         require(femCanvas.getCanvas(canvasId).canvasId != 0, "Canvas does not exist");
         require(revenueDistributed[canvasId], "Revenue not distributed yet");
@@ -90,19 +99,19 @@ contract FemCanvasRevenue is Ownable, ReentrancyGuard {
     }
 
     
+    /**
+        * @dev Claim accumulated platform fees.
+     */
     function claimPlatformFees() external nonReentrant {
-        require(msg.sender == platformFeeRecipient || msg.sender == owner(), "Not authorized");
         require(totalPlatformFees > 0, "No platform fees to claim");
         
         uint256 fees = totalPlatformFees;
         totalPlatformFees = 0;
-        payable(platformFeeRecipient).sendValue(fees);
+        payable(platformFeeRecipientAddress).sendValue(fees);
     }
     
 
     function setPlatformFeeRate(uint256 newRate) external onlyOwner {
-        require(newRate <= 1000, "Fee rate too high"); // 最大10%
-        
         uint256 oldRate = platformFeeRate;
         platformFeeRate = newRate;
         emit PlatformFeeUpdated(oldRate, newRate);
@@ -112,8 +121,8 @@ contract FemCanvasRevenue is Ownable, ReentrancyGuard {
     function setPlatformFeeRecipient(address newRecipient) external onlyOwner {
         require(newRecipient != address(0), "Invalid recipient");
         
-        address oldRecipient = platformFeeRecipient;
-        platformFeeRecipient = newRecipient;
+        address oldRecipient = platformFeeRecipientAddress;
+        platformFeeRecipientAddress = newRecipient;
         emit PlatformFeeRecipientUpdated(oldRecipient, newRecipient);
     }
     
@@ -141,7 +150,11 @@ contract FemCanvasRevenue is Ownable, ReentrancyGuard {
         totalRevenue = canvasRevenue[canvasId];
         distributed = revenueDistributed[canvasId];
         
-        address[] memory contributors = contributionContract.getContributors(canvasId);
+        (
+            address[] memory contributors,
+            uint256[] memory amounts,
+            uint256 totalContributions
+        ) = femCanvasContribution.getCanvasContributionDetails(canvasId);
         contributorsCount = contributors.length;
     }
     

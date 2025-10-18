@@ -13,6 +13,9 @@ interface IFemCanvasContribution {
 
     function getContributionByIdAndAddress(uint256 canvasId,address contributor) external view returns(uint256);
 
-    function getTotalContribution(uint256 canvasIf) external view returns(uint256);
+    function getTotalContribution(uint256 canvasId) external view returns(uint256);
+
+    function getCanvasContributionDetails(uint256 canvasId) external view returns (address[] memory contributors,
+    uint256[] memory amounts,uint256 totalContributions);
     
 }
