@@ -116,10 +116,7 @@ contract FemCanvasContribution is IFemCanvasContribution, Ownable, ReentrancyGua
     }
     
 
-    function getCanvasContributionDetails(uint256 canvasId) 
-        external 
-        view 
-        returns (
+    function getCanvasContributionDetails(uint256 canvasId) external view returns (
             address[] memory contributors,
             uint256[] memory amounts,
             uint256 total
@@ -133,6 +130,7 @@ contract FemCanvasContribution is IFemCanvasContribution, Ownable, ReentrancyGua
         }
         
         total = totalContributions[canvasId];
+        return (contributors, amounts, total);
     }
     
 

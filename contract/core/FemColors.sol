@@ -16,9 +16,10 @@ contract FemColors is ERC721URIStorage, Ownable, IFemColors {
 
     constructor() ERC721("FemColors", "FC") Ownable(msg.sender) {}
 
-    function rewardColor(address to, uint256 colorId) external onlyOwner {
+    function rewardColor(address to, uint256 colorId,string memory metadataURI) external onlyOwner {
         require(exists[colorId] == address(0), "Color already exists");
         _safeMint(to, colorId);
+        _setTokenURI(colorId, metadataURI);
         ownedColors[to].push(colorId);
         exists[colorId] = to;
         emit ColorMinted(to, colorId, colorCodes[colorId]);
