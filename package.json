@@ -18,5 +18,8 @@
   "homepage": "https://github.com/AllenWang-Yang/FemPunk-Nushu#readme",
   "dependencies": {
     "@openzeppelin/contracts": "^5.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.8.1"
   }
 }

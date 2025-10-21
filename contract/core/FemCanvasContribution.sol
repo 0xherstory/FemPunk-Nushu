@@ -15,7 +15,7 @@ contract FemCanvasContribution is IFemCanvasContribution, Ownable, ReentrancyGua
     // key is canvasId, contributor address, value is whether is contributor
     mapping(uint256 => mapping(address => bool)) public isContributor;
     
-    // 授权地址（可以记录贡献的地址）
+    // authorized recorders
     mapping(address => bool) public authorizedRecorders;
     
     modifier onlyAuthorized() {

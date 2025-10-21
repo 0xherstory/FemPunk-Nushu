@@ -6,8 +6,9 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "../interface/IFemCanvasContribution.sol";
 import "../interface/IFemCanvas.sol";
+import "../interface/IFemCanvasRevenue.sol";
 
-contract FemCanvasRevenue is Ownable, ReentrancyGuard {
+contract FemCanvasRevenue is IFemCanvasRevenue, Ownable, ReentrancyGuard {
     using Address for address payable;
     IFemCanvasContribution public femCanvasContribution;
     IFemCanvas public femCanvas;
@@ -22,12 +23,6 @@ contract FemCanvasRevenue is Ownable, ReentrancyGuard {
     // todo 
     address public platformFeeRecipientAddress;
     uint256 public totalPlatformFees;
-    
-    event RevenueReceived(uint256 indexed canvasId, uint256 amount);
-    event RevenueDistributed(uint256 indexed canvasId, uint256 totalAmount, uint256 contributorsCount);
-    event RevenueClaimed(uint256 indexed canvasId, address indexed contributor, uint256 amount);
-    event PlatformFeeUpdated(uint256 oldRate, uint256 newRate);
-    event PlatformFeeRecipientUpdated(address oldRecipient, address newRecipient);
     
     constructor(
         address _contributionContract,
@@ -156,6 +151,7 @@ contract FemCanvasRevenue is Ownable, ReentrancyGuard {
             uint256 totalContributions
         ) = femCanvasContribution.getCanvasContributionDetails(canvasId);
         contributorsCount = contributors.length;
+        return (totalRevenue,distributed,contributorsCount);
     }
     
 
