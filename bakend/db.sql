@@ -78,8 +78,9 @@ CREATE TABLE IF NOT EXISTS colors (
     color_id BIGINT NOT NULL UNIQUE,
     color_code VARCHAR(16) NOT NULL,
     token_id BIGINT DEFAULT NULL,
-    owner_id VARCHAR(64) DEFAULT NULL,
+    owner_address VARCHAR(64) DEFAULT NULL,
     price_wei NUMERIC(36,0) DEFAULT 0,
+    tx_hash VARCHAR(66) DEFAULT NULL,
     status SMALLINT DEFAULT 1,
     created_ts BIGINT NOT NULL,
     updated_ts BIGINT NOT NULL,
@@ -92,6 +93,7 @@ COMMENT ON COLUMN colors.color_code IS '颜色码，例如 #FFFFFF';
 COMMENT ON COLUMN colors.token_id IS '上链 Token ID';
 COMMENT ON COLUMN colors.owner_address IS '用户address';
 COMMENT ON COLUMN colors.price_wei IS '价格，单位 wei';
+COMMENT ON COLUMN colors.tx_hash IS '上链交易 hash';
 COMMENT ON COLUMN colors.status IS '状态 1=启用 0=禁用';
 COMMENT ON COLUMN colors.created_ts IS '创建时间';
 COMMENT ON COLUMN colors.updated_ts IS '更新时间';
@@ -104,7 +106,7 @@ CREATE INDEX idx_colors_code ON colors(color_code);
 -- ========================================
 CREATE TABLE IF NOT EXISTS canvases (
     id BIGSERIAL PRIMARY KEY,
-    canvas_id BIGINT NOT NULL UNIQUE,
+    canvas_id NUMERIC(78, 0) NOT NULL UNIQUE,
     day_timestamp BIGINT NOT NULL,
     ipfs_uri TEXT NOT NULL,
     creator VARCHAR(64) NOT NULL,
@@ -112,6 +114,7 @@ CREATE TABLE IF NOT EXISTS canvases (
     total_contributions BIGINT DEFAULT 0,
     total_raised_wei NUMERIC(36,0) DEFAULT 0,
     finalized SMALLINT DEFAULT 0,
+    tx_hash VARCHAR(66) DEFAULT NULL,
     status SMALLINT DEFAULT 1,
     created_ts BIGINT NOT NULL,
     updated_ts BIGINT NOT NULL,
@@ -127,6 +130,7 @@ COMMENT ON COLUMN canvases.price IS '画布单价';
 COMMENT ON COLUMN canvases.total_contributions IS '总贡献量';
 COMMENT ON COLUMN canvases.total_raised_wei IS '总筹集金额（wei）';
 COMMENT ON COLUMN canvases.finalized IS '是否结算完成 0=未结算 1=结算完成';
+COMMENT ON COLUMN canvases.tx_hash IS '上链交易 hash';
 COMMENT ON COLUMN canvases.status IS '状态';
 COMMENT ON COLUMN canvases.created_ts IS '创建时间';
 COMMENT ON COLUMN canvases.updated_ts IS '更新时间';
@@ -139,7 +143,7 @@ CREATE INDEX idx_canvases_creator ON canvases(creator_id);
 -- ========================================
 CREATE TABLE IF NOT EXISTS contributions (
     id BIGSERIAL PRIMARY KEY,
-    canvas_id BIGINT NOT NULL,
+    canvas_id NUMERIC(78, 0) NOT NULL,
     contributor VARCHAR(64) NOT NULL,
     contributions INT NOT NULL,
     tx_hash VARCHAR(128) DEFAULT NULL,
@@ -164,7 +168,7 @@ CREATE INDEX idx_contributions_txhash ON contributions(tx_hash);
 -- ========================================
 CREATE TABLE IF NOT EXISTS settlements (
     id BIGSERIAL PRIMARY KEY,
-    canvas_id BIGINT NOT NULL,
+    canvas_id NUMERIC(78, 0) NOT NULL,
     total_income_wei NUMERIC(36,0) DEFAULT 0,
     distributed SMALLINT DEFAULT 0,
     settled_ts BIGINT DEFAULT NULL,
@@ -191,7 +195,7 @@ CREATE TABLE IF NOT EXISTS revenue_shares (
     id BIGSERIAL PRIMARY KEY,
     settlement_id BIGINT NOT NULL,
     contributor VARCHAR(64) NOT NULL,
-    canvas_id BIGINT NOT NULL,
+    canvas_id NUMERIC(78, 0) NOT NULL,
     contributions INT DEFAULT 0,
     reward_wei NUMERIC(36,0) DEFAULT 0,
     claimed SMALLINT DEFAULT 0,

@@ -45,6 +45,13 @@ router.post("/reward", async (req, res) => {
       const rewardAmount = color.rows[0].reward_wei;
       const tx = await colorsContract.rewardColor(address,color_id, metadata_uri);
       await tx.wait();
+      const txHash = tx.hash;
+      console.log("Tx sent:", txHash);
+
+      await pool.query("UPDATE colors SET owner=$2,tx_hash=$3, updated_ts=extract(epoch from now())*1000 WHERE color_id=$1", [color_id,address,txHash]);
+
+
+      res.json({ success: true, txHash: txHash });
     }catch (err) {
     console.error(err);
     res.status(500).json({ success: false, error: err.message });
