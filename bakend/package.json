@@ -11,10 +11,12 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "big-integer": "^1.6.52",
     "body-parser": "^2.2.0",
     "dotenv": "^17.2.3",
     "ethers": "^6.15.0",
     "express": "^5.1.0",
-    "pg": "^8.16.3"
+    "pg": "^8.16.3",
+    "uuid": "^13.0.0"
   }
 }
