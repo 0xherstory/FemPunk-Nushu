@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const pool = require("../db");
+const { ethers } = require("ethers");
 const { wallet } = require("../utils/wallet");
-const colorsAbi = require("../abis/IFemColors.json");
+const colorsAbi = require("../abi/FemColors.json");
 const colorsContract = new ethers.Contract(process.env.COLORS_CONTRACT_ADDRESS, colorsAbi, wallet);
 
 // get total colors

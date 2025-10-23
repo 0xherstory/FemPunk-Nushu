@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS colors (
     id BIGSERIAL PRIMARY KEY,
     color_id BIGINT NOT NULL UNIQUE,
     color_code VARCHAR(16) NOT NULL,
-    token_id BIGINT DEFAULT NULL,
+    metadata_uri VARCHAR(255) DEFAULT NULL,
     owner_address VARCHAR(64) DEFAULT NULL,
     price_wei NUMERIC(36,0) DEFAULT 0,
     tx_hash VARCHAR(66) DEFAULT NULL,
@@ -90,7 +90,6 @@ COMMENT ON TABLE colors IS '颜色表';
 COMMENT ON COLUMN colors.id IS '自增主键';
 COMMENT ON COLUMN colors.color_id IS '后端生成唯一颜色 UUID';
 COMMENT ON COLUMN colors.color_code IS '颜色码，例如 #FFFFFF';
-COMMENT ON COLUMN colors.token_id IS '上链 Token ID';
 COMMENT ON COLUMN colors.owner_address IS '用户address';
 COMMENT ON COLUMN colors.price_wei IS '价格，单位 wei';
 COMMENT ON COLUMN colors.tx_hash IS '上链交易 hash';
@@ -108,7 +107,7 @@ CREATE TABLE IF NOT EXISTS canvases (
     id BIGSERIAL PRIMARY KEY,
     canvas_id NUMERIC(78, 0) NOT NULL UNIQUE,
     day_timestamp BIGINT NOT NULL,
-    ipfs_uri TEXT NOT NULL,
+    metadata_uri VARCHAR(255) NOT NULL,
     creator VARCHAR(64) NOT NULL,
     price BIGINT DEFAULT 0,
     total_contributions BIGINT DEFAULT 0,
@@ -124,7 +123,7 @@ COMMENT ON TABLE canvases IS '画布表';
 COMMENT ON COLUMN canvases.id IS '自增主键';
 COMMENT ON COLUMN canvases.canvas_id IS '系统生成的 Canvas ID 或 ERC1155 tokenId';
 COMMENT ON COLUMN canvases.day_timestamp IS '画布日期零点时间戳（毫秒）';
-COMMENT ON COLUMN canvases.ipfs_uri IS '存储 metadata 的 IPFS URI';
+COMMENT ON COLUMN canvases.metadata_uri IS '存储 metadata 的 IPFS URI';
 COMMENT ON COLUMN canvases.creator IS '创建者用户 address';
 COMMENT ON COLUMN canvases.price IS '画布单价';
 COMMENT ON COLUMN canvases.total_contributions IS '总贡献量';

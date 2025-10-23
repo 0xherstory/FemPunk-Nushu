@@ -3,20 +3,14 @@ const { Client } = require("pg");
 const fs = require("fs");
 const { log } = require("console");
 require('dotenv').config();
-const pool = require("../db/index.js"); 
+const pool = require("../db/index.js");
+const { wallet } = require("../utils/wallet"); 
 
 
 
 // === 区块链配置 ===
-const RPC_URL = process.env.RPC_URL;
-const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const CONTRACT_ADDRESS = process.env.COLORS_CONTRACT_ADDRESS;
 const ABI_PATH = "/Users/zhongyang/FemPunk-Nushu/bakend/abi/IFemColors.json";
-
-const provider = new ethers.JsonRpcProvider(RPC_URL);
-console.log("PRIVATE_KEY is:", PRIVATE_KEY);
-console.log("RPC_URL is:", RPC_URL);
-const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
 const abi = JSON.parse(fs.readFileSync(ABI_PATH));
 const colorsContract = new ethers.Contract(CONTRACT_ADDRESS, abi, wallet);
 
