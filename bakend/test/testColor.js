@@ -41,20 +41,6 @@ async function mintColorTest() {
 
         const receipt = await tx.wait();
 
-        // 从事件获取 tokenId
-        if (receipt.status == 1) {
-            console.log("Transaction confirmed in block:", receipt.blockNumber);
-            if(receipt.events){
-                const event = receipt.events.find(e => e.event === "ColorMinted");
-                if (event) {
-                     console.log("ColorMinted event:", event.args);
-                     const tokenId = event.args.colorsCounter.toString();
-                    console.log("Minted tokenId:", tokenId);}   
-            } else {
-                console.log("ColorMinted event not found");                
-            }
-        }
-
         await pool.query("UPDATE colors SET token_id=$2c'l updated_ts=extract(epoch from now())*1000 WHERE color_id=$1", [color_id,tokenId]);
 
 
