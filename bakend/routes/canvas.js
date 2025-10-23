@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const pool = require("../db");
+const { ethers } = require("ethers");
 const { wallet } = require("../utils/wallet");
-const canvasAbi = require("../abis/IFemCanvas.json");
-const canvasContract = new ethers.Contract(process.env.CANVAS_CONTRACT_ADDRESS, canvasAbi, wallet);
+const canvasAbi = require("../abi/FemCanvas.json");
+const { generateUUID } = require("../utils/generateUUID");
+const canvasContract = new ethers.Contract(process.env.CONTRIBUITION_CONTRACT_ADDRESS, canvasAbi, wallet);
 
 // get canvas by day_timestamp
 router.get("/:day_timestamp", async (req, res) => {
@@ -31,17 +33,15 @@ router.get("/id/:canvas_id", async (req, res) => {
 
 // create a canvas at everyday 00:00 UTC+8 （2025-10-21T00:00:00+08:00  =》 1760976000000）
 router.post("/create", async (req, res) => {
-  const { day_timestamp, ipfs_uri, supply } = req.body;
+  // metadata_uri is first version uri, later can be updated when minting
+  const { day_timestamp, metadata_uri, supply,creator } = req.body;
   try {
-    const canvasUUID = uuidv4();
-    const canvasId = BigInt(keccak256(toHex(canvasUUID)));
-    const tx = await canvasContract.mintCanvas(canvasId, day_timestamp, ipfs_uri, supply);
-    await tx.wait();
-
+    const canvasId = generateUUID();
+    const creator = req.body.creator || "0x84228976433481050297e5780D80c3141D0BEACf";
     // insert into database
     await pool.query(
-      "INSERT INTO canvases(canvas_id, day_timestamp, metadata_uri, total_raised_wei, finalized, created_ts, updated_ts) VALUES ($1,$2,$3,0,0,extract(epoch from now())*1000,extract(epoch from now())*1000)",
-      [canvasId, day_timestamp, ipfs_uri]
+      "INSERT INTO canvases(canvas_id, day_timestamp, metadata_uri, creator,total_raised_wei, finalized, updated_ts,created_ts) VALUES ($1,$2,$3,$4,0,0,extract(epoch from now())*1000,extract(epoch from now())*1000)",
+      [canvasId, day_timestamp, metadata_uri,creator]
     );
 
     res.json({ success: true, canvasId});
@@ -53,20 +53,34 @@ router.post("/create", async (req, res) => {
 
 // mint ERC1155 NFT for a canvas
 router.post("/mint", async (req, res) => {
-    const { canvas_id, ipfs_uri, supply } = req.body;
+    const { canvas_id, metadata_uri, supply } = req.body;
+    console.log("Minting canvas:", canvas_id, metadata_uri, supply);
     const canvas = await pool.query(
         "SELECT * FROM canvases WHERE canvas_id=$1", [canvas_id]
     );
     if (canvas.rows.length === 0) return res.status(404).json({ success: false, error: "Canvas not found" });
+
     try {
-        // update metadata uri in database
+        // step1: update metadata uri in database
         await pool.query(
-        "UPDATE INTO canvases(metadata_uri, updated_ts) VALUES ($1,extract(epoch from now())*1000) WHERE canvas_id=$2",
-        [ipfs_uri,canvas_id]
+        "UPDATE canvases SET metadata_uri=$1, updated_ts=extract(epoch from now())*1000 WHERE canvas_id=$2;",
+        [metadata_uri,canvas_id]
         );
-        const tx = await canvasContract.mintCanvas(canvas_id, day_timestamp, ipfs_uri, supply);
+        const day_timestamp = canvas.rows[0].day_timestamp;
+        const supply = req.body.supply || 100;// default supply 100
+        // step2: call contract to mint
+        console.log("Calling mintCanvas on contract...");
+        const tx = await canvasContract.mintCanvas(canvas_id, day_timestamp, metadata_uri, supply);
         await tx.wait();
-        res.json({ success: true, txHash: tx.hash });
+        const txHash = tx.hash;
+        console.log("Calling mintCanvas txHash is:", txHash);
+        // step3: update tx_hash in database
+        await pool.query(
+            "UPDATE canvases SET tx_hash=$1, updated_ts=extract(epoch from now())*1000 WHERE canvas_id=$2;",
+            [txHash,canvas_id]
+        );
+        
+        res.json({ success: true, txHash: txHash });
     }catch (err) {
         console.error(err);
         res.status(500).json({ success: false, error: err.message });
