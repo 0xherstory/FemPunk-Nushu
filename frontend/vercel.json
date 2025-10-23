@@ -1,0 +1,41 @@
+{
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "regions": ["hkg1", "sfo1"],
+  "env": {
+    "NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID": "@walletconnect-project-id",
+    "NEXT_PUBLIC_ALCHEMY_API_KEY": "@alchemy-api-key",
+    "NEXT_PUBLIC_LIVEBLOCKS_PUBLIC_KEY": "@liveblocks-public-key",
+    "LIVEBLOCKS_SECRET_KEY": "@liveblocks-secret-key",
+    "NEXT_PUBLIC_COLOR_NFT_CONTRACT_ADDRESS": "@color-nft-contract",
+    "NEXT_PUBLIC_ARTWORK_NFT_CONTRACT_ADDRESS": "@artwork-nft-contract",
+    "PINATA_API_KEY": "@pinata-api-key",
+    "PINATA_SECRET_API_KEY": "@pinata-secret-key"
+  },
+  "functions": {
+    "app/api/**/*.ts": {
+      "maxDuration": 30
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    }
+  ]
+}
