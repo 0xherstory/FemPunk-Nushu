@@ -1,0 +1,118 @@
+/* Auto-generated CSS variables from Figma design tokens */
+/* Last updated: 2024-10-23 */
+
+:root {
+  /* Colors from Figma MCP */
+  --color-primary-500: #7a2eff;
+  --color-primary-600: #6828b0;
+  --color-accent-green: #1ee11f;
+  --color-nushu-red: #ff6b9d;
+  --color-nushu-gold: #ffd700;
+  --color-nushu-ink: #1a1a1a;
+  --color-canvas-bg: #fefefe;
+  --color-canvas-grid: #f0f0f0;
+  --color-success-500: #10b981;
+  --color-warning-500: #f59e0b;
+  --color-error-500: #ef4444;
+
+  /* Typography */
+  --font-size-display-xl: 3rem;
+  --font-weight-display-xl: 700;
+  --line-height-display-xl: 3.5rem;
+  --font-size-heading-xl: 2.25rem;
+  --font-weight-heading-xl: 600;
+  --line-height-heading-xl: 2.75rem;
+  --font-size-heading-lg: 1.5rem;
+  --font-weight-heading-lg: 600;
+  --line-height-heading-lg: 2rem;
+  --font-size-heading-md: 1.25rem;
+  --font-weight-heading-md: 500;
+  --line-height-heading-md: 1.75rem;
+  --font-size-body-lg: 1.125rem;
+  --font-weight-body-lg: 400;
+  --line-height-body-lg: 1.75rem;
+  --font-size-body-base: 1rem;
+  --font-weight-body-base: 400;
+  --line-height-body-base: 1.5rem;
+  --font-size-body-sm: 0.875rem;
+  --font-weight-body-sm: 400;
+  --line-height-body-sm: 1.25rem;
+  --font-size-caption: 0.75rem;
+  --font-weight-caption: 400;
+  --line-height-caption: 1rem;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+  --spacing-4xl: 6rem;
+  --spacing-5xl: 8rem;
+
+  /* Border Radius */
+  --radius-none: 0;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-canvas: 0 2px 8px 0 rgb(0 0 0 / 0.08);
+  --shadow-brush-stroke: 0 1px 4px 0 rgb(122 46 255 / 0.2);
+}
+
+/* Utility classes for design tokens */
+.text-nushu-gradient {
+  background: linear-gradient(135deg, var(--color-nushu-red) 0%, var(--color-nushu-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bg-nushu-gradient {
+  background: linear-gradient(135deg, var(--color-nushu-red) 0%, var(--color-nushu-gold) 100%);
+}
+
+.canvas-texture {
+  background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.05) 1px, transparent 0);
+  background-size: 20px 20px;
+}
+
+.brush-stroke-shadow {
+  box-shadow: var(--shadow-brush-stroke);
+}
+
+/* NuShu collaborative painting specific styles */
+.nushu-character {
+  font-family: 'Noto Sans NuShu', serif;
+  color: var(--color-nushu-ink);
+}
+
+.collaborative-cursor {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1000;
+  transition: all 0.1s ease-out;
+}
+
+.brush-preview {
+  border-radius: 50%;
+  border: 2px solid var(--color-primary-500);
+  background: rgba(122, 46, 255, 0.1);
+  pointer-events: none;
+}
+
+.canvas-grid {
+  background-image: 
+    linear-gradient(var(--color-canvas-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-canvas-grid) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
