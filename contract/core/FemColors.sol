@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "../interface/IFemColors.sol";
 
 contract FemColors is ERC721URIStorage, Ownable, IFemColors {
-    uint256 public nextTokenId;
+    uint256 public colorsCounter;
     // colorId => price
     mapping(uint256 => uint256) private colorPrices;
     mapping(address => uint256[]) private ownedColors;
@@ -22,6 +22,7 @@ contract FemColors is ERC721URIStorage, Ownable, IFemColors {
         _setTokenURI(colorId, metadataURI);
         ownedColors[to].push(colorId);
         exists[colorId] = to;
+        colorsCounter++;
         emit ColorMinted(to, colorId, colorCodes[colorId]);
     }
 
@@ -34,6 +35,8 @@ contract FemColors is ERC721URIStorage, Ownable, IFemColors {
         _setTokenURI(colorId, metadataURI);
         exists[colorId] = msg.sender;
         ownedColors[msg.sender].push(colorId);
+
+        colorsCounter++;
 
         emit ColorMinted(msg.sender, colorId, colorCodes[colorId]);
     }
