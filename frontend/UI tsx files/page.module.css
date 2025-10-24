@@ -1,0 +1,132 @@
+/* HomePage Layout - Exact Figma reproduction with 1440px × 2729px dimensions */
+
+.heroSection {
+  /* Hero section positioning and z-index layering */
+  position: relative;
+  z-index: 2;
+  /* Exact spacing from Figma layout */
+  margin-top: 0;
+}
+
+.descriptiveSection {
+  /* Descriptive text section positioning */
+  position: relative;
+  z-index: 3;
+  /* Exact spacing between sections from Figma */
+  margin-top: 120px;
+  padding: 0 40px;
+  /* Center content within page width */
+  max-width: var(--figma-page-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.descriptiveText {
+  /* Text sections layout */
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  /* Center alignment */
+  align-items: center;
+}
+
+.gallerySection {
+  /* Gallery section positioning */
+  position: relative;
+  z-index: 4;
+  /* Exact spacing from descriptive section */
+  margin-top: 160px;
+  padding: 0 40px;
+  /* Center content within page width */
+  max-width: var(--figma-page-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.artworkGallery {
+  /* Gallery grid positioning */
+  width: 100%;
+  /* Ensure proper spacing for 6 cards */
+  display: grid;
+  grid-template-columns: repeat(3, var(--figma-card-width));
+  grid-template-rows: repeat(2, var(--figma-card-height));
+  /* Exact gap spacing from Figma */
+  gap: 40px 45px;
+  /* Center the grid */
+  justify-content: center;
+  align-content: center;
+}
+
+.ctaSection {
+  /* CTA section positioning */
+  position: relative;
+  z-index: 5;
+  /* Exact spacing from gallery section */
+  margin-top: 80px;
+  padding: 0 40px;
+  /* Center content within page width */
+  max-width: var(--figma-page-width);
+  margin-left: auto;
+  margin-right: auto;
+  /* Bottom spacing to complete page height */
+  margin-bottom: 120px;
+}
+
+.viewAllCTA {
+  /* Center the CTA link */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Ensure proper z-index layering for overlapping elements */
+.heroSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  /* Background overlay if needed */
+  background: transparent;
+}
+
+/* Responsive considerations while maintaining exact positioning */
+@media (max-width: 1440px) {
+  .descriptiveSection,
+  .gallerySection,
+  .ctaSection {
+    /* Maintain proportional spacing on smaller screens */
+    padding: 0 20px;
+  }
+  
+  .artworkGallery {
+    /* Adjust grid for smaller screens while maintaining proportions */
+    gap: 30px 35px;
+  }
+}
+
+/* Ensure overall page dimensions match Figma */
+:global(.figma-homepage) {
+  /* Exact page dimensions from requirements 6.1 */
+  width: var(--figma-page-width);
+  height: var(--figma-page-height);
+  /* Center on larger screens */
+  margin: 0 auto;
+  /* Proper positioning context */
+  position: relative;
+  /* Prevent horizontal overflow */
+  overflow-x: hidden;
+}
+
+/* Performance optimizations for layered elements */
+.heroSection,
+.descriptiveSection,
+.gallerySection,
+.ctaSection {
+  /* GPU acceleration for smooth scrolling */
+  transform: translateZ(0);
+  /* Optimize repaints */
+  will-change: transform;
+}

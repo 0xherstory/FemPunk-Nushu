@@ -1,0 +1,516 @@
+/* ============================================
+   EXACT FIGMA SPECIFICATIONS - COLOR PAGE
+   Design: Mint颜色页 (Color Mint Page)
+   Node ID: 100:1983
+   ============================================ */
+
+/* Main Container */
+.container {
+    position: relative;
+    width: 1440px;
+    min-height: 1024px;
+    background: #161616;
+    margin: 0 auto;
+}
+
+/* ============================================
+   NAVIGATION BAR
+   ============================================ */
+.navbar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1440px;
+    height: 96px;
+    z-index: 100;
+}
+
+.navbarBackdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(22, 22, 22, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.navbarContent {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+}
+
+.navbarLeft {
+    display: flex;
+    align-items: center;
+    gap: 56px;
+}
+
+.logo {
+    position: relative;
+    width: 168px;
+    height: 51.902px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.logo:hover {
+    opacity: 0.8;
+}
+
+.logo img {
+    height: 100%;
+}
+
+.navLink {
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: normal;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.navLinkActive {
+    font-weight: 800;
+    color: #1ee11f;
+}
+
+.navLink:hover {
+    color: #1ee11f;
+}
+
+.navbarRight {
+    display: flex;
+    align-items: center;
+}
+
+.connectButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 160px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.connectButton:hover {
+    background: rgba(0, 0, 0, 0.8);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+.walletIcon {
+    width: 20px;
+    height: 20px;
+}
+
+/* ============================================
+   COLOR WHEEL SECTION
+   ============================================ */
+.colorWheelSection {
+    position: absolute;
+    left: 354px;
+    top: 130px;
+}
+
+.colorWheelWrapper {
+    position: relative;
+    width: 382px;
+    height: 382px;
+}
+
+.colorWheelImage {
+    position: absolute;
+    left: 43.785px;
+    top: -0.755px;
+    width: 460.559px;
+    height: 386.492px;
+    -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/b440c43e-6279-46ac-b2e0-501869ca189c');
+    mask-image: url('https://www.figma.com/api/mcp/asset/b440c43e-6279-46ac-b2e0-501869ca189c');
+    -webkit-mask-size: 382px 382px;
+    mask-size: 382px 382px;
+    -webkit-mask-position: 43.785px -0.755px;
+    mask-position: 43.785px -0.755px;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+}
+
+.colorWheelImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ============================================
+   MINT PANEL (Right Side)
+   ============================================ */
+.mintPanel {
+    position: absolute;
+    left: 806px;
+    top: 130px;
+    width: 280px;
+}
+
+/* Title */
+.mintTitle {
+    position: absolute;
+    left: -340px;
+    top: 12.5px;
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: normal;
+    color: #ffffff;
+    text-align: right;
+    white-space: nowrap;
+    margin: 0;
+}
+
+/* Selected Color Display */
+.selectedColorGroup {
+    position: absolute;
+    left: 4px;
+    top: 51px;
+    width: 181px;
+    height: 46px;
+}
+
+.selectedColorCircle {
+    position: absolute;
+    left: 4px;
+    top: 54px;
+    width: 40px;
+    height: 40px;
+}
+
+.selectedColorCircle img {
+    width: 100%;
+    height: 100%;
+}
+
+.selectedColorHex {
+    position: absolute;
+    left: 76px;
+    top: 51px;
+    font-family: 'PingFang SC', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: normal;
+    color: #ffffff;
+    white-space: nowrap;
+}
+
+.colorHexInput {
+    position: absolute;
+    left: 60px;
+    top: 51px;
+    width: 121px;
+    height: 46px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+}
+
+/* Price Info */
+.priceInfo {
+    position: absolute;
+    left: 26.5px;
+    top: 128px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.priceLabel {
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: normal;
+    color: #ffffff;
+    text-align: center;
+}
+
+.priceValue {
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: normal;
+    color: #ffffff;
+    text-align: center;
+}
+
+.priceOriginal {
+    position: absolute;
+    left: 94px;
+    top: 149.5px;
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: normal;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    text-decoration: line-through;
+    text-decoration-skip-ink: none;
+    text-underline-position: from-font;
+}
+
+/* Mint Button */
+.mintButtonWrapper {
+    position: absolute;
+    left: 0;
+    top: 181px;
+    width: 280px;
+}
+
+.mintButton {
+    width: 280px;
+    height: 48px;
+    background: #7b2eff;
+    border: none;
+    border-radius: 24px;
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #ffffff;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mintButton:hover {
+    background: #8e3dff;
+    transform: scale(1.02);
+}
+
+/* Divider with "or" */
+.dividerGroup {
+    position: absolute;
+    left: 0;
+    top: 253px;
+    width: 280px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.dividerLine {
+    width: 120px;
+    height: 1px;
+}
+
+.dividerLine img {
+    width: 100%;
+    height: 100%;
+}
+
+.dividerText {
+    font-family: 'PingFang SC', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: normal;
+    color: #5e5e5e;
+    text-align: center;
+}
+
+/* Random Hint */
+.randomHint {
+    position: absolute;
+    left: 0;
+    top: 299.5px;
+    font-family: 'PingFang SC', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: normal;
+    color: #1ee11f;
+}
+
+/* Invitation Section */
+.invitationSection {
+    position: absolute;
+    left: 0;
+    top: 320px;
+    width: 280px;
+    display: flex;
+    gap: 6px;
+}
+
+.invitationInputWrapper {
+    position: relative;
+    width: 174px;
+    height: 40px;
+}
+
+.invitationInput {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 0 16px;
+    font-family: 'PingFang SC', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: #ffffff;
+}
+
+.invitationInput::placeholder {
+    color: transparent;
+}
+
+.invitationLabel {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'PingFang SC', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: #989898;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.invitationInput:focus + .invitationLabel,
+.invitationInput:not(:placeholder-shown) + .invitationLabel {
+    top: -8px;
+    font-size: 10px;
+    color: #1ee11f;
+}
+
+.receiveButton {
+    width: 100px;
+    height: 40px;
+    background: #1ee11f;
+    border: none;
+    border-radius: 10px;
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    color: #161616;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.receiveButton:hover {
+    background: #2fff30;
+    transform: scale(1.05);
+}
+
+/* ============================================
+   YOUR COLOR SECTION
+   ============================================ */
+.yourColorSection {
+    position: absolute;
+    left: 50%;
+    top: 536px;
+    transform: translateX(-50%);
+    width: 732px;
+    height: 140px;
+}
+
+.yourColorBackground {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 732px;
+    height: 140px;
+    background: #2c2c2c;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.yourColorTitle {
+    position: absolute;
+    left: 16px;
+    top: 30.5px;
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: normal;
+    color: #ffffff;
+    margin: 0;
+}
+
+.colorList {
+    position: absolute;
+    left: 16px;
+    top: 61px;
+    display: flex;
+    gap: 75px;
+}
+
+.colorItem {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.colorCircle {
+    width: 40px;
+    height: 40px;
+}
+
+.colorCircle img {
+    width: 100%;
+    height: 100%;
+}
+
+.colorHex {
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: normal;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+@media (max-width: 1440px) {
+    .container {
+        transform: scale(0.9);
+        transform-origin: top center;
+    }
+}
+
+@media (max-width: 1200px) {
+    .container {
+        transform: scale(0.75);
+        transform-origin: top center;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        transform: scale(0.5);
+        transform-origin: top center;
+    }
+}

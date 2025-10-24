@@ -44,7 +44,8 @@
   --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-lg:
+    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --shadow-canvas: 0 2px 8px 0 rgb(0 0 0 / 0.08);
   --shadow-brush-stroke: 0 1px 4px 0 rgb(122 46 255 / 0.2);
 }
@@ -57,7 +58,9 @@
 
   body {
     @apply bg-white text-gray-900 antialiased;
-    font-feature-settings: 'rlig' 1, 'calt' 1;
+    font-feature-settings:
+      'rlig' 1,
+      'calt' 1;
   }
 
   /* Custom scrollbar */
@@ -110,7 +113,11 @@
   /* Canvas specific styles */
   .canvas-container {
     @apply relative bg-canvas-bg border border-canvas-grid rounded-lg overflow-hidden;
-    background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.05) 1px, transparent 0);
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      rgba(0, 0, 0, 0.05) 1px,
+      transparent 0
+    );
     background-size: 20px 20px;
   }
 
@@ -141,14 +148,22 @@
 @layer utilities {
   /* Text gradients */
   .text-gradient-nushu {
-    background: linear-gradient(135deg, var(--color-nushu-red) 0%, var(--color-nushu-gold) 100%);
+    background: linear-gradient(
+      135deg,
+      var(--color-nushu-red) 0%,
+      var(--color-nushu-gold) 100%
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .text-gradient-primary {
-    background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-600) 100%);
+    background: linear-gradient(
+      135deg,
+      var(--color-primary-500) 0%,
+      var(--color-primary-600) 100%
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -260,7 +275,8 @@
 }
 
 @keyframes user-cursor {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {

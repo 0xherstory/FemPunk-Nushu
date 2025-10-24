@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FemPunk Nvshu - Paint Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="paint-page.css">
+</head>
+<body>
+    <!-- Main Container: 1440x1024 -->
+    <div class="container" data-name="绘画页-有颜色" data-node-id="101:2188">
+
+        <!-- Canvas Background with Mask -->
+        <div class="canvas-background" data-name="Mask group" data-node-id="101:2189">
+            <div class="canvas-image" data-node-id="101:2191">
+                <img src="https://www.figma.com/api/mcp/asset/2ccb6198-a3e8-418b-b296-55208a71f578" alt="Canvas Background">
+            </div>
+        </div>
+
+        <!-- Navigation Bar -->
+        <nav class="navbar" data-name="导航栏" data-node-id="101:2196">
+            <div class="navbar-backdrop" data-node-id="I101:2196;70:1816"></div>
+
+            <div class="navbar-content">
+                <!-- Left Side: Logo and Menu -->
+                <div class="navbar-left" data-node-id="I101:2196;70:1822">
+                    <div class="logo" data-name="fempunk_logo" data-node-id="I101:2196;70:1823">
+                        <img src="https://www.figma.com/api/mcp/asset/0999c80e-150b-47bd-b16a-2b9945623dbc" alt="FemPunk Logo Layer 1">
+                        <img src="https://www.figma.com/api/mcp/asset/f27a3ac7-2bf4-4b40-9215-2c2b2bf87093" alt="FemPunk Logo Layer 2">
+                    </div>
+                    <a href="#" class="nav-link active">PAINT</a>
+                    <a href="#" class="nav-link">COLOR</a>
+                    <a href="#" class="nav-link">GALLERY</a>
+                    <a href="#" class="nav-link">COLLECT</a>
+                </div>
+
+                <!-- Right Side: Connect Button -->
+                <div class="navbar-right" data-node-id="I101:2196;70:1817">
+                    <button class="connect-button" data-node-id="I101:2196;70:1821">
+                        <img src="https://www.figma.com/api/mcp/asset/17dd0880-4f79-474b-9b15-1a7dd17fdaf4" alt="Wallet Icon" class="wallet-icon">
+                        <span>Connect</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Tool Panel (Left Side) -->
+        <div class="tool-panel" data-node-id="101:2238">
+            <!-- Move Tool -->
+            <div class="tool-item" data-node-id="101:2246">
+                <img src="https://www.figma.com/api/mcp/asset/bd4a117f-3d44-42a2-b862-2d10331ce82e" alt="Move Tool">
+            </div>
+
+            <!-- Hand Tool -->
+            <div class="tool-item" data-node-id="101:2239">
+                <img src="https://www.figma.com/api/mcp/asset/42efefc3-fe5e-4549-8472-65ad556fd2e9" alt="Hand Tool">
+            </div>
+
+            <div class="divider" data-node-id="101:2241"></div>
+
+            <!-- Zoom Out -->
+            <div class="tool-item" data-node-id="101:2282">
+                <img src="https://www.figma.com/api/mcp/asset/3eecc0bb-ddbb-4beb-8e19-a745c16d3dd4" alt="Zoom Out">
+            </div>
+
+            <!-- Zoom In -->
+            <div class="tool-item" data-node-id="101:2286">
+                <img src="https://www.figma.com/api/mcp/asset/4494b5d6-4d46-4f8d-92f5-144bc57afb61" alt="Zoom In">
+            </div>
+
+            <div class="divider" data-node-id="101:2242"></div>
+
+            <!-- Brush Size Decrease -->
+            <div class="tool-item" data-node-id="101:2290">
+                <img src="https://www.figma.com/api/mcp/asset/4e5412d2-1450-4f49-a19d-6e5bcd05fd8a" alt="Decrease Brush">
+            </div>
+
+            <div class="brush-size-indicator" data-node-id="101:2245">1px</div>
+
+            <!-- Brush Size Increase -->
+            <div class="tool-item" data-node-id="101:2293">
+                <img src="https://www.figma.com/api/mcp/asset/d43b361b-c817-483c-8927-dce4a1ffe75a" alt="Increase Brush">
+            </div>
+
+            <div class="divider" data-node-id="101:2243"></div>
+
+            <!-- Color Section -->
+            <div class="color-section">
+                <div class="color-label" data-node-id="101:2279">My Color</div>
+
+                <!-- Color Swatches -->
+                <div class="color-swatches">
+                    <div class="color-swatch active" data-node-id="101:2259" style="background: #592386;"></div>
+                    <div class="color-swatch" data-node-id="101:2333" style="background: #237286;"></div>
+                </div>
+
+                <!-- Mint Color Button -->
+                <button class="mint-color-button" data-node-id="101:2251">
+                    <span>Mint Color</span>
+                </button>
+            </div>
+
+            <div class="divider" data-node-id="101:2244"></div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <!-- Undo -->
+                <button class="action-button" data-node-id="101:2272">
+                    <img src="https://www.figma.com/api/mcp/asset/26836a04-b252-4f76-84a0-4569b6667f48" alt="Undo">
+                </button>
+
+                <!-- Redo -->
+                <button class="action-button" data-node-id="101:2276">
+                    <img src="https://www.figma.com/api/mcp/asset/4976f618-136d-4008-9516-25ecf19136db" alt="Redo">
+                </button>
+
+                <!-- Import Image -->
+                <button class="action-button" data-node-id="101:2268">
+                    <img src="https://www.figma.com/api/mcp/asset/e5c3d2f0-3764-462e-bcc3-d796a921a14d" alt="Import Image">
+                </button>
+
+                <!-- Clear Canvas -->
+                <button class="action-button" data-node-id="101:2264">
+                    <img src="https://www.figma.com/api/mcp/asset/0409163b-d49c-4a1a-9e71-191a6843dcf7" alt="Clear">
+                </button>
+
+                <!-- Save Button -->
+                <button class="save-button" data-node-id="101:2254">
+                    <img src="https://www.figma.com/api/mcp/asset/aef4a79c-5051-45db-a154-60c42dd838ad" alt="Save Icon">
+                    <span>Save</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Info Panel -->
+        <div class="info-panel" data-node-id="101:2197">
+
+            <!-- Nvshu of Today Section -->
+            <div class="info-section nvshu-today">
+                <div class="section-header">
+                    <h3>Nvshu of Today</h3>
+                    <div class="countdown-badge" data-node-id="101:2222">
+                        Canvas locks in 13:13:34
+                    </div>
+                </div>
+
+                <!-- Nvshu Character Display -->
+                <div class="nvshu-character" data-node-id="101:2198">
+                    <div class="character-mask" data-node-id="101:2200">
+                        <img src="https://www.figma.com/api/mcp/asset/dcf0d13f-9ade-4973-9921-18bccb92ef36" alt="Nvshu Character Background">
+                    </div>
+                    <div class="character-overlay" data-node-id="101:2204">
+                        <img src="https://www.figma.com/api/mcp/asset/0a7e46ce-4998-4fd1-a9ef-2274cd0e0aef" alt="Nvshu Character">
+                    </div>
+                    <div class="character-elements" data-node-id="101:2211">
+                        <img src="https://www.figma.com/api/mcp/asset/cf6bc0c4-6a58-421a-85fd-bcd098215db0" alt="Element 1" class="element-1">
+                        <img src="https://www.figma.com/api/mcp/asset/61facb6b-4a5a-4cb0-ae49-90a162e8990e" alt="Element 2" class="element-2">
+                    </div>
+                </div>
+
+                <div class="nvshu-translation" data-node-id="101:2218">
+                    <span class="translation-label">Nvshu Translate：</span>
+                    <span class="translation-text">Spring</span>
+                </div>
+            </div>
+
+            <!-- Theme of Today Section -->
+            <div class="info-section theme-section" data-node-id="101:2231">
+                <div class="divider-line" data-node-id="101:2232"></div>
+
+                <div class="section-header">
+                    <h3>Theme of Today</h3>
+                    <div class="day-badge" data-node-id="101:2234">Day 24</div>
+                </div>
+
+                <div class="theme-content" data-node-id="101:2236">
+                    <p>Spring Garden</p>
+                </div>
+            </div>
+
+            <!-- What is Nvshu Section -->
+            <div class="info-section what-nvshu-section" data-node-id="101:2224">
+                <div class="divider-line" data-node-id="101:2225"></div>
+
+                <div class="section-header">
+                    <h3>What is Nvshu</h3>
+                </div>
+
+                <div class="nvshu-description" data-node-id="101:2227">
+                    <p>
+                        Nvshu is a unique script created <strong>by women</strong> in <strong>Jiangyong</strong> County, Hunan, China. Developed as a way for women to <strong>express their emotions</strong>, write poems, and <strong>communicate</strong> with one another in a patriarchal society, its <strong>elegant</strong>, slender strokes embody grace and resilience. Today, Nvshu stands as a powerful symbol of <strong>women's creativity,</strong> connection, and cultural heritage.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

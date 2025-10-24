@@ -1,0 +1,566 @@
+/* ============================================
+   EXACT FIGMA SPECIFICATIONS - STANDALONE CSS
+   Design: FemFunk-Nvshu - 绘画页-有颜色
+   Node ID: 101:2188
+   Dimensions: 1440px × 1024px
+
+   For use with: paint-page.html
+   ============================================ */
+
+/* Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: #161616;
+    color: #ffffff;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* Main Container */
+.container {
+    position: relative;
+    width: 1440px;
+    height: 1024px;
+    background: #161616;
+}
+
+/* Canvas Background */
+.canvas-background {
+    position: absolute;
+    left: 8px;
+    top: 104px;
+    width: calc(1440px - 8px);
+    height: calc(1024px - 104px);
+}
+
+.canvas-image {
+    position: absolute;
+    left: calc(50% - 257px);
+    top: calc(50% + 47px);
+    width: 910px;
+    height: 910px;
+    transform: translate(-50%, -50%);
+    -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/72a94d6a-4e70-41bc-8e1b-33a30b4e8e0c');
+    mask-image: url('https://www.figma.com/api/mcp/asset/72a94d6a-4e70-41bc-8e1b-33a30b4e8e0c');
+    -webkit-mask-size: 910px 910px;
+    mask-size: 910px 910px;
+    -webkit-mask-position: 0px 0px;
+    mask-position: 0px 0px;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+}
+
+.canvas-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+    pointer-events: none;
+}
+
+/* Navigation Bar */
+.navbar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1440px;
+    height: 96px;
+}
+
+.navbar-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(22, 22, 22, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.navbar-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-left {
+    position: absolute;
+    left: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 56px;
+}
+
+.logo {
+    position: relative;
+    width: 168px;
+    height: 51.902px;
+    overflow: hidden;
+}
+
+.logo img:first-child {
+    position: absolute;
+    left: 4.16px;
+    top: 3.24px;
+    width: 18.42px;
+    height: 40.827px;
+}
+
+.logo img:last-child {
+    position: absolute;
+    left: 23.88px;
+    top: 2.02px;
+    width: 139.95px;
+    height: 45.45px;
+}
+
+.nav-link {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: normal;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.25s ease;
+}
+
+.nav-link.active {
+    font-weight: 800;
+    color: #1ee11f;
+}
+
+.nav-link:hover {
+    color: #1ee11f;
+}
+
+.navbar-right {
+    position: absolute;
+    left: 1256px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.connect-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 160px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: normal;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.connect-button:hover {
+    background: rgba(0, 0, 0, 0.8);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+.wallet-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* Tool Panel */
+.tool-panel {
+    position: absolute;
+    left: 968px;
+    top: 112px;
+    width: 94px;
+    height: 540px;
+    background: #2c2c2c;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 12px;
+}
+
+.tool-item {
+    width: 24px;
+    height: 24px;
+    margin: 6px 0;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.tool-item:hover {
+    opacity: 0.7;
+}
+
+.tool-item img {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.divider {
+    width: 92.5px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    margin: 8px 0;
+}
+
+.brush-size-indicator {
+    font-family: 'PingFang SC', sans-serif;
+    font-size: 12px;
+    line-height: normal;
+    color: #ffffff;
+    text-align: center;
+    margin: 6px 0;
+}
+
+.color-section {
+    width: 100%;
+    padding: 16px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.color-label {
+    font-family: 'PingFang SC', sans-serif;
+    font-size: 12px;
+    line-height: normal;
+    color: #ffffff;
+    align-self: flex-start;
+    padding-left: 10px;
+    margin-bottom: 8px;
+}
+
+.color-swatches {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.color-swatch {
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.color-swatch:hover {
+    transform: scale(1.1);
+}
+
+.color-swatch.active {
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.mint-color-button {
+    width: 74px;
+    height: 24px;
+    background: #7b2eff;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: normal;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.mint-color-button:hover {
+    background: #8e3dff;
+    transform: scale(1.05);
+}
+
+.action-buttons {
+    width: 100%;
+    padding: 0 15px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: auto;
+    padding-bottom: 12px;
+}
+
+.action-button {
+    width: 32px;
+    height: 32px;
+    background: #444444;
+    border: none;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.action-button:hover {
+    background: #555555;
+}
+
+.action-button img {
+    width: 16px;
+    height: 16px;
+}
+
+.save-button {
+    grid-column: 1 / -1;
+    width: 74px;
+    height: 32px;
+    background: #444444;
+    border: none;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: normal;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    margin: 0 auto;
+}
+
+.save-button:hover {
+    background: #555555;
+}
+
+.save-button img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Info Panel */
+.info-panel {
+    position: absolute;
+    left: 1078px;
+    top: 97px;
+    width: 362px;
+    height: 927px;
+    background: #212121;
+    border: 1px solid #373737;
+}
+
+.info-section {
+    padding: 16px;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.section-header h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: normal;
+    color: #ffffff;
+}
+
+.countdown-badge {
+    background: #000000;
+    padding: 2px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: normal;
+    color: #ffffff;
+}
+
+.day-badge {
+    background: #000000;
+    padding: 2px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: normal;
+    color: #ffffff;
+}
+
+.nvshu-today {
+    padding-top: 32px;
+}
+
+.nvshu-character {
+    position: relative;
+    width: 167.04px;
+    height: 161.28px;
+    margin: 0 auto 16px;
+}
+
+.character-mask {
+    position: absolute;
+    left: -18.72px;
+    top: -100.98px;
+    width: 204.48px;
+    height: 363.24px;
+    opacity: 0.9;
+    mix-blend-mode: multiply;
+    -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/6bf31d8c-04be-4553-9eeb-8619ff97434e');
+    mask-image: url('https://www.figma.com/api/mcp/asset/6bf31d8c-04be-4553-9eeb-8619ff97434e');
+    -webkit-mask-size: 133.199px 132.84px;
+    mask-size: 133.199px 132.84px;
+    -webkit-mask-position: 43.199px 37.8px;
+    mask-position: 43.199px 37.8px;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+}
+
+.character-mask img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+}
+
+.character-overlay {
+    position: absolute;
+    left: 17.02px;
+    top: 14.14px;
+    width: 133px;
+    height: 133px;
+    opacity: 0.9;
+}
+
+.character-overlay img {
+    width: 100%;
+    height: 100%;
+}
+
+.character-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 167.04px;
+    height: 161.28px;
+}
+
+.element-1 {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 167.04px;
+    height: 161.28px;
+    opacity: 0.9;
+}
+
+.element-2 {
+    position: absolute;
+    left: 66.85px;
+    top: 27.6px;
+    width: 31.493px;
+    height: 103.926px;
+    opacity: 0.9;
+}
+
+.nvshu-translation {
+    font-size: 12px;
+    line-height: 19px;
+}
+
+.translation-label {
+    font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
+    font-weight: 400;
+    color: #ffffff;
+    opacity: 0.9;
+}
+
+.translation-text {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    color: #1ee11f;
+    opacity: 0.9;
+}
+
+.theme-section {
+    position: relative;
+    margin-top: 0;
+}
+
+.divider-line {
+    position: absolute;
+    left: -16px;
+    right: -16px;
+    top: -16px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.theme-content {
+    background: #000000;
+    padding: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 19px;
+    color: #1ee11f;
+}
+
+.what-nvshu-section {
+    position: relative;
+    margin-top: 0;
+}
+
+.nvshu-description {
+    background: #000000;
+    padding: 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 19px;
+    color: #ffffff;
+}
+
+.nvshu-description p {
+    white-space: pre-wrap;
+}
+
+.nvshu-description strong {
+    font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 1440px) {
+    .container {
+        transform: scale(0.8);
+        transform-origin: top left;
+    }
+}
+
+@media (max-width: 1200px) {
+    .container {
+        transform: scale(0.7);
+        transform-origin: top left;
+    }
+}

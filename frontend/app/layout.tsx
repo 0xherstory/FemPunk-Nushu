@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Montserrat } from 'next/font/google';
 import './globals.css';
 import { Web3Provider } from '../lib/providers/Web3Provider';
 import { ErrorBoundary } from '../components/ui/ErrorBoundary';
@@ -7,6 +7,11 @@ import { GlobalErrorDisplay, OfflineIndicator, GlobalLoadingOverlay } from '../c
 import { ClientOnly } from '../components/ui/ClientOnly';
 
 const inter = Inter({ subsets: ['latin'] });
+const montserrat = Montserrat({ 
+  subsets: ['latin'],
+  variable: '--font-montserrat',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'FemPunk NüShu - Web3 协作绘画平台',
@@ -39,7 +44,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-CN">
-      <body className={inter.className}>
+      <body className={`${inter.className} ${montserrat.variable}`}>
         <ErrorBoundary>
           <Web3Provider>
             <ClientOnly>

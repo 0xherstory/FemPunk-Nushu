@@ -1,0 +1,571 @@
+/* ============================================
+   EXACT FIGMA SPECIFICATIONS - CSS MODULES
+   Design: FemFunk-Nvshu - 绘画页-有颜色
+   Node ID: 101:2188
+   Dimensions: 1440px × 1024px
+
+   Technology: CSS Modules for Next.js 14
+   ============================================ */
+
+/* ============================================
+   Main Container
+   Position: relative
+   Size: 1440px × 1024px
+   ============================================ */
+.container {
+    position: relative;
+    width: 1440px;
+    height: 1024px;
+    background: #161616;
+}
+
+/* ============================================
+   Canvas Background with Mask
+   Position: absolute, left: 8px, top: 104px
+   ============================================ */
+.canvasBackground {
+    position: absolute;
+    left: 8px;
+    top: 104px;
+    width: calc(1440px - 8px);
+    height: calc(1024px - 104px);
+}
+
+.canvasImage {
+    position: absolute;
+    left: calc(50% - 257px);
+    top: calc(50% + 47px);
+    width: 910px;
+    height: 910px;
+    transform: translate(-50%, -50%);
+    -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/72a94d6a-4e70-41bc-8e1b-33a30b4e8e0c');
+    mask-image: url('https://www.figma.com/api/mcp/asset/72a94d6a-4e70-41bc-8e1b-33a30b4e8e0c');
+    -webkit-mask-size: 910px 910px;
+    mask-size: 910px 910px;
+    -webkit-mask-position: 0px 0px;
+    mask-position: 0px 0px;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+}
+
+.canvasImage img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+    pointer-events: none;
+}
+
+/* ============================================
+   Navigation Bar
+   Position: absolute, left: 0, top: 0
+   Size: 1440px × 96px
+   ============================================ */
+.navbar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1440px;
+    height: 96px;
+}
+
+.navbarBackdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(22, 22, 22, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.navbarContent {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.navbarLeft {
+    position: absolute;
+    left: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 56px;
+}
+
+.logo {
+    position: relative;
+    width: 168px;
+    height: 51.902px;
+    overflow: hidden;
+}
+
+.logo img:first-child {
+    position: absolute;
+    left: 4.16px;
+    top: 3.24px;
+    width: 18.42px;
+    height: 40.827px;
+}
+
+.logo img:last-child {
+    position: absolute;
+    left: 23.88px;
+    top: 2.02px;
+    width: 139.95px;
+    height: 45.45px;
+}
+
+.navLink {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: normal;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.25s ease;
+}
+
+.navLink.active {
+    font-weight: 800;
+    color: #1ee11f;
+}
+
+.navLink:hover {
+    color: #1ee11f;
+}
+
+.navbarRight {
+    position: absolute;
+    left: 1256px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.connectButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 160px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: normal;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.connectButton:hover {
+    background: rgba(0, 0, 0, 0.8);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+.walletIcon {
+    width: 20px;
+    height: 20px;
+}
+
+/* ============================================
+   Tool Panel (Left Side)
+   Position: absolute, left: 968px, top: 112px
+   Size: 94px × 540px
+   ============================================ */
+.toolPanel {
+    position: absolute;
+    left: 968px;
+    top: 112px;
+    width: 94px;
+    height: 540px;
+    background: #2c2c2c;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 12px;
+}
+
+.toolItem {
+    width: 24px;
+    height: 24px;
+    margin: 6px 0;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.toolItem:hover {
+    opacity: 0.7;
+}
+
+.toolItem img {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.divider {
+    width: 92.5px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    margin: 8px 0;
+}
+
+.brushSizeIndicator {
+    font-family: 'PingFang SC', sans-serif;
+    font-size: 12px;
+    line-height: normal;
+    color: #ffffff;
+    text-align: center;
+    margin: 6px 0;
+}
+
+.colorSection {
+    width: 100%;
+    padding: 16px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.colorLabel {
+    font-family: 'PingFang SC', sans-serif;
+    font-size: 12px;
+    line-height: normal;
+    color: #ffffff;
+    align-self: flex-start;
+    padding-left: 10px;
+    margin-bottom: 8px;
+}
+
+.colorSwatches {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.colorSwatch {
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.colorSwatch:hover {
+    transform: scale(1.1);
+}
+
+.colorSwatch.active {
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.mintColorButton {
+    width: 74px;
+    height: 24px;
+    background: #7b2eff;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: normal;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.mintColorButton:hover {
+    background: #8e3dff;
+    transform: scale(1.05);
+}
+
+.actionButtons {
+    width: 100%;
+    padding: 0 15px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: auto;
+    padding-bottom: 12px;
+}
+
+.actionButton {
+    width: 32px;
+    height: 32px;
+    background: #444444;
+    border: none;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.actionButton:hover {
+    background: #555555;
+}
+
+.actionButton img {
+    width: 16px;
+    height: 16px;
+}
+
+.saveButton {
+    grid-column: 1 / -1;
+    width: 74px;
+    height: 32px;
+    background: #444444;
+    border: none;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: normal;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    margin: 0 auto;
+}
+
+.saveButton:hover {
+    background: #555555;
+}
+
+.saveButton img {
+    width: 20px;
+    height: 20px;
+}
+
+/* ============================================
+   Info Panel (Right Side)
+   Position: absolute, left: 1078px, top: 97px
+   Size: 362px × 927px
+   ============================================ */
+.infoPanel {
+    position: absolute;
+    left: 1078px;
+    top: 97px;
+    width: 362px;
+    height: 927px;
+    background: #212121;
+    border: 1px solid #373737;
+}
+
+.infoSection {
+    padding: 16px;
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.sectionHeader h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: normal;
+    color: #ffffff;
+}
+
+.countdownBadge {
+    background: #000000;
+    padding: 2px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: normal;
+    color: #ffffff;
+}
+
+.dayBadge {
+    background: #000000;
+    padding: 2px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: normal;
+    color: #ffffff;
+}
+
+.nvshuToday {
+    padding-top: 32px;
+}
+
+.nvshuCharacter {
+    position: relative;
+    width: 167.04px;
+    height: 161.28px;
+    margin: 0 auto 16px;
+}
+
+.characterMask {
+    position: absolute;
+    left: -18.72px;
+    top: -100.98px;
+    width: 204.48px;
+    height: 363.24px;
+    opacity: 0.9;
+    mix-blend-mode: multiply;
+    -webkit-mask-image: url('https://www.figma.com/api/mcp/asset/6bf31d8c-04be-4553-9eeb-8619ff97434e');
+    mask-image: url('https://www.figma.com/api/mcp/asset/6bf31d8c-04be-4553-9eeb-8619ff97434e');
+    -webkit-mask-size: 133.199px 132.84px;
+    mask-size: 133.199px 132.84px;
+    -webkit-mask-position: 43.199px 37.8px;
+    mask-position: 43.199px 37.8px;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+}
+
+.characterMask img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+}
+
+.characterOverlay {
+    position: absolute;
+    left: 17.02px;
+    top: 14.14px;
+    width: 133px;
+    height: 133px;
+    opacity: 0.9;
+}
+
+.characterOverlay img {
+    width: 100%;
+    height: 100%;
+}
+
+.characterElements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 167.04px;
+    height: 161.28px;
+}
+
+.element1 {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 167.04px;
+    height: 161.28px;
+    opacity: 0.9;
+}
+
+.element2 {
+    position: absolute;
+    left: 66.85px;
+    top: 27.6px;
+    width: 31.493px;
+    height: 103.926px;
+    opacity: 0.9;
+}
+
+.nvshuTranslation {
+    font-size: 12px;
+    line-height: 19px;
+}
+
+.translationLabel {
+    font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
+    font-weight: 400;
+    color: #ffffff;
+    opacity: 0.9;
+}
+
+.translationText {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    color: #1ee11f;
+    opacity: 0.9;
+}
+
+.themeSection {
+    position: relative;
+    margin-top: 0;
+}
+
+.dividerLine {
+    position: absolute;
+    left: -16px;
+    right: -16px;
+    top: -16px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.themeContent {
+    background: #000000;
+    padding: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 19px;
+    color: #1ee11f;
+}
+
+.whatNvshuSection {
+    position: relative;
+    margin-top: 0;
+}
+
+.nvshuDescription {
+    background: #000000;
+    padding: 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 19px;
+    color: #ffffff;
+}
+
+.nvshuDescription p {
+    white-space: pre-wrap;
+}
+
+.nvshuDescription strong {
+    font-weight: 600;
+}
+
+/* ============================================
+   Responsive Adjustments
+   ============================================ */
+@media (max-width: 1440px) {
+    .container {
+        transform: scale(0.8);
+        transform-origin: top left;
+    }
+}
+
+@media (max-width: 1200px) {
+    .container {
+        transform: scale(0.7);
+        transform-origin: top left;
+    }
+}

@@ -1,0 +1,340 @@
+/* ============================================
+   EXACT FIGMA SPECIFICATIONS - GALLERY PAGE
+   Design: 展览页 (Gallery Page)
+   Node ID: 101:2395
+   ============================================ */
+
+/* Main Container */
+.container {
+    position: relative;
+    width: 1440px;
+    min-height: 1024px;
+    background: #161616;
+    margin: 0 auto;
+}
+
+/* ============================================
+   NAVIGATION BAR
+   ============================================ */
+.navbar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1440px;
+    height: 96px;
+    z-index: 100;
+}
+
+.navbarBackdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(22, 22, 22, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.navbarContent {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+}
+
+.navbarLeft {
+    display: flex;
+    align-items: center;
+    gap: 56px;
+}
+
+.logo {
+    position: relative;
+    width: 168px;
+    height: 51.902px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.logo img {
+    height: 100%;
+}
+
+.navLink {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: normal;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.navLinkActive {
+    font-weight: 800;
+    color: #1ee11f;
+}
+
+.navLink:hover {
+    color: #1ee11f;
+}
+
+.navbarRight {
+    display: flex;
+    align-items: center;
+}
+
+.connectButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 160px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.connectButton:hover {
+    background: rgba(0, 0, 0, 0.8);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+.walletIcon {
+    width: 20px;
+    height: 20px;
+}
+
+/* ============================================
+   GALLERY GRID
+   ============================================ */
+.galleryGrid {
+    position: absolute;
+    left: 185px;
+    top: 136px;
+    width: 1070px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+
+/* ============================================
+   GALLERY CARD
+   ============================================ */
+.galleryCard {
+    position: relative;
+    width: 350px;
+    height: 445px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+/* Card Background Panel */
+.cardBackground {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 4px;
+    top: 315px;
+    background: #2c2c2c;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+/* Card Image */
+.cardImage {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 350px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+/* Card Title */
+.cardTitle {
+    position: absolute;
+    left: 16px;
+    right: 168px;
+    top: 366px;
+    font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: normal;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Participants */
+.cardParticipants {
+    position: absolute;
+    left: 15px;
+    top: 391px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.iconParticipants {
+    width: 14px;
+    height: 14px;
+}
+
+.participantsCount {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: normal;
+    color: #ffffff;
+    opacity: 0.4;
+}
+
+/* Price */
+.cardPrice {
+    position: absolute;
+    left: 66px;
+    top: 391px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.iconEth {
+    width: 12px;
+    height: 12px;
+}
+
+.priceValue {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: normal;
+    color: #ffffff;
+    opacity: 0.4;
+}
+
+/* Status Text (for "Painting now...") */
+.cardStatus {
+    position: absolute;
+    left: 65px;
+    top: 391px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: normal;
+    color: #ffffff;
+    opacity: 0.4;
+}
+
+/* Color Palette */
+.cardColors {
+    position: absolute;
+    left: 16px;
+    right: 97px;
+    bottom: 15px;
+    height: 16px;
+}
+
+/* Button Wrapper */
+.cardButtonWrapper {
+    position: absolute;
+    right: 16px;
+    bottom: 20px;
+    width: 78px;
+    height: 36px;
+}
+
+/* Button Base */
+.cardButton {
+    width: 78px;
+    height: 36px;
+    border-radius: 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: normal;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+/* Paint Button */
+.cardButtonPaint {
+    background: #7b2eff;
+    color: #ffffff;
+}
+
+.cardButtonPaint:hover {
+    background: #8e3dff;
+    transform: scale(1.05);
+}
+
+/* Mint Button */
+.cardButtonMint {
+    background: #1ee11f;
+    color: #161616;
+}
+
+.cardButtonMint:hover {
+    background: #2fff30;
+    transform: scale(1.05);
+}
+
+/* Buy Button */
+.cardButtonBuy {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: #ffffff;
+}
+
+.cardButtonBuy:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.8);
+    transform: scale(1.05);
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+@media (max-width: 1440px) {
+    .container {
+        transform: scale(0.9);
+        transform-origin: top center;
+    }
+}
+
+@media (max-width: 1200px) {
+    .container {
+        transform: scale(0.75);
+        transform-origin: top center;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        transform: scale(0.5);
+        transform-origin: top center;
+    }
+
+    .galleryGrid {
+        width: 100%;
+        justify-content: center;
+    }
+}

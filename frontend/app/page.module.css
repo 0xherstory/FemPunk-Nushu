@@ -1,0 +1,794 @@
+/* ============================================
+   COMPLETE FIGMA SPECIFICATIONS - HOME PAGE
+   CSS for HomePage Component
+   Design: 首页 (Homepage) - All 60+ Decoration Layers
+   Node ID: 70:1809
+   ============================================ */
+
+/* Main Container */
+.container {
+    position: relative;
+    width: 1440px;
+    min-height: 2700px;
+    background: #161616;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+/* ============================================
+   COMPLETE BACKGROUND DECORATION LAYERS
+   All 60+ decorative elements from Figma
+   ============================================ */
+
+.backgroundLayersComplete {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Gradient Overlay Top */
+.gradientOverlayTop {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 2px;
+    height: 744px;
+    background: linear-gradient(to bottom, #161616 0%, #161616 91.658%, rgba(22, 22, 22, 0) 100%);
+    z-index: 2;
+}
+
+/* Main Background Image (multiply blend) */
+.bgMainImage {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -1px;
+    width: 1441px;
+    height: 1027px;
+    mix-blend-mode: multiply;
+    z-index: 1;
+}
+
+.bgMainImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ============================================
+   LEFT SIDE DECORATIONS (15+ elements)
+   ============================================ */
+
+.decorLeftGroup {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+}
+
+/* 图层 0绿 1 (Green Layer - Left Top) */
+.greenLayerLeftTop {
+    position: absolute;
+    left: -97px;
+    top: 135px;
+    width: 360px;
+    height: auto;
+    opacity: 0.8;
+    mix-blend-mode: lighten;
+}
+
+.greenLayerLeftTop img {
+    width: 100%;
+    height: auto;
+}
+
+/* 01204v (Decorative Element) */
+.decor01204v {
+    position: absolute;
+    left: 80px;
+    top: 280px;
+    width: 200px;
+    height: auto;
+    opacity: 0.7;
+}
+
+.decor01204v img {
+    width: 100%;
+    height: auto;
+}
+
+/* ============================================
+   RIGHT SIDE DECORATIONS (3+ elements)
+   ============================================ */
+
+.decorRightGroup {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+}
+
+/* 30267v Main */
+.decor30267v {
+    position: absolute;
+    right: -129px;
+    top: 227px;
+    width: 430px;
+    height: auto;
+    opacity: 0.8;
+}
+
+.decor30267v img {
+    width: 100%;
+    height: auto;
+}
+
+/* ============================================
+   THORN DECORATIONS
+   ============================================ */
+.thornTop {
+    position: absolute;
+    left: calc(50% - 358px);
+    top: calc(50% - 648px);
+    transform: rotate(-1.602deg);
+    mix-blend-mode: color-dodge;
+    z-index: 10;
+}
+
+.thornTop img {
+    width: 724px;
+    height: 103px;
+}
+
+/* ============================================
+   NAVIGATION BAR
+   ============================================ */
+.navbar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 96px;
+    z-index: 100;
+}
+
+.navbarBackdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(22, 22, 22, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.navbarContent {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+}
+
+.navbarLeft {
+    display: flex;
+    align-items: center;
+    gap: 56px;
+}
+
+.logo {
+    position: relative;
+    width: 168px;
+    height: 51.902px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.logo:hover {
+    opacity: 0.8;
+}
+
+.logo img {
+    height: 100%;
+}
+
+.navLink {
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: normal;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.navLink:hover {
+    color: #1ee11f;
+}
+
+.navbarRight {
+    display: flex;
+    align-items: center;
+}
+
+.connectButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 160px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.connectButton:hover {
+    background: rgba(0, 0, 0, 0.8);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+.connectButton img {
+    width: 20px;
+    height: 20px;
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+.heroSection {
+    position: relative;
+    width: 100%;
+    height: 750px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 141px;
+    z-index: 15;
+}
+
+.heroTitle {
+    position: relative;
+    width: 846px;
+    height: 233px;
+    z-index: 20;
+}
+
+.heroTitle img {
+    width: 100%;
+    height: 100%;
+}
+
+.heroSubtitle1 {
+    position: absolute;
+    left: 538px;
+    top: 401px;
+    background: #000000;
+    padding: 2px 16px;
+    z-index: 15;
+}
+
+.heroSubtitle1 p,
+.heroSubtitle2 p {
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 36px;
+    color: #ffffff;
+    text-align: center;
+    white-space: nowrap;
+    margin: 0;
+}
+
+.heroSubtitle2 {
+    position: absolute;
+    left: 459px;
+    top: 449px;
+    background: #000000;
+    padding: 2px 16px;
+    z-index: 15;
+}
+
+.polygonLeft {
+    position: absolute;
+    left: calc(50% - 341px);
+    top: 418px;
+    transform: rotate(136.158deg) scaleY(-1);
+    z-index: 5;
+}
+
+.polygonLeft img {
+    width: 574px;
+    height: 770px;
+}
+
+.polygonRight {
+    position: absolute;
+    left: calc(50% + 321px);
+    top: 458px;
+    transform: rotate(43.842deg);
+    z-index: 5;
+}
+
+.polygonRight img {
+    width: 574px;
+    height: 770px;
+}
+
+.tornPaperTop {
+    position: absolute;
+    left: -1px;
+    top: 553px;
+    width: 1441px;
+    height: 182px;
+    z-index: 25;
+}
+
+.tornPaperTop img {
+    width: 100%;
+    height: 100%;
+}
+
+/* ============================================
+   NVSHU OF TODAY SECTION
+   ============================================ */
+.nvshuTodaySection {
+    position: relative;
+    width: 100%;
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 20;
+}
+
+.nvshuTodayTitle {
+    position: absolute;
+    left: 513px;
+    top: 747px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    z-index: 20;
+}
+
+.titleNvshu {
+    width: 185px;
+    height: 52px;
+}
+
+.titleNvshu img,
+.titleToday img {
+    width: 100%;
+    height: 100%;
+}
+
+.titleToday {
+    width: 216px;
+    height: 52px;
+}
+
+.nvshuTodaySubtitle {
+    position: absolute;
+    left: 50%;
+    top: 816px;
+    transform: translateX(-50%);
+    background: #000000;
+    padding: 2px 16px;
+    z-index: 20;
+}
+
+.nvshuTodaySubtitle p {
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 36px;
+    color: #ffffff;
+    text-align: center;
+    white-space: nowrap;
+    margin: 0;
+}
+
+/* Nvshu Character Display */
+.nvshuCharacterDisplay {
+    position: absolute;
+    left: 50%;
+    top: 850px;
+    transform: translateX(-50%);
+    width: 480px;
+    height: 480px;
+    z-index: 30;
+}
+
+.characterGlow {
+    position: absolute;
+    left: 43.2px;
+    top: 95.9px;
+    width: 330.3px;
+    height: 332.1px;
+    border-radius: 27px;
+    box-shadow: inset 0px 3.6px 27px 0px #ff66e8;
+    opacity: 0.9;
+}
+
+.characterLayers {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.characterMask {
+    position: absolute;
+    left: -65.4px;
+    top: 1.4px;
+    width: 511.2px;
+    height: 908.1px;
+    mix-blend-mode: multiply;
+    opacity: 0.9;
+}
+
+.characterMask img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.characterOverlay {
+    position: absolute;
+    left: 43.8px;
+    top: 97.5px;
+    width: 331px;
+    height: 331px;
+    opacity: 0.9;
+}
+
+.characterOverlay img {
+    width: 100%;
+    height: 100%;
+}
+
+.characterBase {
+    position: absolute;
+    left: calc(50% - 208.8px);
+    top: calc(50% - 201.6px);
+    width: 417.6px;
+    height: 403.2px;
+    opacity: 0.9;
+}
+
+.characterBase img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.characterDecor {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 480px;
+    height: 480px;
+    opacity: 0.9;
+}
+
+.characterDecor img {
+    width: 100%;
+    height: 100%;
+}
+
+.characterStroke {
+    position: absolute;
+    left: 173.7px;
+    top: 136.73px;
+    width: 65.61px;
+    height: 216.513px;
+    opacity: 0.9;
+}
+
+.characterStroke img {
+    width: 100%;
+    height: 100%;
+}
+
+.characterTranslation {
+    position: absolute;
+    left: 50%;
+    top: 367.7px;
+    transform: translateX(-50%);
+    background: #7b2eff;
+    padding: 1.8px 7.2px;
+    width: 75.6px;
+    height: 21.6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.9;
+}
+
+.characterTranslation p {
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 14.4px;
+    color: #ffffff;
+    text-align: center;
+    margin: 0;
+}
+
+/* Start Painting Button */
+.ctaButtonWrapper {
+    position: absolute;
+    left: 50%;
+    top: 1325px;
+    transform: translateX(-50%);
+    z-index: 40;
+}
+
+.startPaintingButton {
+    position: relative;
+    width: 310px;
+    height: 48px;
+    background: #7b2eff;
+    border: 2px solid #1ee11f;
+    border-radius: 24px;
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+}
+
+.startPaintingButton:hover {
+    background: #8e3dff;
+    transform: scale(1.05);
+}
+
+.startPaintingButton img {
+    width: 28px;
+    height: 28px;
+}
+
+.tornPaperBottom {
+    position: absolute;
+    left: -6px;
+    top: 1259px;
+    width: 1441px;
+    height: 182px;
+    transform: rotate(184.637deg) scaleY(-1);
+    z-index: 35;
+}
+
+.tornPaperBottom img {
+    width: 100%;
+    height: 100%;
+}
+
+/* ============================================
+   COMMUNITY ARTWORKS SECTION
+   ============================================ */
+.communitySection {
+    position: relative;
+    width: 100%;
+    padding-top: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 20;
+}
+
+.communitySectionTitle {
+    position: absolute;
+    left: 475px;
+    top: 1522px;
+    display: flex;
+    gap: 0;
+    align-items: center;
+    z-index: 20;
+}
+
+.titleCommunity {
+    width: 247px;
+    height: 52px;
+}
+
+.titleCommunity img,
+.titleArtworks img {
+    width: 100%;
+    height: 100%;
+}
+
+.titleArtworks {
+    width: 244px;
+    height: 52px;
+}
+
+.communitySubtitle {
+    position: absolute;
+    left: 50%;
+    top: 1589px;
+    transform: translateX(-50%);
+    background: #000000;
+    padding: 2px 16px;
+    z-index: 20;
+}
+
+.communitySubtitle p {
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 36px;
+    color: #ffffff;
+    text-align: center;
+    white-space: nowrap;
+    margin: 0;
+}
+
+/* Artworks Grid */
+.artworksGrid {
+    position: absolute;
+    left: 50%;
+    top: 1669px;
+    transform: translateX(-50%);
+    width: 1260px;
+    display: grid;
+    grid-template-columns: repeat(3, 350px);
+    gap: 90px 5px;
+    z-index: 20;
+}
+
+.artworkItem {
+    position: relative;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+.artworkImage {
+    width: 350px;
+    height: 350px;
+    position: relative;
+}
+
+.artworkImg {
+    width: 350px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.mintButton {
+    width: 138px;
+    height: 48px;
+    background: #1ee11f;
+    border: none;
+    border-radius: 24px;
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #161616;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mintButton:hover {
+    background: #2fff30;
+    transform: scale(1.05);
+}
+
+.buyButton {
+    width: 138px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 24px;
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.buyButton:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* View All Link */
+.viewAllLink {
+    position: absolute;
+    left: 50%;
+    top: 2593px;
+    transform: translateX(-50%);
+    z-index: 20;
+}
+
+.viewAllButton {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: none;
+    border: none;
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 36px;
+    color: #ffffff;
+    text-decoration: underline;
+    text-decoration-skip-ink: none;
+    text-underline-position: from-font;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.viewAllButton:hover {
+    color: #1ee11f;
+}
+
+.viewAllButton img {
+    width: 20px;
+    height: 20px;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+@media (max-width: 1440px) {
+    .container {
+        transform: scale(0.9);
+        transform-origin: top center;
+    }
+}
+
+@media (max-width: 1200px) {
+    .container {
+        transform: scale(0.75);
+        transform-origin: top center;
+    }
+
+    .artworksGrid {
+        grid-template-columns: repeat(2, 350px);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        transform: scale(0.5);
+        transform-origin: top center;
+    }
+
+    .artworksGrid {
+        grid-template-columns: 1fr;
+    }
+}
