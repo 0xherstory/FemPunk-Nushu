@@ -1,28 +1,30 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAccount } from 'wagmi';
 import Image from 'next/image';
-import { WalletModal } from '../../components/wallet/WalletModal';
-import { useWalletModal } from '../../lib/hooks/useWalletModal';
-import styles from './page.module.css';
-import { SelectedColor, ColorItem } from './color-types';
+import styles from './ColorPage.module.css';
+import { ColorPageProps, SelectedColor } from './color-types';
 
-export default function MintColorPage() {
-  const router = useRouter();
-  const { address, isConnected } = useAccount();
-  const { modalState, openModal: openWalletModal, closeModal: closeWalletModal } = useWalletModal();
-  
-  const [invitationCode, setInvitationCode] = useState('');
-  
-  // Mock data
-  const selectedColor: SelectedColor = {
+/**
+ * FemPunk Nvshu - Color Mint Page Component
+ * Design: Mint颜色页 (Color Mint Page)
+ * Node ID: 100:1983
+ *
+ * Features:
+ * - Interactive color wheel selector
+ * - Mint color NFT functionality
+ * - Invitation code for free receive
+ * - User color collection display
+ * - Price information with discount
+ */
+
+const ColorPage: React.FC<ColorPageProps> = ({
+  className,
+  selectedColor = {
     hex: '#AD4AFF',
     imageUrl: 'https://www.figma.com/api/mcp/asset/a70741bf-8c0e-41d4-964d-4e53d996bd1e',
-  };
-
-  const userColors: ColorItem[] = [
+  },
+  userColors = [
     {
       id: '1',
       hex: '#592386',
@@ -43,48 +45,43 @@ export default function MintColorPage() {
       hex: '#592386',
       imageUrl: 'https://www.figma.com/api/mcp/asset/d7c7e3a6-4753-486a-beb0-871a8469dd5e',
     },
-  ];
-
-  const price = {
+  ],
+  walletAddress = '0xF7a1...7BAD',
+  price = {
     current: 0.0001,
     original: 0.0006,
     currency: 'ETH',
-  };
-
-  // Navigation handlers
-  const handleNavigation = (path: string) => {
-    router.push(path);
-  };
+  },
+  onMintColor,
+  onColorSelect,
+  onInvitationCodeSubmit,
+  onFreeReceive,
+}) => {
+  const [invitationCode, setInvitationCode] = useState('');
 
   const handleMintClick = () => {
-    if (!isConnected) {
-      openWalletModal();
-      return;
-    }
-    console.log('Mint color:', selectedColor);
-    // Implement mint functionality
+    onMintColor?.(selectedColor);
   };
 
   const handleFreeReceiveClick = () => {
-    if (!isConnected) {
-      openWalletModal();
-      return;
-    }
     if (invitationCode.trim()) {
-      console.log('Invitation code submitted:', invitationCode);
+      onInvitationCodeSubmit?.(invitationCode);
     }
-    console.log('Free receive clicked');
-    // Implement free receive functionality
+    onFreeReceive?.();
   };
 
   return (
-    <div className={styles.container} data-name="Mint颜色页" data-node-id="100:1983">
+    <div
+      className={`${styles.container} ${className || ''}`}
+      data-name="Mint颜色页"
+      data-node-id="100:1983"
+    >
       {/* Navigation Bar */}
       <nav className={styles.navbar} data-name="导航栏" data-node-id="100:1991">
         <div className={styles.navbarBackdrop} data-node-id="I100:1991;70:1816" />
         <div className={styles.navbarContent}>
           <div className={styles.navbarLeft} data-node-id="I100:1991;70:1822">
-            <button onClick={() => handleNavigation('/')} className={styles.logo} data-name="fempunk_logo" data-node-id="I100:1991;70:1823">
+            <div className={styles.logo} data-name="fempunk_logo" data-node-id="I100:1991;70:1823">
               <Image
                 src="https://www.figma.com/api/mcp/asset/622cce7a-4e71-4086-8741-d8b730ba1fc5"
                 alt="FemPunk Logo"
@@ -99,23 +96,26 @@ export default function MintColorPage() {
                 height={45}
                 data-node-id="I100:1991;70:1823;33:2515"
               />
-            </button>
-            <button onClick={() => handleNavigation('/canvas')} className={styles.navLink} data-node-id="I100:1991;70:1824">
+            </div>
+            <a href="#" className={styles.navLink} data-node-id="I100:1991;70:1824">
               PAINT
-            </button>
-            <button onClick={() => handleNavigation('/buy')} className={`${styles.navLink} ${styles.navLinkActive}`} data-node-id="I100:1991;70:1825">
+            </a>
+            <a
+              href="#"
+              className={`${styles.navLink} ${styles.navLinkActive}`}
+              data-node-id="I100:1991;70:1825"
+            >
               COLOR
-            </button>
-            <button onClick={() => handleNavigation('/gallery')} className={styles.navLink} data-node-id="I100:1991;70:1826">
+            </a>
+            <a href="#" className={styles.navLink} data-node-id="I100:1991;70:1826">
               GALLERY
-            </button>
+            </a>
+            <a href="#" className={styles.navLink} data-node-id="I100:1991;70:1827">
+              COLLECT
+            </a>
           </div>
           <div className={styles.navbarRight} data-node-id="I100:1991;70:1817">
-            <button 
-              className={styles.connectButton} 
-              data-node-id="I100:1991;70:1821"
-              onClick={isConnected ? () => {} : () => openWalletModal()}
-            >
+            <button className={styles.connectButton} data-node-id="I100:1991;70:1821">
               <Image
                 src="https://www.figma.com/api/mcp/asset/b4771eab-5ce8-4d52-bfd5-aa543a398bc4"
                 alt="Wallet Icon"
@@ -124,9 +124,7 @@ export default function MintColorPage() {
                 data-name="理财 1"
                 data-node-id="I100:1991;70:1819"
               />
-              <span data-node-id="I100:1991;70:1818">
-                {isConnected ? `${address?.slice(0, 6)}...${address?.slice(-4)}` : 'Connect'}
-              </span>
+              <span data-node-id="I100:1991;70:1818">{walletAddress}</span>
             </button>
           </div>
         </div>
@@ -134,8 +132,16 @@ export default function MintColorPage() {
 
       {/* Color Wheel Section */}
       <div className={styles.colorWheelSection} data-node-id="101:2144">
-        <div className={styles.colorWheelWrapper} data-name="Mask group" data-node-id="101:2142">
-          <div className={styles.colorWheelImage} data-name="图层 165 1" data-node-id="101:2145">
+        <div
+          className={styles.colorWheelWrapper}
+          data-name="Mask group"
+          data-node-id="101:2142"
+        >
+          <div
+            className={styles.colorWheelImage}
+            data-name="图层 165 1"
+            data-node-id="101:2145"
+          >
             <Image
               src="https://www.figma.com/api/mcp/asset/4ede6f9f-ca64-4bd5-a766-14faa87d4dd6"
               alt="Color Wheel"
@@ -297,12 +303,8 @@ export default function MintColorPage() {
           ))}
         </div>
       </div>
-
-      {/* Wallet Modal */}
-      <WalletModal 
-        isOpen={modalState.isOpen}
-        onClose={closeWalletModal}
-      />
     </div>
   );
-}
+};
+
+export default ColorPage;

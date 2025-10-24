@@ -1,0 +1,1310 @@
+/* ============================================
+   COMPLETE FIGMA SPECIFICATIONS - HOME PAGE
+   CSS for home-page-complete.html
+   Design: 首页 (Homepage) - All 60+ Decoration Layers
+   Node ID: 70:1809
+   ============================================ */
+
+/* Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: #161616;
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+/* Main Container */
+.container {
+    position: relative;
+    width: 1440px;
+    min-height: 2700px;
+    background: #161616;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+/* ============================================
+   COMPLETE BACKGROUND DECORATION LAYERS
+   All 60+ decorative elements from Figma
+   ============================================ */
+
+.background-layers-complete {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Gradient Overlay Top */
+.gradient-overlay-top {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 2px;
+    height: 744px;
+    background: linear-gradient(to bottom, #161616 0%, #161616 91.658%, rgba(22, 22, 22, 0) 100%);
+    z-index: 2;
+}
+
+/* Main Background Image (multiply blend) */
+.bg-main-image {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -1px;
+    width: 1441px;
+    height: 1027px;
+    mix-blend-mode: multiply;
+    z-index: 1;
+}
+
+.bg-main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ============================================
+   LEFT SIDE DECORATIONS (15+ elements)
+   ============================================ */
+
+.decor-left-group {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+}
+
+/* 图层 0绿 1 (Green Layer - Left Top) */
+.green-layer-left-top {
+    position: absolute;
+    left: -97px;
+    top: 135px;
+    width: 360px;
+    height: auto;
+    opacity: 0.8;
+    mix-blend-mode: lighten;
+}
+
+.green-layer-left-top img {
+    width: 100%;
+    height: auto;
+}
+
+/* 01204v (Decorative Element) */
+.decor-01204v {
+    position: absolute;
+    left: 80px;
+    top: 280px;
+    width: 200px;
+    height: auto;
+    opacity: 0.7;
+}
+
+.decor-01204v img {
+    width: 100%;
+    height: auto;
+}
+
+/* 图层 1111 1 */
+.layer-1111 {
+    position: absolute;
+    left: 45px;
+    top: 520px;
+    width: 180px;
+    height: auto;
+    opacity: 0.75;
+}
+
+.layer-1111 img {
+    width: 100%;
+    height: auto;
+}
+
+/* 图层 06 7 */
+.layer-067 {
+    position: absolute;
+    left: -30px;
+    top: 750px;
+    width: 220px;
+    height: auto;
+    opacity: 0.8;
+}
+
+.layer-067 img {
+    width: 100%;
+    height: auto;
+}
+
+/* Union (Left Bottom) */
+.union-left {
+    position: absolute;
+    left: 20px;
+    top: 980px;
+    width: 150px;
+    height: auto;
+    opacity: 0.6;
+}
+
+.union-left img {
+    width: 100%;
+    height: auto;
+}
+
+/* 图层 0绿 1 (Another Green Layer) */
+.green-layer-left-mid {
+    position: absolute;
+    left: -60px;
+    top: 1150px;
+    width: 300px;
+    height: auto;
+    opacity: 0.7;
+    mix-blend-mode: lighten;
+}
+
+.green-layer-left-mid img {
+    width: 100%;
+    height: auto;
+}
+
+/* Group (Left) */
+.group-left-1 {
+    position: absolute;
+    left: 50px;
+    top: 1320px;
+    width: 190px;
+    height: auto;
+    opacity: 0.65;
+}
+
+.group-left-1 img {
+    width: 100%;
+    height: auto;
+}
+
+/* 图层 1 */
+.layer-1-left {
+    position: absolute;
+    left: -15px;
+    top: 1520px;
+    width: 170px;
+    height: auto;
+    opacity: 0.7;
+}
+
+.layer-1-left img {
+    width: 100%;
+    height: auto;
+}
+
+/* Group (Another) */
+.group-left-2 {
+    position: absolute;
+    left: 70px;
+    top: 1690px;
+    width: 200px;
+    height: auto;
+    opacity: 0.68;
+}
+
+.group-left-2 img {
+    width: 100%;
+    height: auto;
+}
+
+/* Union (Left Bottom 2) */
+.union-left-bottom {
+    position: absolute;
+    left: -40px;
+    top: 1880px;
+    width: 160px;
+    height: auto;
+    opacity: 0.6;
+}
+
+.union-left-bottom img {
+    width: 100%;
+    height: auto;
+}
+
+/* 7163ca757593023b6d82203df742d44b 2 */
+.char-layer-left {
+    position: absolute;
+    left: 30px;
+    top: 2050px;
+    width: 210px;
+    height: auto;
+    opacity: 0.5;
+    mix-blend-mode: multiply;
+}
+
+.char-layer-left img {
+    width: 100%;
+    height: auto;
+}
+
+/* Vector */
+.vector-left {
+    position: absolute;
+    left: 90px;
+    top: 2200px;
+    width: 130px;
+    height: auto;
+    opacity: 0.7;
+}
+
+.vector-left img {
+    width: 100%;
+    height: auto;
+}
+
+/* Group 2 */
+.group-left-3 {
+    position: absolute;
+    left: -25px;
+    top: 2350px;
+    width: 175px;
+    height: auto;
+    opacity: 0.65;
+}
+
+.group-left-3 img {
+    width: 100%;
+    height: auto;
+}
+
+/* Group 3 */
+.group-left-4 {
+    position: absolute;
+    left: 55px;
+    top: 2480px;
+    width: 185px;
+    height: auto;
+    opacity: 0.7;
+}
+
+.group-left-4 img {
+    width: 100%;
+    height: auto;
+}
+
+/* Group 26 */
+.group-26 {
+    position: absolute;
+    left: -10px;
+    top: 2580px;
+    width: 165px;
+    height: auto;
+    opacity: 0.6;
+}
+
+.group-26 img {
+    width: 100%;
+    height: auto;
+}
+
+/* 0453633f... Image */
+.decor-image-left {
+    position: absolute;
+    left: 40px;
+    top: 2630px;
+    width: 195px;
+    height: auto;
+    opacity: 0.75;
+}
+
+.decor-image-left img {
+    width: 100%;
+    height: auto;
+}
+
+/* ============================================
+   RIGHT SIDE DECORATIONS (3+ elements)
+   ============================================ */
+
+.decor-right-group {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+}
+
+/* 30267v Main */
+.decor-30267v {
+    position: absolute;
+    right: -129px;
+    top: 227px;
+    width: 430px;
+    height: auto;
+    opacity: 0.8;
+}
+
+.decor-30267v img {
+    width: 100%;
+    height: auto;
+}
+
+/* 图层 0绿 1 (Green Right) */
+.green-layer-right {
+    position: absolute;
+    right: 60px;
+    top: 450px;
+    width: 320px;
+    height: auto;
+    opacity: 0.75;
+    mix-blend-mode: lighten;
+}
+
+.green-layer-right img {
+    width: 100%;
+    height: auto;
+}
+
+/* 92f69aafc72e913374ac020ef18d9e95 1 */
+.decor-92f {
+    position: absolute;
+    right: -80px;
+    top: 680px;
+    width: 280px;
+    height: auto;
+    opacity: 0.7;
+}
+
+.decor-92f img {
+    width: 100%;
+    height: auto;
+}
+
+/* ============================================
+   TOP DECORATIONS (color-dodge blends)
+   ============================================ */
+
+.decor-top-right {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+}
+
+/* ae51105d... (Color dodge blend) */
+.decor-ae51 {
+    position: absolute;
+    right: 120px;
+    top: 50px;
+    width: 250px;
+    height: auto;
+    opacity: 0.85;
+    mix-blend-mode: color-dodge;
+}
+
+.decor-ae51 img {
+    width: 100%;
+    height: auto;
+}
+
+.decor-top-left {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+}
+
+/* 73c2d12703bf4732dd645175e5704217 1 (Color dodge) */
+.decor-73c {
+    position: absolute;
+    left: 180px;
+    top: 85px;
+    width: 220px;
+    height: auto;
+    opacity: 0.8;
+    mix-blend-mode: color-dodge;
+}
+
+.decor-73c img {
+    width: 100%;
+    height: auto;
+}
+
+/* ============================================
+   HERO DECORATIONS (5+ elements)
+   ============================================ */
+
+.hero-decor-group {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+}
+
+/* Union Hero */
+.union-hero {
+    position: absolute;
+    left: 50%;
+    top: 35%;
+    transform: translate(-50%, -50%);
+    width: 180px;
+    height: auto;
+    opacity: 0.6;
+}
+
+.union-hero img {
+    width: 100%;
+    height: auto;
+}
+
+/* 图层 0绿 1 (Hero Green) */
+.green-layer-hero {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+    height: auto;
+    opacity: 0.7;
+    mix-blend-mode: lighten;
+}
+
+.green-layer-hero img {
+    width: 100%;
+    height: auto;
+}
+
+/* Group Hero */
+.group-hero {
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: auto;
+    opacity: 0.65;
+}
+
+.group-hero img {
+    width: 100%;
+    height: auto;
+}
+
+/* 图层 1 Hero */
+.layer-1-hero {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 190px;
+    height: auto;
+    opacity: 0.7;
+}
+
+.layer-1-hero img {
+    width: 100%;
+    height: auto;
+}
+
+/* Group Hero 2 */
+.group-hero-2 {
+    position: absolute;
+    left: 50%;
+    top: 55%;
+    transform: translate(-50%, -50%);
+    width: 210px;
+    height: auto;
+    opacity: 0.68;
+}
+
+.group-hero-2 img {
+    width: 100%;
+    height: auto;
+}
+
+/* eb0ca0ed... Image */
+.decor-eb0ca {
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
+    width: 170px;
+    height: auto;
+    opacity: 0.6;
+}
+
+.decor-eb0ca img {
+    width: 100%;
+    height: auto;
+}
+
+/* ============================================
+   MID-RIGHT DECORATIONS (2+ elements)
+   ============================================ */
+
+.mid-right-decor {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 100%;
+    height: 100%;
+    z-index: 6;
+}
+
+/* jimeng-2025-10-21-7040 */
+.jimeng-decor {
+    position: absolute;
+    right: -120px;
+    top: -150px;
+    width: 380px;
+    height: auto;
+    opacity: 0.75;
+}
+
+.jimeng-decor img {
+    width: 100%;
+    height: auto;
+}
+
+/* 图层 03 1 */
+.layer-03 {
+    position: absolute;
+    right: 40px;
+    top: 80px;
+    width: 240px;
+    height: auto;
+    opacity: 0.7;
+}
+
+.layer-03 img {
+    width: 100%;
+    height: auto;
+}
+
+/* ============================================
+   THORN DECORATIONS
+   ============================================ */
+.thorn-top {
+    position: absolute;
+    left: calc(50% - 358px);
+    top: calc(50% - 648px);
+    transform: rotate(-1.602deg);
+    mix-blend-mode: color-dodge;
+    z-index: 10;
+}
+
+.thorn-top img {
+    width: 724px;
+    height: 103px;
+}
+
+.thorn-top-right {
+    position: absolute;
+    left: calc(50% + 456px);
+    top: calc(50% - 658px);
+    transform: rotate(6.719deg);
+    mix-blend-mode: color-dodge;
+    z-index: 10;
+}
+
+.thorn-top-right img {
+    width: 724px;
+    height: 103px;
+}
+
+/* ============================================
+   NAVIGATION BAR
+   ============================================ */
+.navbar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 96px;
+    z-index: 100;
+}
+
+.navbar-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(22, 22, 22, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.navbar-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 56px;
+}
+
+.logo {
+    position: relative;
+    width: 168px;
+    height: 51.902px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo img {
+    height: 100%;
+}
+
+.nav-link {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: normal;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #1ee11f;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.connect-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 160px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.connect-button:hover {
+    background: rgba(0, 0, 0, 0.8);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+.connect-button img {
+    width: 20px;
+    height: 20px;
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: 750px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 141px;
+    z-index: 15;
+}
+
+.hero-title {
+    position: relative;
+    width: 846px;
+    height: 233px;
+    z-index: 20;
+}
+
+.hero-title img {
+    width: 100%;
+    height: 100%;
+}
+
+.hero-subtitle-1 {
+    position: absolute;
+    left: 538px;
+    top: 401px;
+    background: #000000;
+    padding: 2px 16px;
+    z-index: 15;
+}
+
+.hero-subtitle-1 p,
+.hero-subtitle-2 p {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 36px;
+    color: #ffffff;
+    text-align: center;
+    white-space: nowrap;
+    margin: 0;
+}
+
+.hero-subtitle-2 {
+    position: absolute;
+    left: 459px;
+    top: 449px;
+    background: #000000;
+    padding: 2px 16px;
+    z-index: 15;
+}
+
+.polygon-left {
+    position: absolute;
+    left: calc(50% - 341px);
+    top: 418px;
+    transform: rotate(136.158deg) scaleY(-1);
+    z-index: 5;
+}
+
+.polygon-left img {
+    width: 574px;
+    height: 770px;
+}
+
+.polygon-right {
+    position: absolute;
+    left: calc(50% + 321px);
+    top: 458px;
+    transform: rotate(43.842deg);
+    z-index: 5;
+}
+
+.polygon-right img {
+    width: 574px;
+    height: 770px;
+}
+
+.torn-paper-top {
+    position: absolute;
+    left: -1px;
+    top: 553px;
+    width: 1441px;
+    height: 182px;
+    z-index: 25;
+}
+
+.torn-paper-top img {
+    width: 100%;
+    height: 100%;
+}
+
+/* ============================================
+   NVSHU OF TODAY SECTION
+   ============================================ */
+.nvshu-today-section {
+    position: relative;
+    width: 100%;
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 20;
+}
+
+.nvshu-today-title {
+    position: absolute;
+    left: 513px;
+    top: 747px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    z-index: 20;
+}
+
+.title-nvshu {
+    width: 185px;
+    height: 52px;
+}
+
+.title-nvshu img,
+.title-today img {
+    width: 100%;
+    height: 100%;
+}
+
+.title-today {
+    width: 216px;
+    height: 52px;
+}
+
+.nvshu-today-subtitle {
+    position: absolute;
+    left: 50%;
+    top: 816px;
+    transform: translateX(-50%);
+    background: #000000;
+    padding: 2px 16px;
+    z-index: 20;
+}
+
+.nvshu-today-subtitle p {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 36px;
+    color: #ffffff;
+    text-align: center;
+    white-space: nowrap;
+    margin: 0;
+}
+
+/* Nvshu Character Display */
+.nvshu-character-display {
+    position: absolute;
+    left: 50%;
+    top: 850px;
+    transform: translateX(-50%);
+    width: 480px;
+    height: 480px;
+    z-index: 30;
+}
+
+.character-glow {
+    position: absolute;
+    left: 43.2px;
+    top: 95.9px;
+    width: 330.3px;
+    height: 332.1px;
+    border-radius: 27px;
+    box-shadow: inset 0px 3.6px 27px 0px #ff66e8;
+    opacity: 0.9;
+}
+
+.character-layers {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.character-mask {
+    position: absolute;
+    left: -65.4px;
+    top: 1.4px;
+    width: 511.2px;
+    height: 908.1px;
+    mix-blend-mode: multiply;
+    opacity: 0.9;
+}
+
+.character-mask img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.character-overlay {
+    position: absolute;
+    left: 43.8px;
+    top: 97.5px;
+    width: 331px;
+    height: 331px;
+    opacity: 0.9;
+}
+
+.character-overlay img {
+    width: 100%;
+    height: 100%;
+}
+
+.character-base {
+    position: absolute;
+    left: calc(50% - 208.8px);
+    top: calc(50% - 201.6px);
+    width: 417.6px;
+    height: 403.2px;
+    opacity: 0.9;
+}
+
+.character-base img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.character-decor {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 480px;
+    height: 480px;
+    opacity: 0.9;
+}
+
+.character-decor img {
+    width: 100%;
+    height: 100%;
+}
+
+.character-stroke {
+    position: absolute;
+    left: 173.7px;
+    top: 136.73px;
+    width: 65.61px;
+    height: 216.513px;
+    opacity: 0.9;
+}
+
+.character-stroke img {
+    width: 100%;
+    height: 100%;
+}
+
+.character-translation {
+    position: absolute;
+    left: 50%;
+    top: 367.7px;
+    transform: translateX(-50%);
+    background: #7b2eff;
+    padding: 1.8px 7.2px;
+    width: 75.6px;
+    height: 21.6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.9;
+}
+
+.character-translation p {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 14.4px;
+    color: #ffffff;
+    text-align: center;
+    margin: 0;
+}
+
+/* Start Painting Button */
+.cta-button-wrapper {
+    position: absolute;
+    left: 50%;
+    top: 1325px;
+    transform: translateX(-50%);
+    z-index: 40;
+}
+
+.start-painting-button {
+    position: relative;
+    width: 310px;
+    height: 48px;
+    background: #7b2eff;
+    border: 2px solid #1ee11f;
+    border-radius: 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+}
+
+.start-painting-button:hover {
+    background: #8e3dff;
+    transform: scale(1.05);
+}
+
+.start-painting-button img {
+    width: 28px;
+    height: 28px;
+}
+
+/* White Splash Decorations with bai and bodian layers */
+.white-splash-left {
+    position: absolute;
+    left: -390px;
+    top: 1025px;
+    transform: rotate(14.783deg) scaleY(-1);
+    opacity: 0.8;
+    z-index: 8;
+}
+
+.bai-left {
+    position: relative;
+    width: 714px;
+    height: 621px;
+}
+
+.bai-left img {
+    width: 100%;
+    height: 100%;
+}
+
+.white-splash-right {
+    position: absolute;
+    right: -24px;
+    top: 993px;
+    transform: rotate(343.684deg);
+    opacity: 0.8;
+    z-index: 8;
+}
+
+.bai-right {
+    position: relative;
+    width: 885px;
+    height: 769px;
+}
+
+.bai-right img {
+    width: 100%;
+    height: 100%;
+}
+
+.bodian-right {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 885px;
+    height: 769px;
+}
+
+.bodian-right img {
+    width: 100%;
+    height: 100%;
+}
+
+.torn-paper-bottom {
+    position: absolute;
+    left: -6px;
+    top: 1259px;
+    width: 1441px;
+    height: 182px;
+    transform: rotate(184.637deg) scaleY(-1);
+    z-index: 35;
+}
+
+.torn-paper-bottom img {
+    width: 100%;
+    height: 100%;
+}
+
+/* ============================================
+   COMMUNITY ARTWORKS SECTION
+   ============================================ */
+.community-section {
+    position: relative;
+    width: 100%;
+    padding-top: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 20;
+}
+
+.community-section-title {
+    position: absolute;
+    left: 475px;
+    top: 1522px;
+    display: flex;
+    gap: 0;
+    align-items: center;
+    z-index: 20;
+}
+
+.title-community {
+    width: 247px;
+    height: 52px;
+}
+
+.title-community img,
+.title-artworks img {
+    width: 100%;
+    height: 100%;
+}
+
+.title-artworks {
+    width: 244px;
+    height: 52px;
+}
+
+.community-subtitle {
+    position: absolute;
+    left: 50%;
+    top: 1589px;
+    transform: translateX(-50%);
+    background: #000000;
+    padding: 2px 16px;
+    z-index: 20;
+}
+
+.community-subtitle p {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 36px;
+    color: #ffffff;
+    text-align: center;
+    white-space: nowrap;
+    margin: 0;
+}
+
+/* Artworks Grid */
+.artworks-grid {
+    position: absolute;
+    left: 50%;
+    top: 1669px;
+    transform: translateX(-50%);
+    width: 1260px;
+    display: grid;
+    grid-template-columns: repeat(3, 350px);
+    gap: 90px 5px;
+    z-index: 20;
+}
+
+.artwork-item {
+    position: relative;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+.artwork-item img {
+    width: 350px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.mint-button {
+    width: 138px;
+    height: 48px;
+    background: #1ee11f;
+    border: none;
+    border-radius: 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #161616;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mint-button:hover {
+    background: #2fff30;
+    transform: scale(1.05);
+}
+
+.buy-button {
+    width: 138px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.buy-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* View All Link */
+.view-all-link {
+    position: absolute;
+    left: 50%;
+    top: 2593px;
+    transform: translateX(-50%);
+    z-index: 20;
+}
+
+.view-all-button {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: none;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 36px;
+    color: #ffffff;
+    text-decoration: underline;
+    text-decoration-skip-ink: none;
+    text-underline-position: from-font;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.view-all-button:hover {
+    color: #1ee11f;
+}
+
+.view-all-button img {
+    width: 20px;
+    height: 20px;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+@media (max-width: 1440px) {
+    .container {
+        transform: scale(0.9);
+        transform-origin: top center;
+    }
+}
+
+@media (max-width: 1200px) {
+    .container {
+        transform: scale(0.75);
+        transform-origin: top center;
+    }
+
+    .artworks-grid {
+        grid-template-columns: repeat(2, 350px);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        transform: scale(0.5);
+        transform-origin: top center;
+    }
+
+    .artworks-grid {
+        grid-template-columns: 1fr;
+    }
+}
