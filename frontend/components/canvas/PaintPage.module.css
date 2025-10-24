@@ -301,9 +301,55 @@
     transition: all 0.25s ease;
 }
 
-.mintColorButton:hover {
+.mintColorButton:hover:not(:disabled) {
     background: #8e3dff;
     transform: scale(1.05);
+}
+
+.mintColorButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.mintColorButton .spinner {
+    width: 12px;
+    height: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.mintMessage {
+    width: 74px;
+    padding: 4px 6px;
+    border-radius: 6px;
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 8px;
+    line-height: 1.2;
+    text-align: center;
+    margin-top: 8px;
+    word-wrap: break-word;
+    hyphens: auto;
+}
+
+.mintMessage.success {
+    background: rgba(30, 225, 31, 0.2);
+    color: #1ee11f;
+    border: 1px solid rgba(30, 225, 31, 0.3);
+}
+
+.mintMessage.error {
+    background: rgba(255, 107, 107, 0.2);
+    color: #ff6b6b;
+    border: 1px solid rgba(255, 107, 107, 0.3);
 }
 
 .actionButtons {

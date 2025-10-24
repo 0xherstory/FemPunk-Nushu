@@ -204,12 +204,60 @@ const PaintPage: React.FC<PaintPageProps> = ({ className }) => {
     alert(`保存作品成功!\n\n笔画数: ${strokeCount}\n创作者: ${address.slice(0, 6)}...${address.slice(-4)}\n\n这是演示模式，实际部署时会保存到区块链。`);
   };
 
-  const handleMintColor = () => {
+  const [isMinting, setIsMinting] = useState(false);
+  const [mintMessage, setMintMessage] = useState<string | null>(null);
+
+  const handleMintColor = async () => {
     if (!isConnected) {
       openWalletModal();
       return;
     }
-    router.push('/buy');
+
+    setIsMinting(true);
+    setMintMessage(null);
+
+    try {
+      // 使用测试颜色
+      const testColors = ['E5E5E5', 'B2B2B2', 'FF6B6B', '4ECDC4', '45B7D1', 'FFA07A'];
+      const randomColor = testColors[Math.floor(Math.random() * testColors.length)];
+      
+      const response = await fetch('/api/colors/reward', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          wallet_address: address,
+          color_code: randomColor,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to mint color');
+      }
+
+      const result = await response.json();
+      console.log('Color minted successfully:', result);
+      
+      setMintMessage(`Successfully minted color #${randomColor}!`);
+      
+      // 3秒后清除消息
+      setTimeout(() => {
+        setMintMessage(null);
+      }, 3000);
+      
+    } catch (err) {
+      console.error('Error minting color:', err);
+      setMintMessage(err instanceof Error ? err.message : 'Failed to mint color');
+      
+      // 5秒后清除错误消息
+      setTimeout(() => {
+        setMintMessage(null);
+      }, 5000);
+    } finally {
+      setIsMinting(false);
+    }
   };
   return (
     <div className={`${styles.container} ${className || ''}`} data-name="绘画页-有颜色" data-node-id="101:2188">
@@ -383,9 +431,28 @@ const PaintPage: React.FC<PaintPageProps> = ({ className }) => {
           </div>
 
           {/* Mint Color Button */}
-          <button className={styles.mintColorButton} data-node-id="101:2251" onClick={handleMintColor}>
-            <span>Mint Color</span>
+          <button 
+            className={styles.mintColorButton} 
+            data-node-id="101:2251" 
+            onClick={handleMintColor}
+            disabled={isMinting || !isConnected}
+          >
+            {isMinting ? (
+              <>
+                <div className={styles.spinner} />
+                <span>Minting...</span>
+              </>
+            ) : (
+              <span>Mint Color</span>
+            )}
           </button>
+
+          {/* Mint Message */}
+          {mintMessage && (
+            <div className={`${styles.mintMessage} ${mintMessage.includes('Successfully') ? styles.success : styles.error}`}>
+              {mintMessage}
+            </div>
+          )}
         </div>
 
         <div className={styles.divider} data-node-id="101:2244" />
