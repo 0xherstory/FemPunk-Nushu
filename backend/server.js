@@ -7,6 +7,7 @@ const canvasRouter = require("./routes/canvas");
 const contributionsRouter = require("./routes/contributions");
 const revenueRouter = require("./routes/revenue");
 const usersRouter = require("./routes/users");
+const uploadNftRouter = require("./routes/uploadNft");
 
 const app = express();
 app.use(bodyParser.json());
@@ -17,6 +18,7 @@ app.use("/api/canvas", canvasRouter);
 app.use("/api/contributions", contributionsRouter);
 app.use("/api/revenue", revenueRouter);
 app.use("/api/users", usersRouter);
+app.use("/api/uploadNft", uploadNftRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

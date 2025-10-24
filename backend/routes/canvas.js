@@ -5,6 +5,7 @@ const { ethers } = require("ethers");
 const { wallet } = require("../utils/wallet");
 const canvasAbi = require("../abi/FemCanvas.json");
 const { generateUUID } = require("../utils/generateUUID");
+const { uploadToFilebase, uploadMetadata } = require('./uploadNFT');
 const canvasContract = new ethers.Contract(process.env.CONTRIBUITION_CONTRACT_ADDRESS, canvasAbi, wallet);
 
 // get canvas by day_timestamp
@@ -49,6 +50,20 @@ router.post("/create", async (req, res) => {
     console.error(err);
     res.status(500).json({ success: false, error: err.message });
   }
+});
+
+router.post("/updateMetadata", async (req, res) => {
+    const { canvas_id, metadata_uri } = req.body;
+    try {
+        await pool.query(
+        "UPDATE canvases SET metadata_uri=$1, updated_ts=extract(epoch from now())*1000 WHERE canvas_id=$2;",
+        [metadata_uri,canvas_id]
+        );
+        res.json({ success: true });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, error: err.message });
+    }
 });
 
 // mint ERC1155 NFT for a canvas
