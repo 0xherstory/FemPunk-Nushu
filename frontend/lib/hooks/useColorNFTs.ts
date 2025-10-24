@@ -1,84 +1,134 @@
-import { useReadContract, useReadContracts } from 'wagmi';
+import { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
-import { getColorNFTContract } from '../contracts/config';
 import type { ColorNFT } from '../../types';
+
+// Mock colors for development/demo mode
+const MOCK_USER_COLORS: ColorNFT[] = [
+  {
+    id: 'demo-1',
+    colorHex: '#FF6B9D',
+    tokenId: 1,
+    owner: '0x1234...5678',
+    mintedAt: new Date(),
+    price: BigInt('1000000000000000000'), // 1 ETH in wei
+  },
+  {
+    id: 'demo-2', 
+    colorHex: '#FFD700',
+    tokenId: 2,
+    owner: '0x1234...5678',
+    mintedAt: new Date(),
+    price: BigInt('1000000000000000000'),
+  },
+  {
+    id: 'demo-3',
+    colorHex: '#2D3748',
+    tokenId: 3,
+    owner: '0x1234...5678',
+    mintedAt: new Date(),
+    price: BigInt('1000000000000000000'),
+  }
+];
+
+const AVAILABLE_COLORS = [
+  '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF',
+  '#FFA500', '#800080', '#FFC0CB', '#A52A2A', '#808080', '#000000'
+];
 
 // Hook to get user's owned color NFTs
 export function useUserColors() {
-  const { address, chainId } = useAccount();
-  
-  const contract = chainId ? getColorNFTContract(chainId) : null;
-  
-  const { data: ownedColors, isLoading, error, refetch } = useReadContract({
-    ...contract,
-    functionName: 'getOwnedColors',
-    args: address ? [address] : undefined,
-    query: {
-      enabled: !!address && !!contract,
-      refetchInterval: 30000, // Refetch every 30 seconds
-    },
-  });
+  const { address, isConnected } = useAccount();
+  const [isLoading, setIsLoading] = useState(true);
+  const [userColors, setUserColors] = useState<ColorNFT[]>([]);
 
-  // Transform contract data to ColorNFT type
-  const transformedColors: ColorNFT[] = (ownedColors as any[])?.map((color: any) => ({
-    id: `${chainId}-${color.tokenId}`,
-    colorHex: color.colorHex,
-    tokenId: Number(color.tokenId),
-    owner: address || '',
-    mintedAt: new Date(Number(color.mintedAt) * 1000),
-    price: color.price,
-  })) || [];
+  useEffect(() => {
+    // Simulate loading delay
+    const timer = setTimeout(() => {
+      if (isConnected && address) {
+        // Return mock colors for connected users
+        setUserColors(MOCK_USER_COLORS.map(color => ({
+          ...color,
+          owner: address
+        })));
+      } else {
+        // No colors for non-connected users
+        setUserColors([]);
+      }
+      setIsLoading(false);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [address, isConnected]);
+
+  const refetch = () => {
+    setIsLoading(true);
+    // Simulate refetch
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 300);
+  };
 
   return {
-    userColors: transformedColors,
+    userColors,
     isLoading,
-    error,
+    error: null,
     refetch,
   };
 }
 
 // Hook to get all available colors for purchase
 export function useAvailableColors() {
-  const { chainId } = useAccount();
-  
-  const contract = chainId ? getColorNFTContract(chainId) : null;
-  
-  const { data: availableColors, isLoading, error, refetch } = useReadContract({
-    ...contract,
-    functionName: 'getAvailableColors',
-    query: {
-      enabled: !!contract,
-      refetchInterval: 60000, // Refetch every minute
-    },
-  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [availableColors, setAvailableColors] = useState<string[]>([]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setAvailableColors(AVAILABLE_COLORS);
+      setIsLoading(false);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const refetch = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 200);
+  };
 
   return {
-    availableColors: availableColors || [],
+    availableColors,
     isLoading,
-    error,
+    error: null,
     refetch,
   };
 }
 
 // Hook to get current color price
 export function useCurrentColorPrice() {
-  const { chainId } = useAccount();
-  
-  const contract = chainId ? getColorNFTContract(chainId) : null;
-  
-  const { data: currentPrice, isLoading, error, refetch } = useReadContract({
-    ...contract,
-    functionName: 'getCurrentPrice',
-    query: {
-      enabled: !!contract,
-      refetchInterval: 300000, // Refetch every 5 minutes
-    },
-  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [currentPrice, setCurrentPrice] = useState<bigint>(BigInt('1000000000000000000')); // 1 ETH
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 200);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const refetch = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 200);
+  };
 
   return {
-    currentPrice: (currentPrice as bigint) || 0n,
+    currentPrice,
     isLoading,
-    error,
+    error: null,
     refetch,
   };
 }
@@ -99,22 +149,26 @@ export function useOwnsColor(colorHex: string) {
 
 // Hook to get user's color balance
 export function useColorBalance() {
-  const { address, chainId } = useAccount();
-  
-  const contract = chainId ? getColorNFTContract(chainId) : null;
-  
-  const { data: balance, isLoading, error } = useReadContract({
-    ...contract,
-    functionName: 'balanceOf',
-    args: address ? [address] : undefined,
-    query: {
-      enabled: !!address && !!contract,
-    },
-  });
+  const { address, isConnected } = useAccount();
+  const [isLoading, setIsLoading] = useState(true);
+  const [balance, setBalance] = useState(0);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (isConnected && address) {
+        setBalance(MOCK_USER_COLORS.length);
+      } else {
+        setBalance(0);
+      }
+      setIsLoading(false);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [address, isConnected]);
 
   return {
-    balance: balance ? Number(balance) : 0,
+    balance,
     isLoading,
-    error,
+    error: null,
   };
 }

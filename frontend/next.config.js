@@ -13,6 +13,7 @@ const nextConfig = {
       'gateway.pinata.cloud',
       'cloudflare-ipfs.com',
       'liveblocks.io',
+      'www.figma.com',
     ],
     formats: ['image/webp', 'image/avif'],
     minimumCacheTTL: 31536000, // 1年缓存

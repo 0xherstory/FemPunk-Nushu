@@ -1,0 +1,235 @@
+/* ============================================
+   SHARED NAVIGATION COMPONENT
+   Optimized and reusable navigation bar
+   ============================================ */
+
+.navbar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 96px;
+    z-index: 100;
+}
+
+.navbar.transparent {
+    background: transparent;
+}
+
+.navbarBackdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(22, 22, 22, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.navbarContent {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(16px, 2vw, 28px);
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.navbarLeft {
+    display: flex;
+    align-items: center;
+    gap: clamp(32px, 4vw, 56px);
+}
+
+.logo {
+    position: relative;
+    width: 168px;
+    height: 51.902px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    padding: 0;
+}
+
+.logo:hover {
+    opacity: 0.8;
+}
+
+.logo:focus-visible {
+    outline: 2px solid #1ee11f;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+.logo img {
+    height: 100%;
+    width: auto;
+}
+
+.navLinks {
+    display: flex;
+    align-items: center;
+    gap: clamp(24px, 3vw, 56px);
+}
+
+.navLink {
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: clamp(14px, 1.25vw, 18px);
+    line-height: normal;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 8px 12px;
+    border-radius: 4px;
+    position: relative;
+}
+
+.navLinkActive {
+    font-weight: 800;
+    color: #1ee11f;
+}
+
+.navLink:hover {
+    color: #1ee11f;
+    background: rgba(30, 225, 31, 0.1);
+}
+
+.navLink:focus-visible {
+    outline: 2px solid #1ee11f;
+    outline-offset: 2px;
+}
+
+.navbarRight {
+    display: flex;
+    align-items: center;
+}
+
+.connectButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: clamp(140px, 12vw, 160px);
+    height: 40px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: clamp(14px, 1.1vw, 16px);
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0 12px;
+}
+
+.connectButton:hover {
+    background: rgba(0, 0, 0, 0.8);
+    border-color: rgba(255, 255, 255, 0.8);
+    transform: translateY(-1px);
+}
+
+.connectButton:focus-visible {
+    outline: 2px solid #1ee11f;
+    outline-offset: 2px;
+}
+
+.connectButton img {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.connectButton span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 768px) {
+    .navbar {
+        height: 80px;
+    }
+    
+    .navbarContent {
+        padding: 0 16px;
+    }
+    
+    .navbarLeft {
+        gap: 20px;
+    }
+    
+    .navLinks {
+        gap: 16px;
+    }
+    
+    .logo {
+        width: 140px;
+        height: 43px;
+    }
+    
+    .connectButton {
+        width: 120px;
+        height: 36px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navLinks {
+        display: none;
+    }
+    
+    .navbarLeft {
+        justify-content: center;
+        flex: 1;
+    }
+    
+    .connectButton {
+        width: 100px;
+        font-size: 12px;
+    }
+    
+    .connectButton span {
+        display: none;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY IMPROVEMENTS
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    .logo,
+    .navLink,
+    .connectButton {
+        transition: none;
+    }
+}
+
+@media (prefers-contrast: high) {
+    .navbarBackdrop {
+        background: rgba(0, 0, 0, 0.9);
+        border-color: #ffffff;
+    }
+    
+    .navLink:hover,
+    .navLinkActive {
+        background: #1ee11f;
+        color: #000000;
+    }
+}

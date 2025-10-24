@@ -1,0 +1,313 @@
+import { useEffect, useRef, useCallback, useState } from 'react';
+import { fabric } from 'fabric';
+import { CollaborativeCanvas } from '../canvas/fabricCanvas';
+import { useCanvasState } from './useCanvasState';
+import { useCanvasEvents } from './useCanvasEvents';
+import { useActiveUsers } from './useActiveUsers';
+import { OperationQueue, debounce, throttle } from '../canvas/operationQueue';
+import { UndoRedoManager } from '../canvas/undoRedo';
+import type { DrawingTool, CanvasOperation } from '../../types';
+
+interface UseCollaborativeCanvasProps {
+  canvasRef: React.RefObject<HTMLCanvasElement>;
+  userAddress?: string;
+  onStrokeAdded?: () => void;
+}
+
+export function useCollaborativeCanvas({
+  canvasRef,
+  userAddress,
+  onStrokeAdded,
+}: UseCollaborativeCanvasProps) {
+  const [fabricCanvas, setFabricCanvas] = useState<CollaborativeCanvas | null>(null);
+  const [currentTool, setCurrentTool] = useState<DrawingTool>({ type: 'brush', size: 5 });
+  const [isInitialized, setIsInitialized] = useState(false);
+  
+  // Performance optimization instances
+  const operationQueueRef = useRef<OperationQueue | null>(null);
+  const undoRedoManagerRef = useRef<UndoRedoManager | null>(null);
+  const [canUndo, setCanUndo] = useState(false);
+  const [canRedo, setCanRedo] = useState(false);
+
+  // Liveblocks hooks
+  const {
+    canvasState,
+    updateCanvasObjects,
+    addCanvasObject,
+    setIsDrawing,
+    setSelectedColor,
+    updateCursor,
+    setUserInfo,
+    recordStroke,
+  } = useCanvasState();
+
+  const {
+    broadcastCanvasOperation,
+    broadcastStrokeAdded,
+    onCanvasUpdated,
+    onStrokeAdded: onRemoteStrokeAdded,
+  } = useCanvasEvents();
+
+  const { activeUsers } = useActiveUsers();
+
+  // Initialize performance optimization tools
+  useEffect(() => {
+    if (!operationQueueRef.current) {
+      operationQueueRef.current = new OperationQueue(async (operations) => {
+        // Batch process operations
+        const objects = operations
+          .filter(op => op.type === 'ADD_OBJECT' && op.objectData)
+          .map(op => op.objectData);
+        
+        if (objects.length > 0) {
+          updateCanvasObjects(objects);
+        }
+      });
+    }
+
+    if (!undoRedoManagerRef.current) {
+      undoRedoManagerRef.current = new UndoRedoManager();
+    }
+  }, [updateCanvasObjects]);
+
+  // Initialize Fabric.js canvas
+  useEffect(() => {
+    if (!canvasRef.current || fabricCanvas) return;
+
+    const canvas = new CollaborativeCanvas(canvasRef.current);
+    setFabricCanvas(canvas);
+
+    // Debounced canvas state save for undo/redo
+    const debouncedSaveState = debounce((canvasData: string) => {
+      if (undoRedoManagerRef.current && userAddress) {
+        undoRedoManagerRef.current.saveState(canvasData, userAddress);
+        const historyInfo = undoRedoManagerRef.current.getHistoryInfo();
+        setCanUndo(historyInfo.canUndo);
+        setCanRedo(historyInfo.canRedo);
+      }
+    }, 1000);
+
+    // Throttled cursor update
+    const throttledCursorUpdate = throttle((cursor: { x: number; y: number }) => {
+      updateCursor(cursor);
+    }, 50);
+
+    // Set up event handlers with performance optimizations
+    canvas.onObjectAdded((object) => {
+      if (!userAddress) return;
+
+      const objectData = object.toJSON();
+      const operation: CanvasOperation = {
+        type: 'ADD_OBJECT',
+        objectId: (object as any).id || `obj_${Date.now()}`,
+        objectData,
+        userId: userAddress,
+        timestamp: new Date().toISOString(),
+      };
+
+      // Use operation queue for batching
+      if (operationQueueRef.current) {
+        operationQueueRef.current.enqueue(operation);
+      } else {
+        // Fallback to direct update
+        addCanvasObject(objectData);
+      }
+      
+      // Broadcast to other users
+      broadcastCanvasOperation(operation);
+
+      // Save state for undo/redo
+      debouncedSaveState(canvas.getCanvasData());
+    });
+
+    canvas.onPathCreated((path) => {
+      if (!userAddress) return;
+
+      // Record stroke for contribution tracking
+      recordStroke(userAddress);
+      
+      // Broadcast stroke added event
+      broadcastStrokeAdded(path.toJSON(), userAddress);
+      
+      // Call callback if provided
+      onStrokeAdded?.();
+    });
+
+    // Set user info if available
+    if (userAddress) {
+      setUserInfo(userAddress);
+    }
+
+    setIsInitialized(true);
+
+    return () => {
+      canvas.dispose();
+    };
+  }, [canvasRef, userAddress, addCanvasObject, broadcastCanvasOperation, broadcastStrokeAdded, recordStroke, setUserInfo, onStrokeAdded]);
+
+  // Load canvas state from Liveblocks
+  useEffect(() => {
+    if (!fabricCanvas || !canvasState || !isInitialized) return;
+
+    // Load objects from Liveblocks storage
+    if (canvasState.objects.length > 0) {
+      const canvasData = JSON.stringify({ objects: canvasState.objects });
+      fabricCanvas.loadCanvasData(canvasData);
+    }
+  }, [fabricCanvas, canvasState, isInitialized]);
+
+  // Listen for remote canvas updates
+  useEffect(() => {
+    if (!fabricCanvas) return;
+
+    const unsubscribe = onCanvasUpdated((operation) => {
+      if (operation.userId === userAddress) return; // Ignore own operations
+
+      switch (operation.type) {
+        case 'ADD_OBJECT':
+          if (operation.objectData) {
+            fabricCanvas.syncObjectFromRemote(operation.objectData);
+          }
+          break;
+        case 'CLEAR_CANVAS':
+          fabricCanvas.clearCanvas();
+          break;
+        // Add more operation types as needed
+      }
+    });
+
+    return unsubscribe;
+  }, [fabricCanvas, userAddress, onCanvasUpdated]);
+
+  // Handle mouse events for cursor tracking
+  useEffect(() => {
+    if (!fabricCanvas) return;
+
+    const canvas = fabricCanvas.getCanvas();
+
+    const handleMouseMove = (e: fabric.IEvent) => {
+      if (e.e instanceof MouseEvent) {
+        const pointer = canvas.getPointer(e.e);
+        throttledCursorUpdate({ x: pointer.x, y: pointer.y });
+      }
+    };
+
+    const handleMouseLeave = () => {
+      updateCursor(null);
+    };
+
+    const handleMouseDown = () => {
+      setIsDrawing(true);
+    };
+
+    const handleMouseUp = () => {
+      setIsDrawing(false);
+    };
+
+    canvas.on('mouse:move', handleMouseMove);
+    canvas.on('mouse:out', handleMouseLeave);
+    canvas.on('mouse:down', handleMouseDown);
+    canvas.on('mouse:up', handleMouseUp);
+
+    return () => {
+      canvas.off('mouse:move', handleMouseMove);
+      canvas.off('mouse:out', handleMouseLeave);
+      canvas.off('mouse:down', handleMouseDown);
+      canvas.off('mouse:up', handleMouseUp);
+    };
+  }, [fabricCanvas, updateCursor, setIsDrawing]);
+
+  // Tool management functions
+  const setTool = useCallback((tool: DrawingTool) => {
+    setCurrentTool(tool);
+    fabricCanvas?.setTool(tool);
+    setSelectedColor(tool.color || null);
+  }, [fabricCanvas, setSelectedColor]);
+
+  const setBrushSize = useCallback((size: number) => {
+    const newTool = { ...currentTool, size };
+    setCurrentTool(newTool);
+    fabricCanvas?.setBrushSize(size);
+  }, [fabricCanvas, currentTool]);
+
+  const setBrushColor = useCallback((color: string) => {
+    const newTool = { ...currentTool, color };
+    setCurrentTool(newTool);
+    fabricCanvas?.setBrushColor(color);
+    setSelectedColor(color);
+  }, [fabricCanvas, currentTool, setSelectedColor]);
+
+  const clearCanvas = useCallback(() => {
+    if (!fabricCanvas || !userAddress) return;
+
+    fabricCanvas.clearCanvas();
+    
+    const operation: CanvasOperation = {
+      type: 'CLEAR_CANVAS',
+      userId: userAddress,
+      timestamp: new Date().toISOString(),
+    };
+
+    broadcastCanvasOperation(operation);
+    updateCanvasObjects([]);
+  }, [fabricCanvas, userAddress, broadcastCanvasOperation, updateCanvasObjects]);
+
+  // Undo/Redo functions
+  const undo = useCallback(() => {
+    if (!undoRedoManagerRef.current || !fabricCanvas) return;
+
+    const previousState = undoRedoManagerRef.current.undo();
+    if (previousState) {
+      fabricCanvas.loadCanvasData(previousState.data);
+      const historyInfo = undoRedoManagerRef.current.getHistoryInfo();
+      setCanUndo(historyInfo.canUndo);
+      setCanRedo(historyInfo.canRedo);
+    }
+  }, [fabricCanvas]);
+
+  const redo = useCallback(() => {
+    if (!undoRedoManagerRef.current || !fabricCanvas) return;
+
+    const nextState = undoRedoManagerRef.current.redo();
+    if (nextState) {
+      fabricCanvas.loadCanvasData(nextState.data);
+      const historyInfo = undoRedoManagerRef.current.getHistoryInfo();
+      setCanUndo(historyInfo.canUndo);
+      setCanRedo(historyInfo.canRedo);
+    }
+  }, [fabricCanvas]);
+
+  // Export canvas as image
+  const exportCanvas = useCallback((format: string = 'image/png') => {
+    return fabricCanvas?.toDataURL(format);
+  }, [fabricCanvas]);
+
+  // Get performance metrics
+  const getPerformanceMetrics = useCallback(() => {
+    return {
+      queueStatus: operationQueueRef.current?.getStatus(),
+      historyInfo: undoRedoManagerRef.current?.getHistoryInfo(),
+      activeUserCount: activeUsers.length,
+    };
+  }, [activeUsers]);
+
+  return {
+    fabricCanvas,
+    isInitialized,
+    currentTool,
+    activeUsers,
+    canvasState,
+    canUndo,
+    canRedo,
+    
+    // Actions
+    setTool,
+    setBrushSize,
+    setBrushColor,
+    clearCanvas,
+    exportCanvas,
+    undo,
+    redo,
+    getPerformanceMetrics,
+  };
+}

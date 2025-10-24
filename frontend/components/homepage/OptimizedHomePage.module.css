@@ -1,0 +1,489 @@
+/* ============================================
+   OPTIMIZED HOME PAGE STYLES
+   Responsive, accessible, and performant
+   ============================================ */
+
+.homePage {
+    position: relative;
+    overflow-x: hidden;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 1440px;
+    min-height: 2700px;
+    margin: 0 auto;
+    background: #161616;
+}
+
+/* ============================================
+   BACKGROUND LAYERS - OPTIMIZED
+   ============================================ */
+.backgroundLayers {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.gradientOverlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom, 
+        #161616 0%, 
+        #161616 91.658%, 
+        rgba(22, 22, 22, 0) 100%
+    );
+    z-index: 2;
+}
+
+.bgMainImage {
+    position: absolute;
+    inset: 0;
+    mix-blend-mode: multiply;
+    z-index: 1;
+}
+
+.decorLeft {
+    position: absolute;
+    left: -97px;
+    top: 135px;
+    z-index: 3;
+}
+
+.decorRight {
+    position: absolute;
+    right: -129px;
+    top: 227px;
+    z-index: 3;
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+.heroSection {
+    position: relative;
+    width: 100%;
+    height: 750px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 141px 20px 0;
+    z-index: 15;
+}
+
+.heroTitle {
+    position: relative;
+    width: min(846px, 90vw);
+    height: auto;
+    aspect-ratio: 846 / 233;
+    z-index: 20;
+    margin-bottom: 2rem;
+}
+
+.heroSubtitles {
+    position: relative;
+    z-index: 15;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.subtitle1,
+.subtitle2 {
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: clamp(14px, 1.25vw, 18px);
+    line-height: 1.5;
+    color: #ffffff;
+    background: #000000;
+    padding: 2px 16px;
+    margin: 0.5rem auto;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.polygonLeft,
+.polygonRight {
+    position: absolute;
+    top: 50%;
+    z-index: 5;
+    opacity: 0.8;
+}
+
+.polygonLeft {
+    left: calc(50% - 341px);
+    transform: rotate(136.158deg) scaleY(-1) translateY(-50%);
+}
+
+.polygonRight {
+    right: calc(50% - 341px);
+    transform: rotate(43.842deg) translateY(-50%);
+}
+
+/* ============================================
+   NVSHU OF TODAY SECTION
+   ============================================ */
+.nvshuTodaySection {
+    position: relative;
+    width: 100%;
+    padding: 100px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 20;
+}
+
+.sectionTitle {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.sectionSubtitle {
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: clamp(14px, 1.25vw, 18px);
+    line-height: 1.5;
+    color: #ffffff;
+    text-align: center;
+    background: #000000;
+    padding: 2px 16px;
+    margin-bottom: 3rem;
+    max-width: 90vw;
+}
+
+/* Nvshu Character Display */
+.nvshuCharacter {
+    position: relative;
+    width: min(480px, 90vw);
+    height: min(480px, 90vw);
+    margin-bottom: 3rem;
+}
+
+.characterGlow {
+    position: absolute;
+    left: 43.2px;
+    top: 95.9px;
+    width: 330.3px;
+    height: 332.1px;
+    border-radius: 27px;
+    box-shadow: inset 0px 3.6px 27px 0px #ff66e8;
+    opacity: 0.9;
+}
+
+.characterLayers {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.characterMask {
+    position: absolute;
+    left: -65.4px;
+    top: 1.4px;
+    width: 511.2px;
+    height: 908.1px;
+    mix-blend-mode: multiply;
+    opacity: 0.9;
+}
+
+.characterOverlay {
+    position: absolute;
+    left: 43.8px;
+    top: 97.5px;
+    width: 331px;
+    height: 331px;
+    opacity: 0.9;
+}
+
+.characterBase {
+    position: absolute;
+    left: calc(50% - 208.8px);
+    top: calc(50% - 201.6px);
+    width: 417.6px;
+    height: 403.2px;
+    opacity: 0.9;
+}
+
+.characterTranslation {
+    position: absolute;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+    background: #7b2eff;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 14px;
+    color: #ffffff;
+    text-align: center;
+}
+
+/* Start Painting Button */
+.ctaButtonWrapper {
+    position: relative;
+    z-index: 40;
+}
+
+.startPaintingButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: min(310px, 90vw);
+    height: 48px;
+    background: #7b2eff;
+    border: 2px solid #1ee11f;
+    border-radius: 24px;
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.startPaintingButton:hover {
+    background: #8e3dff;
+    transform: scale(1.05);
+}
+
+.startPaintingButton:focus-visible {
+    outline: 2px solid #1ee11f;
+    outline-offset: 4px;
+}
+
+/* ============================================
+   COMMUNITY ARTWORKS SECTION
+   ============================================ */
+.communitySection {
+    position: relative;
+    width: 100%;
+    padding: 100px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 20;
+}
+
+/* Artworks Grid */
+.artworksGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 350px));
+    gap: clamp(20px, 3vw, 40px);
+    justify-content: center;
+    width: 100%;
+    max-width: 1260px;
+    margin-bottom: 3rem;
+}
+
+.artworkItem {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    transition: transform 0.3s ease;
+}
+
+.artworkItem:hover {
+    transform: translateY(-5px);
+}
+
+.artworkImage {
+    width: 100%;
+    max-width: 350px;
+    aspect-ratio: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.mintButton {
+    width: 138px;
+    height: 48px;
+    background: #1ee11f;
+    border: none;
+    border-radius: 24px;
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #161616;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mintButton:hover {
+    background: #2fff30;
+    transform: scale(1.05);
+}
+
+.buyButton {
+    width: 138px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 24px;
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.buyButton:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.8);
+    transform: scale(1.05);
+}
+
+.mintButton:focus-visible,
+.buyButton:focus-visible {
+    outline: 2px solid #1ee11f;
+    outline-offset: 2px;
+}
+
+/* View All Link */
+.viewAllLink {
+    position: relative;
+    z-index: 20;
+}
+
+.viewAllButton {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: none;
+    border: none;
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    color: #ffffff;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    padding: 8px;
+}
+
+.viewAllButton:hover {
+    color: #1ee11f;
+}
+
+.viewAllButton:focus-visible {
+    outline: 2px solid #1ee11f;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+.srOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 768px) {
+    .container {
+        min-height: auto;
+    }
+    
+    .heroSection {
+        height: auto;
+        padding: 100px 20px 50px;
+    }
+    
+    .polygonLeft,
+    .polygonRight {
+        display: none; /* Hide decorative elements on mobile for performance */
+    }
+    
+    .nvshuCharacter {
+        width: min(320px, 90vw);
+        height: min(320px, 90vw);
+    }
+    
+    .artworksGrid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+    
+    .sectionTitle {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .heroSection,
+    .nvshuTodaySection,
+    .communitySection {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+    
+    .artworksGrid {
+        grid-template-columns: 1fr;
+    }
+    
+    .startPaintingButton {
+        width: 100%;
+        max-width: 280px;
+    }
+}
+
+/* ============================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    .artworkItem,
+    .startPaintingButton,
+    .mintButton,
+    .buyButton,
+    .viewAllButton {
+        transition: none;
+    }
+    
+    .artworkItem:hover {
+        transform: none;
+    }
+    
+    .startPaintingButton:hover,
+    .mintButton:hover,
+    .buyButton:hover {
+        transform: none;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .subtitle1,
+    .subtitle2,
+    .sectionSubtitle {
+        background: #000000;
+        border: 1px solid #ffffff;
+    }
+    
+    .startPaintingButton {
+        border: 2px solid #ffffff;
+    }
+}

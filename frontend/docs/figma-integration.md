@@ -17,7 +17,11 @@ The Figma MCP server is configured in `.kiro/settings/mcp.json`:
   "mcpServers": {
     "figma": {
       "command": "uvx",
-      "args": ["figma-mcp", "--figma-api-key", "figd_MN9pf_I0igi6YpyK4AAXi-jVdreQcbnC85IYe748"],
+      "args": [
+        "figma-mcp",
+        "--figma-api-key",
+        "figd_MN9pf_I0igi6YpyK4AAXi-jVdreQcbnC85IYe748"
+      ],
       "disabled": false,
       "autoApprove": []
     }
@@ -94,7 +98,7 @@ tsx scripts/setup-figma-integration.ts
 # Sync design tokens only
 tsx scripts/sync-figma-tokens.ts
 
-# Export assets only  
+# Export assets only
 tsx scripts/export-figma-assets.ts
 ```
 
@@ -127,7 +131,7 @@ import { BrushIcon, PaletteIcon } from '@/components/ui/Icon';
 ```tsx
 import { FempunkLogo } from '@/components/figma/FempunkLogo';
 
-<FempunkLogo variant="filled" size="lg" />
+<FempunkLogo variant="filled" size="lg" />;
 ```
 
 ## CSS Utilities
