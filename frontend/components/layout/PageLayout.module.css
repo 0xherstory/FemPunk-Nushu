@@ -1,0 +1,42 @@
+/* ============================================
+   PAGE LAYOUT COMPONENT
+   Consistent layout structure for all pages
+   ============================================ */
+
+.pageLayout {
+    position: relative;
+    width: 100%;
+    background: #161616;
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+.pageLayout.fullHeight {
+    min-height: 100vh;
+}
+
+.mainContent {
+    position: relative;
+    width: 100%;
+    padding-top: 96px; /* Account for fixed navigation */
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+@media (max-width: 768px) {
+    .mainContent {
+        padding-top: 80px;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    .pageLayout * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
