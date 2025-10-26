@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useAccount } from 'wagmi';
-import { RevenueModal, useRevenueModal } from '../../../components/revenue/RevenueManager';
+import RevenueManager, { useRevenueModal } from '../../../components/revenue/RevenueManager';
 import { PageLayout } from '../../../components/layout/PageLayout';
 import { useSendRevenue, useCanvasRevenueStatus, useClaimableAmount } from '../../../lib/hooks/useRevenueContract';
 
@@ -208,7 +208,7 @@ export default function MintPage() {
         )}
 
         {/* Revenue Modal */}
-        <RevenueModal
+        <RevenueManager
           isOpen={isOpen}
           onClose={closeModal}
           canvasId={canvasId}

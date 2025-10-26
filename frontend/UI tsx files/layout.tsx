@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { montserrat } from '../lib/fonts'
+import { montserrat } from '@/lib/fonts';
 import '../styles/figma-homepage/globals.css'
 
 export const metadata: Metadata = {
@@ -41,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={montserrat.variable}>
+   <html lang="en" className={montserrat.className}>
       <body className={montserrat.className}>
         <a href="#main-content" className="skip-link">
           Skip to main content
