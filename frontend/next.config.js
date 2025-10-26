@@ -1,11 +1,18 @@
+// frontend/next.config.js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // 生产环境优化配置
+  // 禁用构建时 ESLint（Render/CI 上不要求安装 eslint）
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+
+  // 实验与优化（合并为一个字段）
   experimental: {
     optimizeCss: true,
     optimizePackageImports: ['@rainbow-me/rainbowkit', 'wagmi', 'viem'],
+    serverComponentsExternalPackages: ['fabric'],
   },
-  
+
   // 图片优化配置
   images: {
     domains: [
@@ -18,29 +25,20 @@ const nextConfig = {
     formats: ['image/webp', 'image/avif'],
     minimumCacheTTL: 31536000, // 1年缓存
   },
-  
+
   // 压缩和优化
   compress: true,
   poweredByHeader: false,
-  
+
   // 安全头配置
   async headers() {
     return [
       {
         source: '/(.*)',
         headers: [
-          {
-            key: 'X-Frame-Options',
-            value: 'DENY',
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
-          {
-            key: 'Referrer-Policy',
-            value: 'strict-origin-when-cross-origin',
-          },
+          { key: 'X-Frame-Options', value: 'DENY' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           {
             key: 'Content-Security-Policy',
             value: [
@@ -57,19 +55,15 @@ const nextConfig = {
       },
     ];
   },
-  
+
   // 重定向配置
   async redirects() {
     return [
-      {
-        source: '/home',
-        destination: '/',
-        permanent: true,
-      },
+      { source: '/home', destination: '/', permanent: true },
     ];
   },
-  
-  // API 代理配置
+
+  // API 代理配置（注意：生产环境的 localhost 不是后端服务；仅开发环境有效）
   async rewrites() {
     return [
       {
@@ -78,14 +72,14 @@ const nextConfig = {
       },
     ];
   },
-  
+
   // 环境变量配置
   env: {
     CUSTOM_KEY: process.env.CUSTOM_KEY,
   },
-  
+
   // Webpack 配置优化
-  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+  webpack: (config, { dev }) => {
     // Fix for MetaMask SDK React Native dependencies
     config.resolve.fallback = {
       ...config.resolve.fallback,
@@ -96,10 +90,10 @@ const nextConfig = {
     // Ignore React Native modules in MetaMask SDK
     config.externals = config.externals || [];
     config.externals.push({
-      '@react-native-async-storage/async-storage': 'commonjs @react-native-async-storage/async-storage',
+      '@react-native-async-storage/async-storage':
+        'commonjs @react-native-async-storage/async-storage',
     });
 
-    // 生产环境优化
     if (!dev) {
       config.optimization.splitChunks = {
         chunks: 'all',
@@ -122,8 +116,7 @@ const nextConfig = {
         },
       };
     }
-    
-    // 添加 bundle 分析
+
     if (process.env.ANALYZE === 'true') {
       const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
       config.plugins.push(
@@ -133,17 +126,12 @@ const nextConfig = {
         })
       );
     }
-    
+
     return config;
   },
-  
+
   // 输出配置
   output: 'standalone',
-  
-  // 实验性功能
-  experimental: {
-    serverComponentsExternalPackages: ['fabric'],
-  },
 };
 
 module.exports = nextConfig;
