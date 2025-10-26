@@ -219,15 +219,92 @@ export const ArtworkNFTABI = [
   }
 ] as const;
 
+// FemCanvasRevenue Contract ABI
+export const FemCanvasRevenueABI = [
+  {
+    inputs: [{ name: "canvasId", type: "uint256" }],
+    name: "receiveRevenue",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function"
+  },
+  {
+    inputs: [{ name: "canvasId", type: "uint256" }],
+    name: "distributeRevenue",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function"
+  },
+  {
+    inputs: [{ name: "canvasId", type: "uint256" }],
+    name: "claimRevenue",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function"
+  },
+  {
+    inputs: [
+      { name: "canvasId", type: "uint256" },
+      { name: "contributor", type: "address" }
+    ],
+    name: "getClaimableAmount",
+    outputs: [{ name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    inputs: [{ name: "canvasId", type: "uint256" }],
+    name: "getCanvasRevenueStatus",
+    outputs: [
+      { name: "totalRevenue", type: "uint256" },
+      { name: "distributed", type: "bool" },
+      { name: "contributorsCount", type: "uint256" }
+    ],
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, name: "canvasId", type: "uint256" },
+      { indexed: false, name: "amount", type: "uint256" }
+    ],
+    name: "RevenueReceived",
+    type: "event"
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, name: "canvasId", type: "uint256" },
+      { indexed: false, name: "amount", type: "uint256" },
+      { indexed: false, name: "contributorsCount", type: "uint256" }
+    ],
+    name: "RevenueDistributed",
+    type: "event"
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, name: "canvasId", type: "uint256" },
+      { indexed: true, name: "contributor", type: "address" },
+      { indexed: false, name: "amount", type: "uint256" }
+    ],
+    name: "RevenueClaimed",
+    type: "event"
+  }
+] as const;
+
 // Contract Addresses (will be configured per environment)
 export const CONTRACT_ADDRESSES = {
   sepolia: {
     colorNFT: '0x0000000000000000000000000000000000000000', // To be deployed
     artworkNFT: '0x0000000000000000000000000000000000000000', // To be deployed
+    femCanvasRevenue: process.env.NEXT_PUBLIC_REVENUE_CONTRACT_ADDRESS || '0x0000000000000000000000000000000000000000',
   },
   mainnet: {
     colorNFT: '0x0000000000000000000000000000000000000000', // To be deployed
     artworkNFT: '0x0000000000000000000000000000000000000000', // To be deployed
+    femCanvasRevenue: process.env.NEXT_PUBLIC_REVENUE_CONTRACT_ADDRESS || '0x0000000000000000000000000000000000000000',
   }
 } as const;
 

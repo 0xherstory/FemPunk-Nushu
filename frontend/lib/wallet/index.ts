@@ -19,8 +19,15 @@ export { useArtworkDetails, useContributorArtworks, useArtworkBalance, useArtwor
 
 // Contract Configuration
 export { wagmiConfig, chains } from '../wagmi/config';
-export { getColorNFTContract, getArtworkNFTContract, getContractConfig, SUPPORTED_CHAINS, DEFAULT_CHAIN, GAS_LIMITS, PRICE_CONFIG } from '../contracts/config';
-export { ColorNFTABI, ArtworkNFTABI, CONTRACT_ADDRESSES } from '../contracts/abis';
+export { getColorNFTContract, getArtworkNFTContract, getFemCanvasRevenueContract, getContractConfig, SUPPORTED_CHAINS, DEFAULT_CHAIN, GAS_LIMITS, PRICE_CONFIG } from '../contracts/config';
+export { ColorNFTABI, ArtworkNFTABI, FemCanvasRevenueABI, CONTRACT_ADDRESSES } from '../contracts/abis';
+
+// Revenue Contract Hooks
+export { useSendRevenue, useClaimRevenue, useClaimableAmount, useCanvasRevenueStatus } from '../hooks/useRevenueContract';
+
+// Revenue Components
+export { RevenueModal, useRevenueModal } from '../../components/revenue/RevenueManager';
+export { RevenueButton, SendRevenueButton, ClaimRevenueButton, RevenueStatusButton } from '../../components/revenue/RevenueButton';
 
 // Utilities
 export { parseWeb3Error, isRetryableError, getErrorSeverity, formatErrorForUser, ERROR_MESSAGES } from '../utils/web3-errors';

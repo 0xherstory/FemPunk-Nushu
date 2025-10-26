@@ -69,6 +69,16 @@ const nextConfig = {
     ];
   },
   
+  // API 代理配置
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://localhost:3001/api/:path*',
+      },
+    ];
+  },
+  
   // 环境变量配置
   env: {
     CUSTOM_KEY: process.env.CUSTOM_KEY,

@@ -2,45 +2,38 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:3001';
 
-export async function POST(request: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
-    const body = await request.json();
-    const { address, color_id } = body;
+    const { searchParams } = new URL(request.url);
+    const address = searchParams.get('address');
     
-    console.log('Frontend API received:', { address, color_id });
-    
-    if (!address || !color_id) {
+    if (!address) {
       return NextResponse.json(
-        { error: 'Wallet address and color code are required' },
+        { error: 'Wallet address is required' },
         { status: 400 }
       );
     }
 
-    const response = await fetch(`${BACKEND_URL}/api/colors/reward`, {
-      method: 'POST',
+    const response = await fetch(`${BACKEND_URL}/api/colors/owner/${address}`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        address,
-        color_id,
-      }),
     });
 
     if (!response.ok) {
       const errorData = await response.text();
       console.error('Backend error:', errorData);
       
-      // 尝试解析错误信息
       try {
         const errorJson = JSON.parse(errorData);
         return NextResponse.json(
-          { error: errorJson.error || 'Failed to mint color' },
+          { error: errorJson.error || 'Failed to fetch colors' },
           { status: response.status }
         );
       } catch {
         return NextResponse.json(
-          { error: 'Failed to mint color' },
+          { error: 'Failed to fetch colors' },
           { status: response.status }
         );
       }
@@ -49,7 +42,7 @@ export async function POST(request: NextRequest) {
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
-    console.error('Error minting color:', error);
+    console.error('Error fetching colors:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
