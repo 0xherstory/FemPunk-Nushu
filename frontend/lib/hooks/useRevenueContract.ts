@@ -19,7 +19,10 @@ export const useSendRevenue = () => {
   });
 
   const sendRevenue = async (canvasId: number, amountInEth: string) => {
+    console.log('🔄 sendRevenue called:', { canvasId, amountInEth, address, chainId });
+
     if (!address || !chainId) {
+      console.error('❌ Wallet not connected:', { address, chainId });
       setError('请先连接钱包');
       return;
     }
@@ -29,21 +32,29 @@ export const useSendRevenue = () => {
       setError(null);
 
       const contract = getFemCanvasRevenueContract(chainId);
-      const amountInWei = parseEther(amountInEth);
+      console.log('📋 Contract config:', contract);
 
-      await writeContract({
+      const amountInWei = parseEther(amountInEth);
+      console.log('💎 Amount in wei:', amountInWei.toString());
+
+      const writeContractArgs = {
         ...contract,
-        functionName: 'receiveRevenue',
-        args: [BigInt(canvasId)],
+        functionName: 'receiveRevenue' as const,
+        args: [BigInt(canvasId)] as const,
         value: amountInWei,
         gas: GAS_LIMITS.receiveRevenue,
-      });
+      };
+      console.log('📝 writeContract args:', writeContractArgs);
+
+      console.log('🚀 Calling writeContract...');
+      await writeContract(writeContractArgs);
+      console.log('✅ writeContract completed');
 
     } catch (err: any) {
       console.error('Send revenue error:', err);
-      
+
       let errorMessage = '发送收益失败';
-      
+
       // Handle specific error types
       if (err.message?.includes('User rejected')) {
         errorMessage = '用户取消了交易';
@@ -58,7 +69,7 @@ export const useSendRevenue = () => {
       } else if (err.message) {
         errorMessage = err.message;
       }
-      
+
       setError(errorMessage);
 
       trackWeb3Error(err, {
@@ -108,16 +119,16 @@ export const useClaimRevenue = () => {
 
       await writeContract({
         ...contract,
-        functionName: 'claimRevenue',
-        args: [BigInt(canvasId)],
+        functionName: 'claimRevenue' as const,
+        args: [BigInt(canvasId)] as const,
         gas: GAS_LIMITS.claimRevenue,
       });
 
     } catch (err: any) {
       console.error('Claim revenue error:', err);
-      
+
       let errorMessage = '领取收益失败';
-      
+
       // Handle specific error types
       if (err.message?.includes('User rejected')) {
         errorMessage = '用户取消了交易';
@@ -132,7 +143,7 @@ export const useClaimRevenue = () => {
       } else if (err.message) {
         errorMessage = err.message;
       }
-      
+
       setError(errorMessage);
 
       trackWeb3Error(err, {

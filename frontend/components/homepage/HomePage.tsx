@@ -61,19 +61,17 @@ const HomePage: React.FC<HomePageProps> = ({
         {/* 左侧装饰图片 */}
         <div className={styles.leftDecorGroup}>
           <div className={styles.leftImg1}>
-            <Image
+            <img
               src="/images/homepage/left_img1.png"
               alt=""
-              fill
-              style={{ objectFit: 'contain' }}
+              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
             />
           </div>
           <div className={styles.leftImg2}>
-            <Image
+            <img
               src="/images/homepage/left_img2.png"
               alt=""
-              fill
-              style={{ objectFit: 'contain' }}
+              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
             />
           </div>
         </div>
@@ -81,19 +79,17 @@ const HomePage: React.FC<HomePageProps> = ({
         {/* 右侧装饰图片 */}
         <div className={styles.rightDecorGroup}>
           <div className={styles.rightImg1}>
-            <Image
+            <img
               src="/images/homepage/right_img1.png"
               alt=""
-              fill
-              style={{ objectFit: 'contain' }}
+              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
             />
           </div>
           <div className={styles.rightImg2}>
-            <Image
+            <img
               src="/images/homepage/right_img2.png"
               alt=""
-              fill
-              style={{ objectFit: 'contain' }}
+              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
             />
           </div>
         </div>
@@ -116,20 +112,7 @@ const HomePage: React.FC<HomePageProps> = ({
         <div className={styles.navbarContent}>
           <div className={styles.navbarLeft}>
             <div className={styles.logo}>
-              <Image
-                src="/images/logo/fempunk-logo.svg"
-                alt="FemPunk Logo"
-                width={18}
-                height={41}
-                priority
-              />
-              <Image
-                src="/images/logo/fempunk-text.svg"
-                alt="FemPunk Text"
-                width={140}
-                height={45}
-                priority
-              />
+              <span style={{ color: '#1ee11f', fontWeight: 'bold', fontSize: '24px' }}>FemPunk</span>
             </div>
             <a href="#" className={styles.navLink}>PAINT</a>
             <a href="#" className={styles.navLink}>COLOR</a>
@@ -138,13 +121,7 @@ const HomePage: React.FC<HomePageProps> = ({
           </div>
           <div className={styles.navbarRight}>
             <button className={styles.connectButton}>
-              <Image
-                src="/images/icons/wallet.svg"
-                alt=""
-                width={20}
-                height={20}
-                aria-hidden="true"
-              />
+              <span>💳</span>
               <span>Connect</span>
             </button>
           </div>
@@ -156,14 +133,17 @@ const HomePage: React.FC<HomePageProps> = ({
            ============================================ */}
       <section className={styles.heroSection}>
         <div className={styles.heroTitle} data-node-id="127:5649">
-          <Image
-            src="/images/text/hero-title.svg"
-            alt="Nvshu Reborn Art Co-creation"
-            width={846}
-            height={233}
-            priority
-            sizes="(max-width: 768px) 90vw, 846px"
-          />
+          <h1 style={{ 
+            fontSize: '4rem', 
+            fontWeight: 'bold', 
+            textAlign: 'center',
+            background: 'linear-gradient(45deg, #1ee11f, #7b2eff)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            margin: 0
+          }}>
+            Nvshu Reborn<br />Art Co-creation
+          </h1>
         </div>
 
         <div className={styles.heroSubtitles}>
@@ -177,18 +157,14 @@ const HomePage: React.FC<HomePageProps> = ({
            ============================================ */}
       <section className={styles.nvshuTodaySection}>
         <div className={styles.sectionTitle} id="nvshu-today-title">
-          <Image
-            src="/images/text/nvshu-text.svg"
-            alt="Nvshu"
-            width={185}
-            height={52}
-          />
-          <Image
-            src="/images/text/of-today-text.svg"
-            alt="of Today"
-            width={216}
-            height={52}
-          />
+          <h2 style={{ 
+            fontSize: '3rem', 
+            fontWeight: 'bold', 
+            color: '#ffffff',
+            margin: 0
+          }}>
+            Nvshu of Today
+          </h2>
         </div>
 
         <p className={styles.sectionSubtitle}>
@@ -198,31 +174,13 @@ const HomePage: React.FC<HomePageProps> = ({
         {/* Nvshu Character Display */}
         <div className={styles.nvshuCharacter} role="img" aria-label="Today's Nvshu character meaning Spring">
           <div className={styles.characterGlow} />
-          <div className={styles.characterLayers}>
-            <div className={styles.characterMask}>
-              <Image
-                src="/images/text/nvshu-character-mask.svg"
-                alt=""
-                fill
-                sizes="480px"
-              />
-            </div>
-            <div className={styles.characterOverlay}>
-              <Image
-                src="/images/text/nvshu-character-overlay.svg"
-                alt=""
-                width={331}
-                height={331}
-              />
-            </div>
-            <div className={styles.characterBase}>
-              <Image
-                src="/images/text/nvshu-character-base.svg"
-                alt=""
-                fill
-                sizes="480px"
-              />
-            </div>
+          <div style={{
+            fontSize: '8rem',
+            textAlign: 'center',
+            color: '#ff66e8',
+            fontWeight: 'bold'
+          }}>
+            女
           </div>
           <div className={styles.characterTranslation}>
             <span>&quot;Spring&quot;</span>
@@ -236,13 +194,7 @@ const HomePage: React.FC<HomePageProps> = ({
             onClick={onStartPainting}
             aria-describedby="paint-description"
           >
-            <Image
-              src="/images/icons/paint-brush.svg"
-              alt=""
-              width={28}
-              height={28}
-              aria-hidden="true"
-            />
+            <span style={{ fontSize: '1.5rem' }}>🎨</span>
             <span>Start Painting</span>
           </button>
           <p id="paint-description" className={styles.srOnly}>
@@ -256,18 +208,14 @@ const HomePage: React.FC<HomePageProps> = ({
            ============================================ */}
       <section className={styles.communitySection} aria-labelledby="community-title">
         <div className={styles.sectionTitle} id="community-title">
-          <Image
-            src="/images/text/community-text.svg"
-            alt="Community"
-            width={247}
-            height={52}
-          />
-          <Image
-            src="/images/text/artworks-text.svg"
-            alt="Artworks"
-            width={244}
-            height={52}
-          />
+          <h2 style={{ 
+            fontSize: '3rem', 
+            fontWeight: 'bold', 
+            color: '#ffffff',
+            margin: 0
+          }}>
+            Community Artworks
+          </h2>
         </div>
 
         <p className={styles.sectionSubtitle}>
@@ -289,11 +237,11 @@ const HomePage: React.FC<HomePageProps> = ({
                 />
               </div>
               <button
-                className={index === 0 ? styles.mintButton : styles.buyButton}
-                onClick={() => index === 0 ? onMintArtwork?.(artwork.id) : onBuyArtwork?.(artwork.id)}
-                aria-label={`${index === 0 ? 'Mint' : 'Buy'} ${artwork.alt}`}
+                className={index === 1 ? styles.mintButton : styles.buyButton}
+                onClick={() => index === 1 ? onMintArtwork?.(artwork.id) : onBuyArtwork?.(artwork.id)}
+                aria-label={`${index === 1 ? 'Mint' : 'Buy'} ${artwork.alt}`}
               >
-                {index === 0 ? 'Mint' : 'Buy'}
+                {index === 1 ? 'Mint' : 'Buy'}
               </button>
             </div>
           ))}
@@ -303,13 +251,7 @@ const HomePage: React.FC<HomePageProps> = ({
         <div className={styles.viewAllLink}>
           <button onClick={onViewAllArtworks} className={styles.viewAllButton}>
             <span>View all artworks</span>
-            <Image
-              src="/images/icons/arrow-right.svg"
-              alt=""
-              width={20}
-              height={20}
-              aria-hidden="true"
-            />
+            <span style={{ fontSize: '1.2rem' }}>→</span>
           </button>
         </div>
       </section>
@@ -321,32 +263,32 @@ const HomePage: React.FC<HomePageProps> = ({
 const FEATURED_ARTWORKS = [
   {
     id: '1',
-    imageUrl: '/images/artworks/community-artwork-1.svg',
+    imageUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzUwIiBoZWlnaHQ9IjM1MCIgdmlld0JveD0iMCAwIDM1MCAzNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzNTAiIGhlaWdodD0iMzUwIiBmaWxsPSIjN2IyZWZmIi8+Cjx0ZXh0IHg9IjE3NSIgeT0iMTg1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSI0OCIgZm9udC13ZWlnaHQ9ImJvbGQiPkFydCAxPC90ZXh0Pgo8L3N2Zz4K',
     alt: 'Community Artwork 1'
   },
   {
     id: '2', 
-    imageUrl: '/images/artworks/community-artwork-2.svg',
+    imageUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzUwIiBoZWlnaHQ9IjM1MCIgdmlld0JveD0iMCAwIDM1MCAzNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzNTAiIGhlaWdodD0iMzUwIiBmaWxsPSIjMWVlMTFmIi8+Cjx0ZXh0IHg9IjE3NSIgeT0iMTg1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJibGFjayIgZm9udC1zaXplPSI0OCIgZm9udC13ZWlnaHQ9ImJvbGQiPkFydCAyPC90ZXh0Pgo8L3N2Zz4K',
     alt: 'Community Artwork 2'
   },
   {
     id: '3',
-    imageUrl: '/images/artworks/community-artwork-3.svg',
+    imageUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzUwIiBoZWlnaHQ9IjM1MCIgdmlld0JveD0iMCAwIDM1MCAzNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzNTAiIGhlaWdodD0iMzUwIiBmaWxsPSIjZmY2NmU4Ii8+Cjx0ZXh0IHg9IjE3NSIgeT0iMTg1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSI0OCIgZm9udC13ZWlnaHQ9ImJvbGQiPkFydCAzPC90ZXh0Pgo8L3N2Zz4K',
     alt: 'Community Artwork 3'
   },
   {
     id: '4',
-    imageUrl: '/images/artworks/community-artwork-4.svg',
+    imageUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzUwIiBoZWlnaHQ9IjM1MCIgdmlld0JveD0iMCAwIDM1MCAzNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzNTAiIGhlaWdodD0iMzUwIiBmaWxsPSIjNDQ0NDQ0Ii8+Cjx0ZXh0IHg9IjE3NSIgeT0iMTg1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSI0OCIgZm9udC13ZWlnaHQ9ImJvbGQiPkFydCA0PC90ZXh0Pgo8L3N2Zz4K',
     alt: 'Community Artwork 4'
   },
   {
     id: '5',
-    imageUrl: '/images/artworks/community-artwork-5.svg',
+    imageUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzUwIiBoZWlnaHQ9IjM1MCIgdmlld0JveD0iMCAwIDM1MCAzNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzNTAiIGhlaWdodD0iMzUwIiBmaWxsPSIjMDA3N2ZmIi8+Cjx0ZXh0IHg9IjE3NSIgeT0iMTg1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSI0OCIgZm9udC13ZWlnaHQ9ImJvbGQiPkFydCA1PC90ZXh0Pgo8L3N2Zz4K',
     alt: 'Community Artwork 5'
   },
   {
     id: '6',
-    imageUrl: '/images/artworks/community-artwork-6.svg',
+    imageUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzUwIiBoZWlnaHQ9IjM1MCIgdmlld0JveD0iMCAwIDM1MCAzNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzNTAiIGhlaWdodD0iMzUwIiBmaWxsPSIjZmZhNTAwIi8+Cjx0ZXh0IHg9IjE3NSIgeT0iMTg1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSI0OCIgZm9udC13ZWlnaHQ9ImJvbGQiPkFydCA2PC90ZXh0Pgo8L3N2Zz4K',
     alt: 'Community Artwork 6'
   }
 ];

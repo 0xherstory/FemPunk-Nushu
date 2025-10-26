@@ -36,7 +36,7 @@ export default function MintPage() {
       setMintError(null);
 
       console.log('Calling backend to mint NFT...');
-      const response = await fetch('/api/canvas/mint', {
+      const response = await fetch('http://localhost:3001/api/canvas/mint', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,9 +45,9 @@ export default function MintPage() {
           canvas_id: canvasId
         }),
       });
-      
+
       const result = await response.json();
-      
+
       if (result.success) {
         console.log('Canvas minted successfully:', result.txHash);
         setMintSuccess(true);
@@ -129,7 +129,7 @@ export default function MintPage() {
               ) : (
                 <div className="text-center py-4 text-gray-500">加载状态中...</div>
               )}
-              
+
               <button
                 onClick={() => openModal(canvasId, 'status')}
                 className="w-full px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200"
@@ -181,7 +181,7 @@ export default function MintPage() {
                   建议先发送收益，然后再铸造 NFT
                 </p>
               </div>
-              
+
               <button
                 onClick={handleMintNFT}
                 disabled={isMinting}

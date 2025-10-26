@@ -16,29 +16,86 @@ interface RevenueModalProps {
 export function RevenueModal({ isOpen, onClose, canvasId, mode }: RevenueModalProps) {
   const { address, isConnected } = useAccount();
   const [mintQuantity, setMintQuantity] = useState(100); // Default 100 NFTs
-  
+
   const { sendRevenue, isLoading: isSending, isSuccess: sendSuccess, error: sendError, txHash: sendTxHash } = useSendRevenue();
   const { claimRevenue, isLoading: isClaiming, isSuccess: claimSuccess, error: claimError, txHash: claimTxHash } = useClaimRevenue();
   const { claimableAmount, isLoading: loadingClaimable } = useClaimableAmount(canvasId);
   const { status, isLoading: loadingStatus } = useCanvasRevenueStatus(canvasId);
 
-  // Close modal on successful transaction
+  // Close modal on successful transaction and mint canvas
   useEffect(() => {
-    if (sendSuccess || claimSuccess) {
+    console.log('🔍 useEffect triggered:', { sendSuccess, sendTxHash, claimSuccess, canvasId });
+    
+    if (sendSuccess && sendTxHash) {
+      console.log('✅ Revenue send successful, starting auto-mint process...');
+      
+      // Auto mint canvas after successful revenue send
+      const mintCanvas = async () => {
+        try {
+          console.log('🎨 Auto-minting canvas after revenue send...', { canvasId });
+          
+          const response = await fetch('/api/canvas/mint', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              canvas_id: 8417776330752267
+            }),
+          });
+
+          console.log('📡 Mint API response status:', response.status);
+          const result = await response.json();
+          console.log('📋 Mint API result:', result);
+
+          if (result.success) {
+            console.log('🎉 Canvas auto-minted successfully:', result.txHash);
+          } else {
+            console.error('❌ Auto-mint failed:', result.error);
+          }
+        } catch (error) {
+          console.error('💥 Error auto-minting canvas:', error);
+        }
+      };
+
+      // 立即执行 mint
+      mintCanvas();
+
+      // 3秒后关闭模态框
       const timer = setTimeout(() => {
+        console.log('⏰ Auto-closing modal after successful mint');
         onClose();
-      }, 3000); // Auto close after 3 seconds
+      }, 3000);
+      
       return () => clearTimeout(timer);
     }
-  }, [sendSuccess, claimSuccess, onClose]);
+
+    if (claimSuccess) {
+      console.log('✅ Claim successful, closing modal...');
+      const timer = setTimeout(() => {
+        onClose();
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [sendSuccess, claimSuccess, sendTxHash, canvasId, onClose]);
 
   const handleSendRevenue = async () => {
+    console.log('🚀 handleSendRevenue called', { canvasId, mintQuantity });
+    
     if (!mintQuantity || mintQuantity <= 0) {
       alert('请输入有效的铸造数量');
       return;
     }
+    
     const totalAmount = (mintQuantity * 0.0018).toFixed(4);
-    await sendRevenue(canvasId, totalAmount);
+    console.log('💰 Sending revenue:', { canvasId, totalAmount, mintQuantity });
+    
+    try {
+      await sendRevenue(canvasId, totalAmount);
+      console.log('✅ sendRevenue completed');
+    } catch (error) {
+      console.error('❌ sendRevenue failed:', error);
+    }
   };
 
   const handleClaimRevenue = async () => {
@@ -53,9 +110,9 @@ export function RevenueModal({ isOpen, onClose, canvasId, mode }: RevenueModalPr
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b">
           <h2 className="text-xl font-semibold">
-            {mode === 'send' && '发送收益'}
-            {mode === 'claim' && '领取收益'}
-            {mode === 'status' && '收益状态'}
+            {mode === 'send' && '发送'}
+            {mode === 'claim' && '领取'}
+            {mode === 'status' && '状态'}
           </h2>
           <button
             onClick={onClose}
@@ -104,7 +161,7 @@ export function RevenueModal({ isOpen, onClose, canvasId, mode }: RevenueModalPr
                       value={mintQuantity}
                       onChange={(e) => setMintQuantity(parseInt(e.target.value) || 1)}
                       className="w-full px-4 py-3 text-black text-lg font-medium border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-center"
-                      placeholder="100"
+                      placeholder="10"
                     />
                     <p className="text-xs text-black mt-1 text-center">
                       建议数量: 100 个 NFT
@@ -137,8 +194,8 @@ export function RevenueModal({ isOpen, onClose, canvasId, mode }: RevenueModalPr
                   </p>
 
                   {sendError && (
-                    <ErrorAlert 
-                      error={sendError} 
+                    <ErrorAlert
+                      error={sendError}
                       onDismiss={() => {
                         // Clear error after user reads it
                       }}
@@ -148,16 +205,43 @@ export function RevenueModal({ isOpen, onClose, canvasId, mode }: RevenueModalPr
                   {sendSuccess && sendTxHash && (
                     <div className="p-3 bg-green-50 border border-green-200 rounded-md">
                       <p className="text-sm text-green-800 mb-2">
-                        🎉 收益发送成功!
+                        🎉 发送成功! Canvas 正在自动铸造中...
                       </p>
-                      <a 
-                        href={`https://sepolia.etherscan.io/tx/${sendTxHash}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm text-blue-600 underline"
-                      >
-                        查看交易详情 →
-                      </a>
+                      <div className="flex gap-2 items-center">
+                        <a
+                          href={`https://sepolia.etherscan.io/tx/${sendTxHash}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm text-blue-600 underline"
+                        >
+                          查看交易详情 →
+                        </a>
+                        <button
+                          onClick={async () => {
+                            console.log('🔄 Manual mint triggered');
+                            try {
+                              const response = await fetch('/api/canvas/mint', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ canvas_id: canvasId }),
+                              });
+                              const result = await response.json();
+                              console.log('Manual mint result:', result);
+                              if (result.success) {
+                                alert('Canvas 铸造成功！');
+                              } else {
+                                alert('Canvas 铸造失败：' + result.error);
+                              }
+                            } catch (error) {
+                              console.error('Manual mint error:', error);
+                              alert('Canvas 铸造出错');
+                            }
+                          }}
+                          className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+                        >
+                          手动铸造
+                        </button>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -184,8 +268,8 @@ export function RevenueModal({ isOpen, onClose, canvasId, mode }: RevenueModalPr
                   </button>
 
                   {claimError && (
-                    <ErrorAlert 
-                      error={claimError} 
+                    <ErrorAlert
+                      error={claimError}
                       onDismiss={() => {
                         // Clear error after user reads it
                       }}
@@ -195,9 +279,9 @@ export function RevenueModal({ isOpen, onClose, canvasId, mode }: RevenueModalPr
                   {claimSuccess && claimTxHash && (
                     <div className="p-3 bg-green-50 border border-green-200 rounded-md">
                       <p className="text-sm text-green-800 mb-2">
-                        🎉 收益领取成功!
+                        🎉 领取成功!
                       </p>
-                      <a 
+                      <a
                         href={`https://sepolia.etherscan.io/tx/${claimTxHash}`}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -241,7 +325,7 @@ export function RevenueModal({ isOpen, onClose, canvasId, mode }: RevenueModalPr
                         {loadingClaimable ? '加载中...' : `${claimableAmount} ETH`}
                       </span>
                     </div>
-                    
+
                     {status && (
                       <div className="flex justify-between items-center py-3 px-4 bg-gray-50 rounded-lg">
                         <span className="text-gray-700 font-medium">分配状态</span>
@@ -259,8 +343,8 @@ export function RevenueModal({ isOpen, onClose, canvasId, mode }: RevenueModalPr
                           onClose();
                           // Trigger claim modal
                           setTimeout(() => {
-                            const event = new CustomEvent('openRevenueModal', { 
-                              detail: { canvasId, mode: 'claim' } 
+                            const event = new CustomEvent('openRevenueModal', {
+                              detail: { canvasId, mode: 'claim' }
                             });
                             window.dispatchEvent(event);
                           }, 100);
@@ -278,7 +362,7 @@ export function RevenueModal({ isOpen, onClose, canvasId, mode }: RevenueModalPr
                     </button>
                   </div>
                 </div>
-      
+              )}
             </>
           )}
         </div>

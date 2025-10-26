@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 require("dotenv").config();
 
 const colorsRouter = require("./routes/colors");
@@ -10,6 +11,7 @@ const usersRouter = require("./routes/users");
 // const uploadNftRouter = require("./routes/uploadNft");
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 
 // API 路由

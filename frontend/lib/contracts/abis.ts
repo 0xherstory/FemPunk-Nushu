@@ -34,7 +34,7 @@ export const ColorNFTABI = [
     stateMutability: "nonpayable",
     type: "function"
   },
-  
+
   // Custom Color NFT Functions
   {
     inputs: [
@@ -297,8 +297,8 @@ export const FemCanvasRevenueABI = [
 // Contract Addresses (will be configured per environment)
 export const CONTRACT_ADDRESSES = {
   sepolia: {
-    colorNFT: '0x0000000000000000000000000000000000000000', // To be deployed
-    artworkNFT: '0x0000000000000000000000000000000000000000', // To be deployed
+    colorNFT: process.env.NEXT_PUBLIC_COLOR_NFT_ADDRESS || '0x0000000000000000000000000000000000000000', // Placeholder until deployed
+    artworkNFT: process.env.NEXT_PUBLIC_ARTWORK_NFT_ADDRESS || '0x0000000000000000000000000000000000000000', // Placeholder until deployed
     femCanvasRevenue: process.env.NEXT_PUBLIC_REVENUE_CONTRACT_ADDRESS || '0x0000000000000000000000000000000000000000',
   },
   mainnet: {

@@ -295,7 +295,7 @@ const PaintPage: React.FC<PaintPageProps> = ({ className }) => {
     setClaimMessage(null);
 
     try {
-      const testColors = 1342079089309930;
+      const testColors = 2954185897270380;
 
       console.log('Claiming colors with address:', address, 'color_id:', testColors, 'type:', typeof testColors);
 
@@ -317,10 +317,10 @@ const PaintPage: React.FC<PaintPageProps> = ({ className }) => {
 
       const result = await response.json();
       console.log('Colors claimed successfully:', result);
-      
+
       if (result.success && result.color_code) {
         const newColor = `#${result.color_code}`;
-        
+
         // 立即添加新颜色到可用颜色列表（避免重复）
         setAvailableColors(prev => {
           if (!prev.includes(newColor)) {
@@ -328,20 +328,20 @@ const PaintPage: React.FC<PaintPageProps> = ({ className }) => {
           }
           return prev;
         });
-        
+
         // 自动选择新获得的颜色
         setCurrentColor(newColor);
-        
+
         // 标记为新获得的颜色，用于视觉高亮
         setNewlyClaimedColor(newColor);
-        
+
         setClaimMessage(`🎨 Successfully claimed color ${newColor}! Tx: ${result.txHash?.slice(0, 10)}...`);
-        
+
         // 5秒后移除新颜色高亮
         setTimeout(() => {
           setNewlyClaimedColor(null);
         }, 5000);
-        
+
         // 重新获取颜色以确保数据同步
         await fetchUserColors();
       } else {
@@ -658,24 +658,24 @@ const PaintPage: React.FC<PaintPageProps> = ({ className }) => {
           <div className={styles.nvshuCharacter} data-node-id="101:2198">
             <div className={styles.characterMask} data-node-id="101:2200">
               <img
-                src="https://www.figma.com/api/mcp/asset/dcf0d13f-9ade-4973-9921-18bccb92ef36"
+                src="/images/homepage/right_img1.png"
                 alt="Nvshu Character Background"
               />
             </div>
             <div className={styles.characterOverlay} data-node-id="101:2204">
               <img
-                src="https://www.figma.com/api/mcp/asset/0a7e46ce-4998-4fd1-a9ef-2274cd0e0aef"
+                src="/images/homepage/right_img2.png"
                 alt="Nvshu Character"
               />
             </div>
             <div className={styles.characterElements} data-node-id="101:2211">
               <img
-                src="https://www.figma.com/api/mcp/asset/cf6bc0c4-6a58-421a-85fd-bcd098215db0"
+                src="/images/homepage/left_img1.png"
                 alt="Element 1"
                 className={styles.element1}
               />
               <img
-                src="https://www.figma.com/api/mcp/asset/61facb6b-4a5a-4cb0-ae49-90a162e8990e"
+                src="/images/homepage/left_img2.png"
                 alt="Element 2"
                 className={styles.element2}
               />

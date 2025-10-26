@@ -1,7 +1,6 @@
 // RPC Health Check Utility
 export const RPC_ENDPOINTS = {
   sepolia: [
-    'https://sepolia.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
     'https://rpc.sepolia.org',
     'https://ethereum-sepolia.publicnode.com',
     'https://sepolia.gateway.tenderly.co',
