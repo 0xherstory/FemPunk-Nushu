@@ -41,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={montserrat.variable}>
+   <html lang="en" className={montserrat.className}>
       <body className={montserrat.className}>
         <a href="#main-content" className="skip-link">
           Skip to main content
