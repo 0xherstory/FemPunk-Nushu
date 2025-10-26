@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { montserrat } from '../lib/fonts'
+import { montserrat } from '@/lib/fonts';
 import '../styles/figma-homepage/globals.css'
 
 export const metadata: Metadata = {
