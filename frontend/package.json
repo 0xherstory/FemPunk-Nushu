@@ -13,8 +13,7 @@
     "format:check": "prettier --check .",
     "test": "vitest --run",
     "test:watch": "vitest",
-    "test:ui": "vitest --ui",
-    "prepare": "husky install"
+    "test:ui": "vitest --ui"
   },
   "dependencies": {
     "@liveblocks/client": "^1.8.0",
