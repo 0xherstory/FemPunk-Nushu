@@ -18,29 +18,92 @@ interface RevenueManagerProps {
 
 function RevenueManager({ isOpen, onClose, canvasId, mode }: RevenueManagerProps) {
   const { address, isConnected } = useAccount();
-  const [mintQuantity, setMintQuantity] = useState(100); // 默认 100
+  const [mintQuantity, setMintQuantity] = useState(100); // Default 100 NFTs
+
+
 
   const { sendRevenue, isLoading: isSending, isSuccess: sendSuccess, error: sendError, txHash: sendTxHash } = useSendRevenue();
   const { claimRevenue, isLoading: isClaiming, isSuccess: claimSuccess, error: claimError, txHash: claimTxHash } = useClaimRevenue();
   const { claimableAmount, isLoading: loadingClaimable } = useClaimableAmount(canvasId);
   const { status, isLoading: loadingStatus } = useCanvasRevenueStatus(canvasId);
 
+  // Close modal on successful transaction and mint canvas
   // 成功后自动关闭
   useEffect(() => {
-    if (sendSuccess || claimSuccess) {
-      const timer = setTimeout(() => onClose(), 3000);
+    console.log('🔍 useEffect triggered:', { sendSuccess, sendTxHash, claimSuccess, canvasId });
+
+    if (sendSuccess && sendTxHash) {
+      console.log('✅ Revenue send successful, starting auto-mint process...');
+
+      // Auto mint canvas after successful revenue send
+      const mintCanvas = async () => {
+        try {
+          console.log('🎨 Auto-minting canvas after revenue send...', { canvasId });
+
+          const response = await fetch('/api/canvas/mint', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              canvas_id: 8417776330752267
+            }),
+          });
+
+          console.log('📡 Mint API response status:', response.status);
+          const result = await response.json();
+          console.log('📋 Mint API result:', result);
+
+          if (result.success) {
+            console.log('🎉 Canvas auto-minted successfully:', result.txHash);
+          } else {
+            console.error('❌ Auto-mint failed:', result.error);
+          }
+        } catch (error) {
+          console.error('💥 Error auto-minting canvas:', error);
+        }
+      };
+
+      // 立即执行 mint
+      mintCanvas();
+
+      // 3秒后关闭模态框
+      const timer = setTimeout(() => {
+        console.log('⏰ Auto-closing modal after successful mint');
+        onClose();
+      }, 3000);
+
       return () => clearTimeout(timer);
     }
-  }, [sendSuccess, claimSuccess, onClose]);
 
-  const handleSendRevenue = async () => {
+    if (claimSuccess) {
+      console.log('✅ Claim successful, closing modal...');
+      const timer = setTimeout(() => {
+        onClose();
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [sendSuccess, sendTxHash, claimSuccess, canvasId, onClose]);
+
+  async function handleSendRevenue() {
+    console.log('🚀 handleSendRevenue called', { canvasId, mintQuantity });
+
     if (!mintQuantity || mintQuantity <= 0) {
       alert('请输入有效的铸造数量');
       return;
     }
+
     const totalAmount = (mintQuantity * 0.0018).toFixed(4);
-    await sendRevenue(canvasId, totalAmount);
-  };
+    console.log('💰 Sending revenue:', { canvasId, totalAmount, mintQuantity });
+
+    try {
+      await sendRevenue(canvasId, totalAmount);
+      console.log('✅ sendRevenue completed');
+    } catch (error) {
+      console.error('❌ sendRevenue failed:', error);
+    }
+  }
 
   const handleClaimRevenue = async () => {
     await claimRevenue(canvasId);
@@ -54,9 +117,9 @@ function RevenueManager({ isOpen, onClose, canvasId, mode }: RevenueManagerProps
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b">
           <h2 className="text-xl font-semibold">
-            {mode === 'send' && '发送收益'}
-            {mode === 'claim' && '领取收益'}
-            {mode === 'status' && '收益状态'}
+            {mode === 'send' && '发送'}
+            {mode === 'claim' && '领取'}
+            {mode === 'status' && '状态'}
           </h2>
           <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-2xl">×</button>
         </div>
@@ -89,7 +152,7 @@ function RevenueManager({ isOpen, onClose, canvasId, mode }: RevenueManagerProps
                       value={mintQuantity}
                       onChange={(e) => setMintQuantity(parseInt(e.target.value) || 1)}
                       className="w-full px-4 py-3 text-black text-lg font-medium border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-center"
-                      placeholder="100"
+                      placeholder="10"
                     />
                     <p className="text-xs text-black mt-1 text-center">建议数量: 100 个 NFT</p>
                   </div>
@@ -116,7 +179,7 @@ function RevenueManager({ isOpen, onClose, canvasId, mode }: RevenueManagerProps
 
                   <p className="text-xs text-gray-500 text-center">这些 ETH 将发送到收益合约，根据贡献比例分配给参与者</p>
 
-                  {sendError && <ErrorAlert error={sendError} onDismiss={() => {}} />}
+                  {sendError && <ErrorAlert error={sendError} onDismiss={() => { }} />}
 
                   {sendSuccess && sendTxHash && (
                     <div className="p-3 bg-green-50 border border-green-200 rounded-md">
@@ -153,7 +216,7 @@ function RevenueManager({ isOpen, onClose, canvasId, mode }: RevenueManagerProps
                     {isClaiming ? '领取中...' : parseFloat(claimableAmount) <= 0 ? '暂无可领取收益' : '确认领取'}
                   </button>
 
-                  {claimError && <ErrorAlert error={claimError} onDismiss={() => {}} />}
+                  {claimError && <ErrorAlert error={claimError} onDismiss={() => { }} />}
 
                   {claimSuccess && claimTxHash && (
                     <div className="p-3 bg-green-50 border border-green-200 rounded-md">

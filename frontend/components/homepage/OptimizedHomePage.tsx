@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { PageLayout } from '../layout/PageLayout';
 import { RevenueModal, useRevenueModal } from '../revenue/RevenueManager';
 import { SendRevenueButton } from '../revenue/RevenueButton';
+import { MintCanvasButton } from '../canvas/MintCanvasButton';
 import { SetupGuide } from '../setup/SetupGuide';
 import styles from './OptimizedHomePage.module.css';
 
@@ -22,7 +23,7 @@ const FEATURED_ARTWORKS: ArtworkData[] = [
     alt: 'Community Artwork 1'
   },
   {
-    id: '2', 
+    id: '4122776673090589', 
     imageUrl: 'https://www.figma.com/api/mcp/asset/52fff1ab-659b-4c98-aeee-775f3ef30f63',
     alt: 'Community Artwork 2'
   },
@@ -80,30 +81,27 @@ export function OptimizedHomePage() {
         <div className={styles.backgroundLayers}>
           <div className={styles.gradientOverlay} />
           <div className={styles.bgMainImage}>
-            <Image
-              src="https://www.figma.com/api/mcp/asset/a10986f5-0f38-43ac-894d-ab94cc5848a8"
+            <img
+              src="/images/homepage/top_bg.png"
               alt=""
-              fill
-              priority
-              sizes="100vw"
-              style={{ objectFit: 'cover' }}
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
           </div>
           
           {/* Simplified decorative elements for better performance */}
           <div className={styles.decorLeft}>
-            <Image
-              src="https://www.figma.com/api/mcp/asset/0ca3141b-80cd-4dac-940e-d33ee5617ba9"
+            <img
+              src="/images/homepage/left_img1.png"
               alt=""
               width={360}
               height={400}
-              style={{ opacity: 0.8, mixBlendMode: 'lighten' }}
+              style={{ opacity: 0.8, mixBlendMode: 'normal' }}
             />
           </div>
           
           <div className={styles.decorRight}>
-            <Image
-              src="https://www.figma.com/api/mcp/asset/1852609e-2922-4678-bd88-ca7c555f4284"
+            <img
+              src="/images/homepage/right_img1.png"
               alt=""
               width={430}
               height={400}
@@ -268,13 +266,13 @@ export function OptimizedHomePage() {
                     style={{ objectFit: 'cover' }}
                   />
                 </div>
-                {index === 0 ? (
-                  <SendRevenueButton 
+                {index === 1 ? (
+                  <MintCanvasButton 
                     canvasId={parseInt(artwork.id) || 1}
                     className={styles.mintButton}
                   >
                     Mint
-                  </SendRevenueButton>
+                  </MintCanvasButton>
                 ) : (
                   <button
                     className={styles.buyButton}

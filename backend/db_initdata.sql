@@ -40,8 +40,8 @@ INSERT INTO canvases (
   updated_ts,
   is_deleted
 ) VALUES (
-  4122776673090566, 
-  1761436800000,                          -- 当日零点时间戳（毫秒），示例为 2025-10-26 00:00:00+08:00
+  4122776673090589, 
+  1761436800006,                          -- 当日零点时间戳（毫秒），示例为 2025-10-26 00:00:00+08:00
   'https://ipfs.filebase.io/ipfs/QmZ5DCAuWBtadbsdpUiWnXteduiSiGUzY6iwnfd7F49U5w', -- metadata 的 IPFS URI
   '0x1234567890abcdef1234567890abcdef12345678', -- 创建者地址（64 字符限制内）
   1800000000000000000,                    -- 价格（例如 1 ETH = 10^18 wei）
