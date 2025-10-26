@@ -6,7 +6,7 @@ const { wallet } = require("../utils/wallet");
 const canvasAbi = require("../abi/FemCanvas.json");
 const { generateUUID } = require("../utils/generateUUID");
 const { uploadToFilebase, uploadMetadata } = require('../utils/uploadNft');
-const canvasContract = new ethers.Contract(process.env.CONTRIBUITION_CONTRACT_ADDRESS, canvasAbi, wallet);
+const canvasContract = new ethers.Contract(process.env.CANVAS_CONTRACT_ADDRESS, canvasAbi, wallet);
 const canvasRevenue = new ethers.Contract(process.env.REVENUE_CONTRACT_ADDRESS, canvasAbi, wallet);
 
 // get canvas by day_timestamp
@@ -101,7 +101,7 @@ router.post("/finalize", async (req, res) => {
         const day_timestamp = canvas.rows[0].day_timestamp;
         const supply = 100;// default supply 100
         const price = ethers.parseEther("0.0018");
-        const totalRaised = price * supply;
+        const totalRaised = price * BigInt(supply);
         console.log("Total raised wei:", totalRaised.toString());
 
         // step2: call contract to mint
@@ -112,13 +112,13 @@ router.post("/finalize", async (req, res) => {
         console.log("Calling mintCanvas txHash is:", mintTxHash);
 
         // step3: receive revenue
-        const receiveRevenueTx = await canvasRevenue.receiveRevenue(canvas_id, { value: totalRaised });
+        const receiveRevenueTx = await canvasRevenue.receiveRevenue(canvas_id);
         await receiveRevenueTx.wait();
         const receiveRevenueTxHash = receiveRevenueTx.hash;
         console.log("Calling receiveRevenue txHash is:", receiveRevenueTxHash);
 
         // step4: revenue claim
-        const revenueTx = canvasRevenue.claimRevenue(canvas_id);
+        const revenueTx = await canvasRevenue.claimRevenue(canvas_id);
         await revenueTx.wait();
         const revenueTxHash = revenueTx.hash;
         console.log("Calling claimRevenue txHash is:", revenueTxHash);       
@@ -134,7 +134,7 @@ router.post("/finalize", async (req, res) => {
         );
 
         
-        res.json({ success: true, txHash: txHash });
+        res.json({ success: true, mintTxHash, receiveRevenueTxHash, revenueTxHash });
     }
     catch (err) {
         console.error(err);

@@ -1,0 +1,515 @@
+/* ============================================
+   FIGMA 精确规格 - HOME PAGE
+   Design: 首页 (Homepage) - Node ID: 70:1809
+   尺寸: 1440px × 2700px
+   ============================================ */
+
+/* Reset & Base */
+.container {
+  position: relative;
+  width: 1440px;
+  min-height: 2700px;
+  background: #161616;
+  color: #ffffff;
+  overflow: hidden;
+  margin: 0 auto;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* ============================================
+   背景装饰层
+   ============================================ */
+
+.backgroundLayers {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 主背景图片 */
+.bgMainImage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 1027px;
+  mix-blend-mode: multiply;
+  z-index: 1;
+}
+
+/* 第二背景层 */
+.bgSecondLayer {
+  position: absolute;
+  left: 0;
+  top: 800px;
+  width: 100%;
+  height: 800px;
+  opacity: 0.8;
+  z-index: 2;
+}
+
+/* 左侧装饰组 */
+.leftDecorGroup {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 500px;
+  height: 100%;
+  z-index: 3;
+}
+
+.leftImg1 {
+  position: absolute;
+  left: -97px;
+  top: 135px;
+  width: 360px;
+  height: 400px;
+  opacity: 0.8;
+  mix-blend-mode: lighten;
+}
+
+.leftImg2 {
+  position: absolute;
+  left: -60px;
+  top: 1150px;
+  width: 300px;
+  height: 350px;
+  opacity: 0.7;
+  mix-blend-mode: lighten;
+}
+
+/* 右侧装饰组 */
+.rightDecorGroup {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 500px;
+  height: 100%;
+  z-index: 3;
+}
+
+.rightImg1 {
+  position: absolute;
+  right: -97px;
+  top: 200px;
+  width: 430px;
+  height: 400px;
+  opacity: 0.8;
+}
+
+.rightImg2 {
+  position: absolute;
+  right: -60px;
+  top: 1300px;
+  width: 350px;
+  height: 380px;
+  opacity: 0.7;
+}
+
+/* 边框装饰 */
+.frameDecor {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 1200px;
+  height: 2400px;
+  opacity: 0.3;
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* ============================================
+   导航栏 - Node ID: 97:2123
+   ============================================ */
+
+.navbar {
+  position: relative;
+  width: 100%;
+  height: 96px;
+  z-index: 100;
+  background: rgba(22, 22, 22, 0.8);
+  backdrop-filter: blur(10px);
+}
+
+.navbarContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 0 48px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.navbarLeft {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.navLink {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  transition: color 0.2s ease;
+}
+
+.navLink:hover {
+  color: #1ee11f;
+}
+
+.navbarRight {
+  display: flex;
+  align-items: center;
+}
+
+.connectButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: #7b2eff;
+  color: #ffffff;
+  border: none;
+  border-radius: 24px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.connectButton:hover {
+  background: #6828b0;
+  transform: translateY(-1px);
+}
+
+/* ============================================
+   Hero Section
+   ============================================ */
+
+.heroSection {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 141px;
+  z-index: 10;
+}
+
+.heroTitle {
+  position: relative;
+  margin-bottom: 48px;
+}
+
+.heroSubtitles {
+  text-align: center;
+  margin-bottom: 120px;
+}
+
+.heroSubtitle1,
+.heroSubtitle2 {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #ffffff;
+  margin: 8px 0;
+}
+
+/* ============================================
+   Nvshu of Today Section
+   ============================================ */
+
+.nvshuTodaySection {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 120px 0;
+  z-index: 10;
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.sectionSubtitle {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 80px;
+  max-width: 600px;
+}
+
+/* Nvshu Character Display */
+.nvshuCharacter {
+  position: relative;
+  width: 480px;
+  height: 480px;
+  margin-bottom: 80px;
+}
+
+.characterGlow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 480px;
+  height: 480px;
+  border-radius: 27px;
+  box-shadow: inset 0px 3.6px 27px 0px #ff66e8;
+  opacity: 0.9;
+  z-index: 1;
+}
+
+.characterLayers {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.characterMask {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 480px;
+  height: 480px;
+  mix-blend-mode: multiply;
+}
+
+.characterOverlay {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+
+.characterBase {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 480px;
+  height: 480px;
+  z-index: 1;
+}
+
+.characterTranslation {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  font-weight: 500;
+  color: #ffffff;
+  text-align: center;
+}
+
+/* Start Painting Button */
+.ctaButtonWrapper {
+  position: relative;
+}
+
+.startPaintingButton {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 32px;
+  background: #1ee11f;
+  color: #000000;
+  border: none;
+  border-radius: 24px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 310px;
+  justify-content: center;
+}
+
+.startPaintingButton:hover {
+  background: #1bc91c;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(30, 225, 31, 0.3);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ============================================
+   Community Artworks Section
+   ============================================ */
+
+.communitySection {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 120px 48px;
+  z-index: 10;
+}
+
+/* Artworks Grid */
+.artworksGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 350px);
+  grid-template-rows: repeat(2, auto);
+  gap: 48px 32px;
+  margin-bottom: 80px;
+}
+
+.artworkItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.artworkImage {
+  position: relative;
+  width: 350px;
+  height: 350px;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.artworkImage:hover {
+  transform: scale(1.02);
+}
+
+/* Buttons */
+.mintButton {
+  padding: 12px 32px;
+  background: #1ee11f;
+  color: #000000;
+  border: none;
+  border-radius: 24px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 138px;
+}
+
+.mintButton:hover {
+  background: #1bc91c;
+  transform: translateY(-1px);
+}
+
+.buyButton {
+  padding: 12px 32px;
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 24px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 138px;
+}
+
+.buyButton:hover {
+  border-color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+/* View All Link */
+.viewAllLink {
+  margin-top: 40px;
+}
+
+.viewAllButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: #ffffff;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: all 0.2s ease;
+}
+
+.viewAllButton:hover {
+  color: #1ee11f;
+  text-decoration-color: #1ee11f;
+}
+
+/* ============================================
+   响应式设计
+   ============================================ */
+
+@media (max-width: 1440px) {
+  .container {
+    transform: scale(0.9);
+    transform-origin: top center;
+  }
+}
+
+@media (max-width: 1200px) {
+  .container {
+    transform: scale(0.75);
+  }
+
+  .artworksGrid {
+    grid-template-columns: repeat(2, 350px);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    transform: scale(0.5);
+  }
+
+  .artworksGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .navbarContent {
+    padding: 0 24px;
+  }
+
+  .navbarLeft {
+    gap: 24px;
+  }
+
+  .navLink {
+    font-size: 14px;
+  }
+}

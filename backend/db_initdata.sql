@@ -24,4 +24,33 @@ INSERT INTO colors (
     (4270721359686718, '#000000', NULL, NULL, 0, 1, EXTRACT(EPOCH FROM NOW()) * 1000, EXTRACT(EPOCH FROM NOW()) * 1000, 0);
 
 
-
+-- 插入一条画布记录（示例数据）
+INSERT INTO canvases (
+  canvas_id,
+  day_timestamp,
+  metadata_uri,
+  creator,
+  price,
+  total_contributions,
+  total_raised_wei,
+  finalized,
+  tx_hash,
+  status,
+  created_ts,
+  updated_ts,
+  is_deleted
+) VALUES (
+  4122776673090566, 
+  1761436800000,                          -- 当日零点时间戳（毫秒），示例为 2025-10-26 00:00:00+08:00
+  'https://ipfs.filebase.io/ipfs/QmZ5DCAuWBtadbsdpUiWnXteduiSiGUzY6iwnfd7F49U5w', -- metadata 的 IPFS URI
+  '0x1234567890abcdef1234567890abcdef12345678', -- 创建者地址（64 字符限制内）
+  1800000000000000000,                    -- 价格（例如 1 ETH = 10^18 wei）
+  100,                                     -- 总贡献量
+  0,                    -- 总筹集金额（wei），例如 5 ETH
+  0,                                      -- 是否结算完成：0 未结算
+  NULL,                                   -- 上链交易 hash，可为 NULL，或如 '0x...'(长度 66)
+  1,                                      -- 状态（业务自定义，默认 1）
+  EXTRACT(EPOCH FROM NOW())::BIGINT * 1000, -- 创建时间（毫秒）
+  EXTRACT(EPOCH FROM NOW())::BIGINT * 1000, -- 更新时间（毫秒）
+  0                                       -- 逻辑删除：0 未删除
+);

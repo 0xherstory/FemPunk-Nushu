@@ -4,6 +4,9 @@ import React, { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { PageLayout } from '../layout/PageLayout';
+import { RevenueModal, useRevenueModal } from '../revenue/RevenueManager';
+import { SendRevenueButton } from '../revenue/RevenueButton';
+import { SetupGuide } from '../setup/SetupGuide';
 import styles from './OptimizedHomePage.module.css';
 
 interface ArtworkData {
@@ -47,8 +50,10 @@ const FEATURED_ARTWORKS: ArtworkData[] = [
 
 export function OptimizedHomePage() {
   const router = useRouter();
+  const { isOpen, mode, canvasId, openModal, closeModal } = useRevenueModal();
 
   const handleStartPainting = useCallback(() => {
+    console.log('Start Painting button clicked!');
     router.push('/canvas');
   }, [router]);
 
@@ -63,8 +68,10 @@ export function OptimizedHomePage() {
 
   const handleMintArtwork = useCallback((artworkId: string) => {
     console.log('Mint artwork:', artworkId);
-    // TODO: Implement mint functionality
-  }, []);
+    // Open revenue modal directly for quick minting
+    const canvasIdNum = parseInt(artworkId) || 1; // Default to canvas ID 1
+    openModal(canvasIdNum, 'send');
+  }, [openModal]);
 
   return (
     <PageLayout navigationVariant="transparent" className={styles.homePage}>
@@ -203,7 +210,12 @@ export function OptimizedHomePage() {
           <div className={styles.ctaButtonWrapper}>
             <button
               className={styles.startPaintingButton}
-              onClick={handleStartPainting}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Button clicked!', e);
+                handleStartPainting();
+              }}
               aria-describedby="paint-description"
             >
               <Image
@@ -256,13 +268,22 @@ export function OptimizedHomePage() {
                     style={{ objectFit: 'cover' }}
                   />
                 </div>
-                <button
-                  className={index === 0 ? styles.mintButton : styles.buyButton}
-                  onClick={() => index === 0 ? handleMintArtwork(artwork.id) : handleBuyArtwork(artwork.id)}
-                  aria-label={`${index === 0 ? 'Mint' : 'Buy'} ${artwork.alt}`}
-                >
-                  {index === 0 ? 'Mint' : 'Buy'}
-                </button>
+                {index === 0 ? (
+                  <SendRevenueButton 
+                    canvasId={parseInt(artwork.id) || 1}
+                    className={styles.mintButton}
+                  >
+                    Mint
+                  </SendRevenueButton>
+                ) : (
+                  <button
+                    className={styles.buyButton}
+                    onClick={() => handleBuyArtwork(artwork.id)}
+                    aria-label={`Buy ${artwork.alt}`}
+                  >
+                    Buy
+                  </button>
+                )}
               </div>
             ))}
           </div>
@@ -282,6 +303,17 @@ export function OptimizedHomePage() {
           </div>
         </section>
       </div>
+
+      {/* Revenue Modal */}
+      <RevenueModal
+        isOpen={isOpen}
+        onClose={closeModal}
+        canvasId={canvasId}
+        mode={mode}
+      />
+
+      {/* Setup Guide */}
+      <SetupGuide />
     </PageLayout>
   );
 }

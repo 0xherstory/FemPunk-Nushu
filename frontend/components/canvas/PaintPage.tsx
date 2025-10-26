@@ -7,6 +7,28 @@ import { WalletModal } from '../wallet/WalletModal';
 import { useWalletModal } from '../../lib/hooks/useWalletModal';
 import styles from './PaintPage.module.css';
 
+// Type declarations to fix import issues
+
+declare module 'next/navigation' {
+  export function useRouter(): {
+    push: (path: string) => void;
+    replace: (path: string) => void;
+    back: () => void;
+    forward: () => void;
+    refresh: () => void;
+    prefetch: (path: string) => void;
+  };
+}
+
+declare module 'wagmi' {
+  export function useAccount(): {
+    address?: string;
+    isConnected: boolean;
+    isConnecting: boolean;
+    isDisconnected: boolean;
+  };
+}
+
 /**
  * FemPunk Nvshu - Paint Page Component
  * Design: FemFunk-Nvshu - 绘画页-有颜色
@@ -28,11 +50,22 @@ interface PaintPageProps {
   className?: string;
 }
 
+interface ColorData {
+  color_id: number;
+  color_code: string;
+  owner_address: string;
+  metadata_uri: string;
+  tx_hash?: string;
+  created_ts: number;
+  updated_ts: number;
+  is_deleted: number;
+}
+
 const PaintPage: React.FC<PaintPageProps> = ({ className }) => {
   const router = useRouter();
   const { address, isConnected } = useAccount();
   const { modalState, openModal: openWalletModal, closeModal: closeWalletModal } = useWalletModal();
-  
+
   // Canvas state
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -43,8 +76,39 @@ const PaintPage: React.FC<PaintPageProps> = ({ className }) => {
   const [canvasHistory, setCanvasHistory] = useState<ImageData[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
 
-  // Available colors (demo colors)
-  const availableColors = ['#592386', '#237286'];
+  // Colors state
+  const [availableColors, setAvailableColors] = useState<string[]>([]);
+  const [isLoadingColors, setIsLoadingColors] = useState(false);
+  const [newlyClaimedColor, setNewlyClaimedColor] = useState<string | null>(null);
+
+  // Fetch user colors
+  const fetchUserColors = useCallback(async () => {
+    if (!address) return;
+
+    setIsLoadingColors(true);
+    try {
+      const response = await fetch(`/api/colors/owner/${address}`);
+      const data = await response.json();
+
+      if (data.success && data.colors) {
+        const colors = data.colors.map((color: ColorData) => `#${color.color_code}`);
+        setAvailableColors(colors);
+
+        // Set first color as current if available and no color is currently selected
+        if (colors.length > 0 && currentColor === '#592386') {
+          setCurrentColor(colors[0]);
+        }
+      } else {
+        console.error('Failed to fetch colors:', data.error);
+        setAvailableColors([]);
+      }
+    } catch (error) {
+      console.error('Error fetching colors:', error);
+      setAvailableColors([]);
+    } finally {
+      setIsLoadingColors(false);
+    }
+  }, [address, currentColor]);
 
   // Initialize canvas
   useEffect(() => {
@@ -59,10 +123,19 @@ const PaintPage: React.FC<PaintPageProps> = ({ className }) => {
     ctx.lineJoin = 'round';
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
+
     // Save initial state
     saveCanvasState();
   }, []);
+
+  // Fetch colors when user connects wallet (only once)
+  useEffect(() => {
+    if (isConnected && address) {
+      fetchUserColors();
+    } else {
+      setAvailableColors([]);
+    }
+  }, [isConnected, address]); // 移除 fetchUserColors 依赖，避免无限循环
 
   // Save canvas state for undo/redo
   const saveCanvasState = useCallback(() => {
@@ -75,13 +148,13 @@ const PaintPage: React.FC<PaintPageProps> = ({ className }) => {
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const newHistory = canvasHistory.slice(0, historyIndex + 1);
     newHistory.push(imageData);
-    
+
     if (newHistory.length > 50) { // Limit history size
       newHistory.shift();
     } else {
-      setHistoryIndex(prev => prev + 1);
+      setHistoryIndex((prev: number) => prev + 1);
     }
-    
+
     setCanvasHistory(newHistory);
   }, [canvasHistory, historyIndex]);
 
@@ -105,7 +178,7 @@ const PaintPage: React.FC<PaintPageProps> = ({ className }) => {
 
     setIsDrawing(true);
     setHasDrawn(true);
-    
+
     const rect = canvas.getBoundingClientRect();
     const x = (e.clientX - rect.left) * (canvas.width / rect.width);
     const y = (e.clientY - rect.top) * (canvas.height / rect.height);
@@ -135,7 +208,7 @@ const PaintPage: React.FC<PaintPageProps> = ({ className }) => {
 
   const stopDrawing = useCallback(() => {
     if (isDrawing) {
-      setStrokeCount(prev => prev + 1);
+      setStrokeCount((prev: number) => prev + 1);
       saveCanvasState();
     }
     setIsDrawing(false);
@@ -143,7 +216,7 @@ const PaintPage: React.FC<PaintPageProps> = ({ className }) => {
 
   // Tool handlers
   const handleBrushSizeChange = (delta: number) => {
-    setBrushSize(prev => Math.max(1, Math.min(50, prev + delta)));
+    setBrushSize((prev: number) => Math.max(1, Math.min(50, prev + delta)));
   };
 
   const handleColorSelect = (color: string) => {
@@ -199,64 +272,97 @@ const PaintPage: React.FC<PaintPageProps> = ({ className }) => {
 
     const canvas = canvasRef.current;
     const imageData = canvas.toDataURL('image/png');
-    
+
     // Simulate save/mint process
     alert(`保存作品成功!\n\n笔画数: ${strokeCount}\n创作者: ${address.slice(0, 6)}...${address.slice(-4)}\n\n这是演示模式，实际部署时会保存到区块链。`);
   };
 
-  const [isMinting, setIsMinting] = useState(false);
-  const [mintMessage, setMintMessage] = useState<string | null>(null);
+  const [isClaiming, setIsClaiming] = useState(false);
+  const [claimMessage, setClaimMessage] = useState<string | null>(null);
 
-  const handleMintColor = async () => {
+  const handleClaimColors = async () => {
     if (!isConnected) {
       openWalletModal();
       return;
     }
 
-    setIsMinting(true);
-    setMintMessage(null);
+    if (!address) {
+      setClaimMessage('钱包地址未获取到，请重新连接钱包');
+      return;
+    }
+
+    setIsClaiming(true);
+    setClaimMessage(null);
 
     try {
-      // 使用测试颜色
-      const testColors = ['E5E5E5', 'B2B2B2', 'FF6B6B', '4ECDC4', '45B7D1', 'FFA07A'];
-      const randomColor = testColors[Math.floor(Math.random() * testColors.length)];
-      
+      const testColors = 1342079089309930;
+
+      console.log('Claiming colors with address:', address, 'color_id:', testColors, 'type:', typeof testColors);
+
       const response = await fetch('/api/colors/reward', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          wallet_address: address,
-          color_code: randomColor,
+          address: address,
+          color_id: testColors,
         }),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to mint color');
+        throw new Error(errorData.error || 'Failed to claim colors');
       }
 
       const result = await response.json();
-      console.log('Color minted successfully:', result);
+      console.log('Colors claimed successfully:', result);
       
-      setMintMessage(`Successfully minted color #${randomColor}!`);
-      
+      if (result.success && result.color_code) {
+        const newColor = `#${result.color_code}`;
+        
+        // 立即添加新颜色到可用颜色列表（避免重复）
+        setAvailableColors(prev => {
+          if (!prev.includes(newColor)) {
+            return [...prev, newColor];
+          }
+          return prev;
+        });
+        
+        // 自动选择新获得的颜色
+        setCurrentColor(newColor);
+        
+        // 标记为新获得的颜色，用于视觉高亮
+        setNewlyClaimedColor(newColor);
+        
+        setClaimMessage(`🎨 Successfully claimed color ${newColor}! Tx: ${result.txHash?.slice(0, 10)}...`);
+        
+        // 5秒后移除新颜色高亮
+        setTimeout(() => {
+          setNewlyClaimedColor(null);
+        }, 5000);
+        
+        // 重新获取颜色以确保数据同步
+        await fetchUserColors();
+      } else {
+        setClaimMessage('Color claimed but no color code returned');
+      }
+
       // 3秒后清除消息
       setTimeout(() => {
-        setMintMessage(null);
+        setClaimMessage(null);
       }, 3000);
-      
+
     } catch (err) {
-      console.error('Error minting color:', err);
-      setMintMessage(err instanceof Error ? err.message : 'Failed to mint color');
-      
+      console.error('Error claiming colors:', err);
+      setClaimMessage(err instanceof Error ? err.message : 'Failed to claim colors');
+
       // 5秒后清除错误消息
       setTimeout(() => {
-        setMintMessage(null);
+        setClaimMessage(null);
       }, 5000);
     } finally {
-      setIsMinting(false);
+      setIsClaiming(false);
     }
   };
   return (
@@ -270,7 +376,7 @@ const PaintPage: React.FC<PaintPageProps> = ({ className }) => {
             alt="Canvas Background"
           />
         </div>
-        
+
         {/* Interactive Canvas */}
         <canvas
           ref={canvasRef}
@@ -338,10 +444,10 @@ const PaintPage: React.FC<PaintPageProps> = ({ className }) => {
 
           {/* Right Side: Connect Button */}
           <div className={styles.navbarRight} data-node-id="I101:2196;70:1817">
-            <button 
-              className={styles.connectButton} 
+            <button
+              className={styles.connectButton}
               data-node-id="I101:2196;70:1821"
-              onClick={isConnected ? () => {} : () => openWalletModal()}
+              onClick={isConnected ? () => { } : () => openWalletModal()}
             >
               <img
                 src="https://www.figma.com/api/mcp/asset/17dd0880-4f79-474b-9b15-1a7dd17fdaf4"
@@ -375,7 +481,7 @@ const PaintPage: React.FC<PaintPageProps> = ({ className }) => {
         <div className={styles.divider} data-node-id="101:2241" />
 
         {/* Zoom Out */}
-        <button className={styles.toolItem} data-node-id="101:2282" onClick={() => {}}>
+        <button className={styles.toolItem} data-node-id="101:2282" onClick={() => { }}>
           <img
             src="https://www.figma.com/api/mcp/asset/3eecc0bb-ddbb-4beb-8e19-a745c16d3dd4"
             alt="Zoom Out"
@@ -383,7 +489,7 @@ const PaintPage: React.FC<PaintPageProps> = ({ className }) => {
         </button>
 
         {/* Zoom In */}
-        <button className={styles.toolItem} data-node-id="101:2286" onClick={() => {}}>
+        <button className={styles.toolItem} data-node-id="101:2286" onClick={() => { }}>
           <img
             src="https://www.figma.com/api/mcp/asset/4494b5d6-4d46-4f8d-92f5-144bc57afb61"
             alt="Zoom In"
@@ -418,39 +524,45 @@ const PaintPage: React.FC<PaintPageProps> = ({ className }) => {
 
           {/* Color Swatches */}
           <div className={styles.colorSwatches}>
-            {availableColors.map((color, index) => (
-              <button
-                key={color}
-                className={`${styles.colorSwatch} ${currentColor === color ? styles.active : ''}`}
-                data-node-id={index === 0 ? "101:2259" : "101:2333"}
-                style={{ background: color }}
-                onClick={() => handleColorSelect(color)}
-                title={`选择颜色 ${color}`}
-              />
-            ))}
+            {isLoadingColors ? (
+              <div className={styles.loadingColors}>Loading colors...</div>
+            ) : availableColors.length > 0 ? (
+              availableColors.map((color: string, index: number) => (
+                <button
+                  key={color}
+                  className={`${styles.colorSwatch} ${currentColor === color ? styles.active : ''} ${newlyClaimedColor === color ? styles.newColor : ''}`}
+                  data-node-id={index === 0 ? "101:2259" : "101:2333"}
+                  style={{ background: color }}
+                  onClick={() => handleColorSelect(color)}
+                  title={`选择颜色 ${color}${newlyClaimedColor === color ? ' (新获得!)' : ''}`}
+                />
+              ))
+            ) : (
+              <div className={styles.noColors}>No colors available. Claim some colors below!</div>
+            )}
           </div>
 
-          {/* Mint Color Button */}
-          <button 
-            className={styles.mintColorButton} 
-            data-node-id="101:2251" 
-            onClick={handleMintColor}
-            disabled={isMinting || !isConnected}
+          {/* Claim Colors Button */}
+          <button
+            className={styles.mintColorButton}
+            data-node-id="101:2251"
+            onClick={handleClaimColors}
+            disabled={isClaiming || !isConnected}
           >
-            {isMinting ? (
+            {isClaiming ? (
               <>
                 <div className={styles.spinner} />
-                <span>Minting...</span>
+                <span>Claiming...</span>
               </>
             ) : (
-              <span>Mint Color</span>
+              <span>Claim Colors</span>
             )}
           </button>
 
-          {/* Mint Message */}
-          {mintMessage && (
-            <div className={`${styles.mintMessage} ${mintMessage.includes('Successfully') ? styles.success : styles.error}`}>
-              {mintMessage}
+          {/* Claim Message */}
+          {claimMessage && (
+            <div className={`${styles.mintMessage} ${claimMessage.includes('Successfully') ? styles.success : styles.error}`}>
+              {claimMessage}
             </div>
           )}
         </div>
@@ -460,8 +572,8 @@ const PaintPage: React.FC<PaintPageProps> = ({ className }) => {
         {/* Action Buttons */}
         <div className={styles.actionButtons}>
           {/* Undo */}
-          <button 
-            className={styles.actionButton} 
+          <button
+            className={styles.actionButton}
             data-node-id="101:2272"
             onClick={handleUndo}
             disabled={historyIndex <= 0}
@@ -474,8 +586,8 @@ const PaintPage: React.FC<PaintPageProps> = ({ className }) => {
           </button>
 
           {/* Redo */}
-          <button 
-            className={styles.actionButton} 
+          <button
+            className={styles.actionButton}
             data-node-id="101:2276"
             onClick={handleRedo}
             disabled={historyIndex >= canvasHistory.length - 1}
@@ -488,8 +600,8 @@ const PaintPage: React.FC<PaintPageProps> = ({ className }) => {
           </button>
 
           {/* Import Image */}
-          <button 
-            className={styles.actionButton} 
+          <button
+            className={styles.actionButton}
             data-node-id="101:2268"
             onClick={() => alert('导入图片功能开发中')}
             title="导入图片"
@@ -501,8 +613,8 @@ const PaintPage: React.FC<PaintPageProps> = ({ className }) => {
           </button>
 
           {/* Clear Canvas */}
-          <button 
-            className={styles.actionButton} 
+          <button
+            className={styles.actionButton}
             data-node-id="101:2264"
             onClick={handleClear}
             title="清空画布"
@@ -514,8 +626,8 @@ const PaintPage: React.FC<PaintPageProps> = ({ className }) => {
           </button>
 
           {/* Save Button */}
-          <button 
-            className={styles.saveButton} 
+          <button
+            className={styles.saveButton}
             data-node-id="101:2254"
             onClick={handleSave}
             disabled={!hasDrawn || !isConnected}
@@ -607,7 +719,7 @@ const PaintPage: React.FC<PaintPageProps> = ({ className }) => {
       </div>
 
       {/* Wallet Modal */}
-      <WalletModal 
+      <WalletModal
         isOpen={modalState.isOpen}
         onClose={closeWalletModal}
         trigger="canvas"

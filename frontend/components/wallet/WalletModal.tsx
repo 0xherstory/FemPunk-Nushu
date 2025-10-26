@@ -3,9 +3,9 @@
 import React from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useWallet } from '../../lib/context/WalletContext';
-import { useNetworkSwitch, useNetworkGuidance } from '../../lib/hooks/useNetworkSwitch';
-import { Button } from '../ui/Button';
-import { Card } from '../ui/Card';
+import { useNetworkSwitch, useNetworkGuidance } from '../../lib/hooks/useSimpleNetworkSwitch';
+import { Button } from '../ui/SimpleButton';
+import { Card } from '../ui/SimpleCard';
 
 interface WalletModalProps {
   isOpen: boolean;

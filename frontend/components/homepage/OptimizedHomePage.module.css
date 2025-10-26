@@ -249,6 +249,9 @@
     color: #ffffff;
     cursor: pointer;
     transition: all 0.3s ease;
+    position: relative;
+    z-index: 50;
+    pointer-events: auto;
 }
 
 .startPaintingButton:hover {
