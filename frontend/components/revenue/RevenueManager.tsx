@@ -1,3 +1,4 @@
+// frontend/components/revenue/RevenueManager.tsx
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -6,28 +7,28 @@ import { formatEther } from 'viem';
 import { useSendRevenue, useClaimRevenue, useClaimableAmount, useCanvasRevenueStatus } from '../../lib/hooks/useRevenueContract';
 import { ErrorAlert } from '../ui/ErrorAlert';
 
-interface RevenueModalProps {
+type Mode = 'send' | 'claim' | 'status';
+
+interface RevenueManagerProps {
   isOpen: boolean;
   onClose: () => void;
   canvasId: number;
-  mode: 'send' | 'claim' | 'status';
+  mode: Mode;
 }
 
-export function RevenueModal({ isOpen, onClose, canvasId, mode }: RevenueModalProps) {
+function RevenueManager({ isOpen, onClose, canvasId, mode }: RevenueManagerProps) {
   const { address, isConnected } = useAccount();
-  const [mintQuantity, setMintQuantity] = useState(100); // Default 100 NFTs
-  
+  const [mintQuantity, setMintQuantity] = useState(100); // 默认 100
+
   const { sendRevenue, isLoading: isSending, isSuccess: sendSuccess, error: sendError, txHash: sendTxHash } = useSendRevenue();
   const { claimRevenue, isLoading: isClaiming, isSuccess: claimSuccess, error: claimError, txHash: claimTxHash } = useClaimRevenue();
   const { claimableAmount, isLoading: loadingClaimable } = useClaimableAmount(canvasId);
   const { status, isLoading: loadingStatus } = useCanvasRevenueStatus(canvasId);
 
-  // Close modal on successful transaction
+  // 成功后自动关闭
   useEffect(() => {
     if (sendSuccess || claimSuccess) {
-      const timer = setTimeout(() => {
-        onClose();
-      }, 3000); // Auto close after 3 seconds
+      const timer = setTimeout(() => onClose(), 3000);
       return () => clearTimeout(timer);
     }
   }, [sendSuccess, claimSuccess, onClose]);
@@ -57,12 +58,7 @@ export function RevenueModal({ isOpen, onClose, canvasId, mode }: RevenueModalPr
             {mode === 'claim' && '领取收益'}
             {mode === 'status' && '收益状态'}
           </h2>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 text-2xl"
-          >
-            ×
-          </button>
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-2xl">×</button>
         </div>
 
         {/* Content */}
@@ -70,20 +66,12 @@ export function RevenueModal({ isOpen, onClose, canvasId, mode }: RevenueModalPr
           {!isConnected ? (
             <div className="text-center py-8">
               <p className="text-gray-600 mb-4">请先连接钱包</p>
-              <button
-                onClick={onClose}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-              >
-                关闭
-              </button>
+              <button onClick={onClose} className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">关闭</button>
             </div>
           ) : (
             <>
-
-              {/* Send Revenue Mode */}
               {mode === 'send' && (
                 <div className="space-y-4">
-                  {/* Unit Price Display */}
                   <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
                     <div className="text-center">
                       <p className="text-sm text-gray-600 mb-1">NFT 单价</p>
@@ -92,11 +80,8 @@ export function RevenueModal({ isOpen, onClose, canvasId, mode }: RevenueModalPr
                     </div>
                   </div>
 
-                  {/* Mint Quantity Input */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      铸造数量
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">铸造数量</label>
                     <input
                       type="number"
                       min="1"
@@ -106,12 +91,9 @@ export function RevenueModal({ isOpen, onClose, canvasId, mode }: RevenueModalPr
                       className="w-full px-4 py-3 text-black text-lg font-medium border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-center"
                       placeholder="100"
                     />
-                    <p className="text-xs text-black mt-1 text-center">
-                      建议数量: 100 个 NFT
-                    </p>
+                    <p className="text-xs text-black mt-1 text-center">建议数量: 100 个 NFT</p>
                   </div>
 
-                  {/* Total Amount Display */}
                   <div className="p-4 bg-gray-50 rounded-lg border">
                     <div className="flex justify-between items-center">
                       <span className="text-gray-600">总金额:</span>
@@ -132,25 +114,14 @@ export function RevenueModal({ isOpen, onClose, canvasId, mode }: RevenueModalPr
                     {isSending ? '发送中...' : `发送 ${(mintQuantity * 0.0018).toFixed(4)} ETH`}
                   </button>
 
-                  <p className="text-xs text-gray-500 text-center">
-                    这些 ETH 将发送到收益合约，根据贡献比例分配给参与者
-                  </p>
+                  <p className="text-xs text-gray-500 text-center">这些 ETH 将发送到收益合约，根据贡献比例分配给参与者</p>
 
-                  {sendError && (
-                    <ErrorAlert 
-                      error={sendError} 
-                      onDismiss={() => {
-                        // Clear error after user reads it
-                      }}
-                    />
-                  )}
+                  {sendError && <ErrorAlert error={sendError} onDismiss={() => {}} />}
 
                   {sendSuccess && sendTxHash && (
                     <div className="p-3 bg-green-50 border border-green-200 rounded-md">
-                      <p className="text-sm text-green-800 mb-2">
-                        🎉 收益发送成功!
-                      </p>
-                      <a 
+                      <p className="text-sm text-green-800 mb-2">🎉 收益发送成功!</p>
+                      <a
                         href={`https://sepolia.etherscan.io/tx/${sendTxHash}`}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -163,7 +134,6 @@ export function RevenueModal({ isOpen, onClose, canvasId, mode }: RevenueModalPr
                 </div>
               )}
 
-              {/* Claim Revenue Mode */}
               {mode === 'claim' && (
                 <div className="space-y-4">
                   <div className="text-center py-4">
@@ -183,21 +153,12 @@ export function RevenueModal({ isOpen, onClose, canvasId, mode }: RevenueModalPr
                     {isClaiming ? '领取中...' : parseFloat(claimableAmount) <= 0 ? '暂无可领取收益' : '确认领取'}
                   </button>
 
-                  {claimError && (
-                    <ErrorAlert 
-                      error={claimError} 
-                      onDismiss={() => {
-                        // Clear error after user reads it
-                      }}
-                    />
-                  )}
+                  {claimError && <ErrorAlert error={claimError} onDismiss={() => {}} />}
 
                   {claimSuccess && claimTxHash && (
                     <div className="p-3 bg-green-50 border border-green-200 rounded-md">
-                      <p className="text-sm text-green-800 mb-2">
-                        🎉 收益领取成功!
-                      </p>
-                      <a 
+                      <p className="text-sm text-green-800 mb-2">🎉 收益领取成功!</p>
+                      <a
                         href={`https://sepolia.etherscan.io/tx/${claimTxHash}`}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -210,10 +171,8 @@ export function RevenueModal({ isOpen, onClose, canvasId, mode }: RevenueModalPr
                 </div>
               )}
 
-              {/* Status Mode */}
               {mode === 'status' && (
                 <div className="space-y-4">
-                  {/* Canvas Basic Info */}
                   <div className="text-center p-4 bg-gray-50 rounded-lg">
                     <h3 className="text-lg font-semibold mb-2">Canvas #{canvasId}</h3>
                     {loadingStatus ? (
@@ -241,7 +200,7 @@ export function RevenueModal({ isOpen, onClose, canvasId, mode }: RevenueModalPr
                         {loadingClaimable ? '加载中...' : `${claimableAmount} ETH`}
                       </span>
                     </div>
-                    
+
                     {status && (
                       <div className="flex justify-between items-center py-3 px-4 bg-gray-50 rounded-lg">
                         <span className="text-gray-700 font-medium">分配状态</span>
@@ -257,11 +216,8 @@ export function RevenueModal({ isOpen, onClose, canvasId, mode }: RevenueModalPr
                       <button
                         onClick={() => {
                           onClose();
-                          // Trigger claim modal
                           setTimeout(() => {
-                            const event = new CustomEvent('openRevenueModal', { 
-                              detail: { canvasId, mode: 'claim' } 
-                            });
+                            const event = new CustomEvent('openRevenueModal', { detail: { canvasId, mode: 'claim' as Mode } });
                             window.dispatchEvent(event);
                           }, 100);
                         }}
@@ -278,7 +234,7 @@ export function RevenueModal({ isOpen, onClose, canvasId, mode }: RevenueModalPr
                     </button>
                   </div>
                 </div>
-      
+              )}
             </>
           )}
         </div>
@@ -287,19 +243,21 @@ export function RevenueModal({ isOpen, onClose, canvasId, mode }: RevenueModalPr
   );
 }
 
-// Hook for managing revenue modal
+export default RevenueManager;
+
+// 保留 hook
 export function useRevenueModal() {
   const [modalState, setModalState] = useState<{
     isOpen: boolean;
     canvasId: number;
-    mode: 'send' | 'claim' | 'status';
+    mode: Mode;
   }>({
     isOpen: false,
     canvasId: 0,
     mode: 'send'
   });
 
-  const openModal = (canvasId: number, mode: 'send' | 'claim' | 'status' = 'send') => {
+  const openModal = (canvasId: number, mode: Mode = 'send') => {
     setModalState({ isOpen: true, canvasId, mode });
   };
 
@@ -307,10 +265,9 @@ export function useRevenueModal() {
     setModalState(prev => ({ ...prev, isOpen: false }));
   };
 
-  // Listen for custom events
   useEffect(() => {
     const handleOpenModal = (event: CustomEvent) => {
-      const { canvasId, mode } = event.detail;
+      const { canvasId, mode } = event.detail as { canvasId: number; mode: Mode };
       openModal(canvasId, mode);
     };
 
@@ -320,9 +277,5 @@ export function useRevenueModal() {
     };
   }, []);
 
-  return {
-    ...modalState,
-    openModal,
-    closeModal
-  };
+  return { ...modalState, openModal, closeModal };
 }
