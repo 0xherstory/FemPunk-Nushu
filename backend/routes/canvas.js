@@ -5,8 +5,9 @@ const { ethers } = require("ethers");
 const { wallet } = require("../utils/wallet");
 const canvasAbi = require("../abi/FemCanvas.json");
 const { generateUUID } = require("../utils/generateUUID");
-const { uploadToFilebase, uploadMetadata } = require('./uploadNFT');
+const { uploadToFilebase, uploadMetadata } = require('../utils/uploadNft');
 const canvasContract = new ethers.Contract(process.env.CONTRIBUITION_CONTRACT_ADDRESS, canvasAbi, wallet);
+const canvasRevenue = new ethers.Contract(process.env.REVENUE_CONTRACT_ADDRESS, canvasAbi, wallet);
 
 // get canvas by day_timestamp
 router.get("/:day_timestamp", async (req, res) => {
@@ -52,37 +53,21 @@ router.post("/create", async (req, res) => {
   }
 });
 
-router.post("/updateMetadata", async (req, res) => {
-    const { canvas_id, metadata_uri } = req.body;
-    try {
-        await pool.query(
-        "UPDATE canvases SET metadata_uri=$1, updated_ts=extract(epoch from now())*1000 WHERE canvas_id=$2;",
-        [metadata_uri,canvas_id]
-        );
-        res.json({ success: true });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ success: false, error: err.message });
-    }
-});
-
 // mint ERC1155 NFT for a canvas
 router.post("/mint", async (req, res) => {
-    const { canvas_id, metadata_uri, supply } = req.body;
-    console.log("Minting canvas:", canvas_id, metadata_uri, supply);
+  // step1: update metadata_uri in database
+    const { canvas_id } = req.body;
+    console.log("Minting canvas:", canvas_id);
+    // step1: check canvas info
     const canvas = await pool.query(
         "SELECT * FROM canvases WHERE canvas_id=$1", [canvas_id]
     );
     if (canvas.rows.length === 0) return res.status(404).json({ success: false, error: "Canvas not found" });
 
     try {
-        // step1: update metadata uri in database
-        await pool.query(
-        "UPDATE canvases SET metadata_uri=$1, updated_ts=extract(epoch from now())*1000 WHERE canvas_id=$2;",
-        [metadata_uri,canvas_id]
-        );
+        const metadata_uri =  canvas.rows[0].metadata_uri
         const day_timestamp = canvas.rows[0].day_timestamp;
-        const supply = req.body.supply || 100;// default supply 100
+        const supply = 100;// default supply 100
         // step2: call contract to mint
         console.log("Calling mintCanvas on contract...");
         const tx = await canvasContract.mintCanvas(canvas_id, day_timestamp, metadata_uri, supply);
@@ -101,6 +86,60 @@ router.post("/mint", async (req, res) => {
         res.status(500).json({ success: false, error: err.message });
     }
     
+});
+
+// mint + contribution + finalize in one step
+router.post("/finalize", async (req, res) => {
+    const { canvas_id } = req.body;
+    try {
+        // step1: check canvas info
+        const canvas = await pool.query(
+            "SELECT * FROM canvases WHERE canvas_id=$1", [canvas_id]
+        );
+        if (canvas.rows.length === 0) return res.status(404).json({ success: false, error: "Canvas not found" });
+        const metadata_uri =  canvas.rows[0].metadata_uri
+        const day_timestamp = canvas.rows[0].day_timestamp;
+        const supply = 100;// default supply 100
+        const price = ethers.parseEther("0.0018");
+        const totalRaised = price * supply;
+        console.log("Total raised wei:", totalRaised.toString());
+
+        // step2: call contract to mint
+        console.log("Calling mintCanvas on contract...");
+        const mintTx = await canvasContract.mintCanvas(canvas_id, day_timestamp, metadata_uri, supply);
+        await mintTx.wait();
+        const mintTxHash = mintTx.hash;
+        console.log("Calling mintCanvas txHash is:", mintTxHash);
+
+        // step3: receive revenue
+        const receiveRevenueTx = await canvasRevenue.receiveRevenue(canvas_id, { value: totalRaised });
+        await receiveRevenueTx.wait();
+        const receiveRevenueTxHash = receiveRevenueTx.hash;
+        console.log("Calling receiveRevenue txHash is:", receiveRevenueTxHash);
+
+        // step4: revenue claim
+        const revenueTx = canvasRevenue.claimRevenue(canvas_id);
+        await revenueTx.wait();
+        const revenueTxHash = revenueTx.hash;
+        console.log("Calling claimRevenue txHash is:", revenueTxHash);       
+
+        // step3: update database
+        await pool.query(
+            "UPDATE canvases SET total_raised_wei=$1, updated_ts=extract(epoch from now())*1000 WHERE canvas_id=$2;",
+            [totalRaised,canvas_id]
+        );
+        await pool.query(
+            "UPDATE settlements SET total_income_wei=$2,updated_ts=extract(epoch from now())*1000 WHERE canvas_id=$1;",
+            [canvas_id,totalRaised]
+        );
+
+        
+        res.json({ success: true, txHash: txHash });
+    }
+    catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, error: err.message });
+    }
 });
 
 module.exports = router;

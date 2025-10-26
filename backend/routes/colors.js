@@ -65,4 +65,15 @@ router.post("/reward", async (req, res) => {
   }
 });
 
+router.get("/owner/:address", async (req, res) => {
+    const { address } = req.params;
+    try {
+      const result = await pool.query("SELECT * FROM colors WHERE owner_address=$1 AND is_deleted=0", [address]);
+      res.json({ success: true, colors: result.rows });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ success: false, error: err.message });
+    }
+});
+
 module.exports = router;

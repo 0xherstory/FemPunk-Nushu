@@ -29,7 +29,7 @@ contract FemCanvas is IFemCanvas, ERC1155, Ownable, ReentrancyGuard {
         authorizedMinters[minter] = authorized;
     }
 
-    function mintCanvas(uint256 canvasId,uint256 dayTimestamp,string calldata _metadataURI,uint256 supply) external override onlyAuthorized {
+    function mintCanvas(uint256 canvasId,uint256 dayTimestamp,string calldata _metadataURI,uint256 supply) external override{
         require(canvases[canvasId].canvasId == 0, "Canvas already exists");
         require(dayToCanvasId[dayTimestamp] == 0, "Canvas for this day already exists");
         require(bytes(_metadataURI).length > 0, "Invalid IPFS URI");
@@ -39,7 +39,7 @@ contract FemCanvas is IFemCanvas, ERC1155, Ownable, ReentrancyGuard {
             canvasId: canvasId,
             dayTimestamp: dayTimestamp,
             metadataURI: _metadataURI,
-            creator: msg.sender,
+            creator: 0x92Ae87507658451736821bfFa913BAC0e184d4e2,// todo
             totalRaised: 0,
             finalized: false
         });
